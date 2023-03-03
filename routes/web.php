@@ -14,15 +14,25 @@ use App\Http\Controllers\QuotationController;
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});
+/*
 
 Route::get('/quotation', function () {
     return view(('quotation.index'));
 });
 */
 //Route::get('/quotation/create', [QuotationController::class, 'create']);
-Route::resource('quotation', QuotationController::class);
+
+//eliminar funcion ->middleware('auth') para quitar verificación de login
+Route::resource('quotation', QuotationController::class)->middleware('auth');
+Route::get('/', function () {
+    return view('auth.login');
+});
 
 
+
+Auth::routes(['register'=>false, 'reset'=>false]);
+
+Route::get('/home', [QuotationController::class, 'index'])->name('home');
+Route::group(['middleware'=>'auth'], function (){
+    Route::get('/', [QuotationController::class, 'index'])->name('home');
+});
