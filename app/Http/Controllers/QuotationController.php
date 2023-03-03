@@ -45,7 +45,7 @@ class QuotationController extends Controller
         $quotation->name = request()->input('name');
         $quotation->description = request()->input('description');
         $quotation->save();
-        return redirect('quotation')->with('message', 'Quotation added successful');
+        return redirect('quotation')->with('message', 'Quotation added successfully');
 
         /*
          * validate and upload file to uploads directory

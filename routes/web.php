@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuotationController;
+use App\Http\Controllers\PartNumberController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::get('/quotation', function () {
 
 //eliminar funcion ->middleware('auth') para quitar verificación de login
 Route::resource('quotation', QuotationController::class)->middleware('auth');
+Route::resource('partnumber', PartNumberController::class)->middleware('auth');
 Route::get('/', function () {
     return view('auth.login');
 });
