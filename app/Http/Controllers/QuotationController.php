@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Quotation;
 use Illuminate\Http\Request;
 
+
 class QuotationController extends Controller
 {
     /**
@@ -30,6 +31,16 @@ class QuotationController extends Controller
      */
     public function store(Request $request)
     {
+        $fields=[
+          'name'=>'required|string|max:100',
+          'description'=>'required|string|max:200',
+        ];
+        $message=[
+            'name.required'=>'Name is required',
+            'description.required'=>'Description is required'
+        ];
+        $this->validate($request,$fields,$message);
+
         $quotation = new Quotation;
         $quotation->name = request()->input('name');
         $quotation->description = request()->input('description');
@@ -65,9 +76,20 @@ class QuotationController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $fields=[
+            'name'=>'required|string|max:100',
+            'description'=>'required|string|max:200',
+        ];
+        $message=[
+            'name.required'=>'Name is required',
+            'description.required'=>'Description is required'
+        ];
+        $this->validate($request,$fields,$message);
+
         $quotationData = request()->except(['_token','_method']);
         Quotation::where('id', '=', $id)->update($quotationData);
-        return redirect('/quotation/');
+        return redirect('quotation')->with('message','Quotation updated successfully');
+
     }
 
     /**

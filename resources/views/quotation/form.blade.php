@@ -1,9 +1,22 @@
 <h1>{{ $mode }} Quotation</h1>
-<label for="name">Nombre de la Estimación</label>
-<input type="text" name="name" value="{{ isset($quotation->name) ? $quotation->name: '' }}">
+@if(count($errors)>0)
+    <div class="alert alert-danger" role="alert">
+        <ul>
+            @foreach($errors->all() as $error)
+            <li> {{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+<div class="form-group">
+    <label for="name">Nombre de la Estimación</label>
+    <input type="text" name="name" class="form-control" value="{{ isset($quotation->name) ? $quotation->name: old('name') }}">
+</div>
+<div class="form-group">
+    <label for="description">Description</label>
+    <textarea type="text" class="form-control" name="description" value="{{ isset($quotation->description) ? $quotation->description: old('description') }}"></textarea>
+</div>
 <br>
-<label for="description">Descripción</label>
-<input type="text" name="description" value="{{ isset($quotation->description) ? $quotation->description: '' }}">
-<br>
-<input type="submit" value="{{ $mode }} quotation">
-<a href="{{ url('quotation/') }}">Regresar</a>
+<input type="submit" class="btn btn-success" value="{{ $mode }} quotation">
+    <a class="btn btn-primary" href="{{ url('quotation/') }}">Regresar</a>
+

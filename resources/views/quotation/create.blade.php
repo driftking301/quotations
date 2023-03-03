@@ -1,7 +1,12 @@
-<h1>Formulario de creación de Estimación</h1>
+@extends('layouts.app')
+
+@section('content')
+    <div class="container">
 <br>
 <form action="{{ url('/quotation') }}" method="post">
     @csrf
-    @include('quotation.form', ['mode'=>'Create']);
+    @include('quotation.form', ['mode'=>'Create'])
 
 </form>
+    </div>
+@endsection
