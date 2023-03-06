@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\PartNumberController;
+use App\Http\Controllers\DetailsController;
+use App\Http\Controllers\DetailsProcessController;
+use App\Http\Controllers\ProcessController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,13 +29,17 @@ Route::get('/quotation', function () {
 //eliminar funcion ->middleware('auth') para quitar verificación de login
 Route::resource('quotation', QuotationController::class)->middleware('auth');
 Route::resource('partnumber', PartNumberController::class)->middleware('auth');
+Route::resource('details', DetailsController::class)->middleware('auth');
+Route::resource('detailsprocess', DetailsProcessController::class)->middleware('auth');
+Route::resource('process', ProcessController::class)->middleware('auth');
 Route::get('/', function () {
     return view('auth.login');
 });
 
 
 
-Auth::routes(['register'=>false, 'reset'=>false]);
+//Auth::routes(['register'=>false, 'reset'=>false]);
+Auth::routes();
 
 Route::get('/home', [QuotationController::class, 'index'])->name('home');
 Route::group(['middleware'=>'auth'], function (){
