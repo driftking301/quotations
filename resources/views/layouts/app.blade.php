@@ -13,6 +13,9 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <!-- Icons -->
+
+
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
@@ -42,7 +45,13 @@
                                 <a class="dropdown-item" href="{{ route('partnumber.index') }}">
                                     {{ __('Partnumbers') }}
                                 </a>
+
+
+                                <a class="dropdown-item" href="{{ route('process.index') }}">
+                                    {{ __('Processes') }}
+                                </a>
                             </div>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
