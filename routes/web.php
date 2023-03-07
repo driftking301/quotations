@@ -31,6 +31,7 @@ Route::resource('quotation', QuotationController::class)->middleware('auth');
 Route::resource('partnumber', PartNumberController::class)->middleware('auth');
 Route::resource('details', DetailsController::class)->middleware('auth');
 Route::resource('detailsprocess', DetailsProcessController::class)->middleware('auth');
+Route::resource('details', DetailsController::class)->middleware('auth');
 Route::resource('process', ProcessController::class)->middleware('auth');
 Route::get('/', function () {
     return view('auth.login');

@@ -4,6 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <script>
+        document.documentElement.style.zoom = "85%";
+    </script>
+
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
@@ -45,10 +49,14 @@
                                 <a class="dropdown-item" href="{{ route('partnumber.index') }}">
                                     {{ __('Partnumbers') }}
                                 </a>
-
-
                                 <a class="dropdown-item" href="{{ route('process.index') }}">
                                     {{ __('Processes') }}
+                                </a>
+                                <a class="dropdown-item" href="">
+                                    {{ __('Welding') }}
+                                </a>
+                                <a class="dropdown-item" href="">
+                                    {{ __('Laser') }}
                                 </a>
                             </div>
                         </li>

@@ -32,6 +32,7 @@
 
             <td>
                 <a href="{{ url('/quotation/' . $quotation->id . '/edit') }}" class="btn btn-warning">Edit</a>
+                <a href="{{ url('/details/' . $quotation->id . '/edit') }}" class="btn btn-primary">Details</a>
 
 
                 <form action="{{ url('/quotation/'.$quotation->id) }}" class="d-inline" method="post">

@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        schema::create('details', function(Blueprint $table){
-            $table->engine="InnoDB";
+        schema::create('details', function(Blueprint $table) {
+            $table->engine = "InnoDB";
             $table->bigIncrements('id');
             $table->bigInteger('quotation_id')->unsigned();
             $table->string('description');
@@ -20,7 +20,16 @@ return new class extends Migration
             $table->float('length');
             $table->integer('quantity');
             $table->string('bar');
-            $table->string('process');
+            $table->string('laser');
+            $table->string('welding');
+            $table->string('press');
+            $table->string('saw');
+            $table->string('drill');
+            $table->string('clean');
+            $table->string('paint');
+            $table->string('pipethread');
+            $table->string('pipeengage');
+            $table->string('presssetup');
             $table->float('total');
             $table->timestamps();
             $table->foreign('quotation_id')
@@ -35,6 +44,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('details');
     }
 };
