@@ -1,6 +1,6 @@
 $(document).ready(function() {
     $('select[name="partnumber[]"]').select2({
-        placeholder: 'Buscar número de parte',
+        placeholder: 'Search part number',
         allowClear: true
     });
 });
@@ -21,29 +21,31 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     // Función para agregar nueva fila
-    $("#add-row-btn").on("click", function () {
-        let tr = "<tr>" +
-            "<td contenteditable='true'></td>" +
-            "<td contenteditable='true'></td>" +
-            "<td contenteditable='true'></td>" +
-            "<td contenteditable='true'></td>" +
-            "<td contenteditable='true'></td>" +
-            "<td contenteditable='true'></td>" +
-            "<td contenteditable='true'></td>" +
-            "<td class='laser' contenteditable='false'></td>" +
-            "<td contenteditable='true'></td>" +
-            "<td contenteditable='true'></td>" +
-            "<td contenteditable='true'></td>" +
-            "<td contenteditable='true'></td>" +
-            "<td contenteditable='true'></td>" +
-            "<td contenteditable='true'></td>" +
-            "<td contenteditable='true'></td>" +
-            "<td contenteditable='true'></td>" +
-            "<td contenteditable='true'></td>" +
-            "<td class='total' contenteditable='false'></td>" +
-            "<td><button type='button' class='btn btn-danger delete-row'>Eliminar</button></td>" +
-            "</tr>";
-
+    $("#add-row-btn").on("click", function() {
+        let select = $("<select></select>").attr("name", "partnumber[]");
+        $("select[name='partnumber[]']:eq(0) option").each(function() {
+            select.append($(this).clone());
+        });
+        let td = $("<td></td>").append(select);
+        let tr = $("<tr></tr>").append(td)
+            .append("<td contenteditable='true'></td>")
+            .append("<td contenteditable='true'></td>")
+            .append("<td contenteditable='true'></td>")
+            .append("<td contenteditable='true'></td>")
+            .append("<td contenteditable='true'></td>")
+            .append("<td contenteditable='true'></td>")
+            .append("<td class='laser' contenteditable='false'></td>")
+            .append("<td contenteditable='true'></td>")
+            .append("<td contenteditable='true'></td>")
+            .append("<td contenteditable='true'></td>")
+            .append("<td contenteditable='true'></td>")
+            .append("<td contenteditable='true'></td>")
+            .append("<td contenteditable='true'></td>")
+            .append("<td contenteditable='true'></td>")
+            .append("<td contenteditable='true'></td>")
+            .append("<td contenteditable='true'></td>")
+            .append("<td class='total' contenteditable='false'></td>")
+            .append("<td><button type='button' class='btn btn-danger delete-row'>Delete</button></td>");
         $("tbody").append(tr);
     });
 
@@ -52,6 +54,14 @@ $(document).ready(function () {
         $(this).closest("tr").remove();
         calculateGrandTotal();
     });
+
+    function cleanRow(event) {
+        event.preventDefault();
+        var row = $(event.target).closest('tr');
+        $(row).find('input[type=text]').val('');
+        $(row).find('.total').text('');
+        $(row).find('select').prop('selectedIndex', -1);
+    }
 
     // Función para calcular totales en cada fila
     $(document).on("input", "tbody td[contenteditable='true']", function () {

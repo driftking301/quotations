@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Details;
 use App\Models\PartNumber;
+use App\Models\Quotation;
 use Illuminate\Http\Request;
 
 class DetailsController extends Controller
@@ -43,10 +44,11 @@ class DetailsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Details $details)
+    public function edit(Details $details, String $id)
     {
+        $quotation = Quotation::find($id);
         $partnumbers = PartNumber::all();
-        return view('details.edit', compact('partnumbers'));
+        return view('details.edit', compact('partnumbers', 'quotation'));
 
     }
 

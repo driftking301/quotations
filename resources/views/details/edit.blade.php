@@ -13,34 +13,35 @@
 
     <div class="container">
         <br>
-
+        <h2>{{ $quotation->name }}</h2>
         <form action="{{ route('detailsprocess.store') }}" method="POST">
             @csrf
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>Número de parte</th>
-                    <th>Descripción</th>
-                    <th>D. de parte</th>
-                    <th>Ancho</th>
-                    <th>Largo</th>
-                    <th>Cantidad</th>
-                    <th>Barra</th>
-                    <th>Láser</th>
-                    <th>Soldadura</th>
-                    <th>Prensa</th>
-                    <th>Sierra</th>
-                    <th>Taladro</th>
-                    <th>Limpieza</th>
-                    <th>Pintura</th>
+                    <th>Part number</th>
+                    <th>Description</th>
+                    <th>D. part</th>
+                    <th>Width</th>
+                    <th>Length</th>
+                    <th>Quantity</th>
+                    <th>Bar</th>
+                    <th>Laser</th>
+                    <th>Weld</th>
+                    <th>Press</th>
+                    <th>Saw</th>
+                    <th>Drill</th>
+                    <th>Clean</th>
+                    <th>Paint</th>
                     <th>Pipe Thread</th>
                     <th>Pipe Engage</th>
                     <th>Press Setup</th>
                     <th>Total</th>
-                    <th>Acciones</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
+                @for ($i = 0; $i < 70; $i++)
                 <tr>
                     <td contenteditable="false" name="partnumber[]" style="width: 100%;">
                         <select class="form-control" name="partnumber[]" >
@@ -67,15 +68,17 @@
                     <td contenteditable="true" name="pipe_engage[]"></td>
                     <td contenteditable="true" name="press_setup[]"></td>
                     <td class="total" contenteditable="false" name="total[]"></td>
-                    <td><button type="button" class="btn btn-danger delete-row">Eliminar</button></td>
+                    <td><button type="button" class="btn btn-danger clean-row">Delete</button></td>
+
                 </tr>
+                @endfor
                 </tbody>
             </table>
         </form>
         <div class="row">
-            <div class="col-md-2 col-md-offset-10">
-                <button id="add-row-btn" class="btn btn-primary">Agregar Fila</button>
-            </div>
+           <!-- <div class="col-md-2 col-md-offset-10">
+                <button id="add-row-btn" class="btn btn-primary">Add part number</button>
+            </div>-->
             <div id="total-container" class="col-md-2 text-right" style="margin-left: auto">
                 <h2><strong><span id="grand-total">0.00</span></strong></h2>
 
