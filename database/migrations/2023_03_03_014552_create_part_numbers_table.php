@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('partnumber');
             $table->string('description');
             $table->string('unitmeasure');
+            $table->float('price');
             $table->timestamps();
         });
     }

@@ -1,11 +1,12 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
+    <title>@yield('pageTitle') Pollux Quotation Calculator</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <script>
-        document.documentElement.style.zoom = "85%";
+        document.documentElement.style.zoom = "90%";
     </script>
 
     <!-- CSRF Token -->
@@ -52,6 +53,7 @@
                                 <a class="dropdown-item" href="{{ route('process.index') }}">
                                     {{ __('Processes') }}
                                 </a>
+                                <div class="dropdown-divider"></div> <!-- Agregamos una línea divisoria -->
                                 <a class="dropdown-item" href="">
                                     {{ __('Welding') }}
                                 </a>

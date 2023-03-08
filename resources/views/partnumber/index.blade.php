@@ -22,6 +22,7 @@
             <th>Part Number</th>
             <th>Description</th>
             <th>Unit Measure</th>
+            <th>Price</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -33,6 +34,7 @@
             <td>{{ $partnumber->partnumber }}</td>
             <td>{{ $partnumber->description }}</td>
             <td>{{ $partnumber->unitmeasure }}</td>
+            <td>$ {{ $partnumber->price }}</td>
 
             <td>
                 <a href="{{ url('/partnumber/' . $partnumber->id . '/edit') }}" class="btn btn-warning">Edit</a>

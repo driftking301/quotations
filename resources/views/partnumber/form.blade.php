@@ -23,6 +23,9 @@
 <div class="form-group">
     <label for="partnumber">Unit Measure</label>
     <input type="text" class="form-control" name="unitmeasure" value="{{ isset($partnumber->unitmeasure) ? $partnumber->partnumber: old('unitmeasure') }}">
+</div><div class="form-group">
+    <label for="price">Price</label>
+    <input type="text" class="form-control" name="Price" value="{{ isset($partnumber->price) ? $partnumber->price: old('price') }}">
 </div>
 <br>
 <input type="submit" class="btn btn-success" value="{{ $mode }} part number">

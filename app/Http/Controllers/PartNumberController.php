@@ -12,7 +12,7 @@ class PartNumberController extends Controller
      */
     public function index()
     {
-        $partNumberData['partnumbers']=PartNumber::paginate(5);
+        $partNumberData['partnumbers']=PartNumber::paginate(15);
         return view('partnumber.index', $partNumberData);
     }
 

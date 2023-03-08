@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('select[name="partnumber[]"]').select2({
+    $('select[name="partnumber_select[]"]').select2({
         placeholder: 'Search part number',
         allowClear: true
     });
@@ -22,8 +22,8 @@ $(document).ready(function () {
 $(document).ready(function () {
     // Función para agregar nueva fila
     $("#add-row-btn").on("click", function() {
-        let select = $("<select></select>").attr("name", "partnumber[]");
-        $("select[name='partnumber[]']:eq(0) option").each(function() {
+        let select = $("<select></select>").attr("name", "partnumber_select[]");
+        $("select[name='partnumber_select[]']:eq(0) option").each(function() {
             select.append($(this).clone());
         });
         let td = $("<td></td>").append(select);

@@ -14,9 +14,11 @@
     <div class="container">
         <br>
         <h2>{{ $quotation->name }}</h2>
-        <form action="{{ route('detailsprocess.store') }}" method="POST">
+        <form action="{{ route('details.store') }}" method="POST">
             @csrf
-            <table class="table table-bordered">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <input type="hidden" name="quotation_id" value="{{ $quotation->id }}">
+            <table class="table table-bordered table-hover table-sm">
                 <thead>
                 <tr>
                     <th>Part number</th>
@@ -37,48 +39,46 @@
                     <th>Pipe Engage</th>
                     <th>Press Setup</th>
                     <th>Total</th>
-                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 @for ($i = 0; $i < 70; $i++)
-                <tr>
-                    <td contenteditable="false" name="partnumber[]" style="width: 100%;">
-                        <select class="form-control" name="partnumber[]" >
-                            <option value=""></option>
-                            @foreach ($partnumbers as $partnumber)
-                                <option value="{{ $partnumber }}">{{ $partnumber->partnumber }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td contenteditable="true" name="description[]"></td>
-                    <td contenteditable="true" name="d_part[]"></td>
-                    <td contenteditable="true" name="width[]"></td>
-                    <td contenteditable="true" name="length[]"></td>
-                    <td contenteditable="true" name="quantity[]"></td>
-                    <td contenteditable="true" name="bar[]"></td>
-                    <td class="laser" contenteditable="false" name="laser[]"></td>
-                    <td contenteditable="true" name="welding[]"></td>
-                    <td contenteditable="true" name="press[]"></td>
-                    <td contenteditable="true" name="saw[]"></td>
-                    <td contenteditable="true" name="drill[]"></td>
-                    <td contenteditable="true" name="clean[]"></td>
-                    <td contenteditable="true" name="paint[]"></td>
-                    <td contenteditable="true" name="pipe_thread[]"></td>
-                    <td contenteditable="true" name="pipe_engage[]"></td>
-                    <td contenteditable="true" name="press_setup[]"></td>
-                    <td class="total" contenteditable="false" name="total[]"></td>
-                    <td><button type="button" class="btn btn-danger clean-row">Delete</button></td>
+                    <tr>
+                        <td contenteditable="false" name="partnumber_select[]" style="width: 100%;">
+                            <select class="form-control" name="partnumber_select[]" >
+                                <option value=""></option>
+                                @foreach ($partnumbers as $partnumber)
+                                    <option value="{{ $partnumber }}">{{ $partnumber->partnumber }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td contenteditable="true" name="description[{{$i}}]"></td>
+                        <td contenteditable="true" name="d_part[{{$i}}]"></td>
+                        <td contenteditable="true" name="width[{{$i}}]"></td>
+                        <td contenteditable="true" name="length[{{$i}}]"></td>
+                        <td contenteditable="true" name="quantity[{{$i}}]"></td>
+                        <td contenteditable="true" name="bar[{{$i}}]"></td>
+                        <td class="laser" contenteditable="false" name="laser[{{$i}}]"></td>
+                        <td contenteditable="true" name="welding[{{$i}}]"></td>
+                        <td contenteditable="true" name="press[{{$i}}]"></td>
+                        <td contenteditable="true" name="saw[{{$i}}]"></td>
+                        <td contenteditable="true" name="drill[{{$i}}]"></td>
+                        <td contenteditable="true" name="clean[{{$i}}]"></td>
+                        <td contenteditable="true" name="paint[{{$i}}]"></td>
+                        <td contenteditable="true" name="pipethread[{{$i}}]"></td>
+                        <td contenteditable="true" name="pipeengage[{{$i}}]"></td>
+                        <td contenteditable="true" name="press_setup[{{$i}}]"></td>
+                        <td class="total" contenteditable="false" name="total[{{$i}}]"></td>
 
-                </tr>
+                    </tr>
                 @endfor
                 </tbody>
             </table>
         </form>
         <div class="row">
-           <!-- <div class="col-md-2 col-md-offset-10">
-                <button id="add-row-btn" class="btn btn-primary">Add part number</button>
-            </div>-->
+            <!-- <div class="col-md-2 col-md-offset-10">
+                 <button id="add-row-btn" class="btn btn-primary">Add part number</button>
+             </div>-->
             <div id="total-container" class="col-md-2 text-right" style="margin-left: auto">
                 <h2><strong><span id="grand-total">0.00</span></strong></h2>
 

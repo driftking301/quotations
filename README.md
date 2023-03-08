@@ -2,13 +2,14 @@
 
 This is a quotation estimator developed in Laravel + Mysql
 
-## Instructions
+## Instructions to run the app
 
 - Clone the repo
 - Open the repo directory
 - composer install
 - npm install
-- php artisan key:generate (optional?)
-- modify env.example file (delete example extension)
+- php artisan key:generate
+- modify env.example file with your database info(delete .example extension)
 - php artisan migrate
+- npm run dev (for vite auth)
 - php artisan serve
