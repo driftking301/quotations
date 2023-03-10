@@ -3,6 +3,14 @@ $(document).ready(function() {
         placeholder: 'Search part number',
         allowClear: true
     });
+    $('select[name="weld_select[]"]').select2({
+        placeholder: 'Weld type',
+        allowClear: true
+    });
+    $('select[name="laser_select[]"]').select2({
+        placeholder: 'Laser type',
+        allowClear: true
+    });
 });
 
 $(document).ready(function () {
@@ -66,11 +74,11 @@ $(document).ready(function () {
     // Función para calcular totales en cada fila
     $(document).on("input", "tbody td[contenteditable='true']", function () {
         let row = $(this).closest("tr");
-        let width = parseFloat(row.find("td:nth-child(4)").text()) || 0;
-        let length = parseFloat(row.find("td:nth-child(5)").text()) || 0;
-        let quantity = parseFloat(row.find("td:nth-child(6)").text()) || 0;
+        let width = parseFloat(row.find("td:nth-child(3)").text()) || 0;
+        let length = parseFloat(row.find("td:nth-child(4)").text()) || 0;
+        let quantity = parseFloat(row.find("td:nth-child(5)").text()) || 0;
         let laser = (width + length) * 2 * quantity;
-        let weld = parseFloat(row.find("td:nth-child(9)").text()) || 0;
+        let weld = parseFloat(row.find("td:nth-child(8)").text()) || 0;
         let press = parseFloat(row.find("td:nth-child(10)").text() * 1.06) || 0;
         let saw = parseFloat(row.find("td:nth-child(11)").text()) || 0;
         let drill = parseFloat(row.find("td:nth-child(12)").text()) || 0;
@@ -79,7 +87,7 @@ $(document).ready(function () {
         let thread = parseFloat(row.find("td:nth-child(15)").text()) || 0;
         let engage = parseFloat(row.find("td:nth-child(16)").text()) || 0;
         let pressSetup = parseFloat(row.find("td:nth-child(17)").text()) || 0;
-        let total = laser + weld + press + saw + drill + clean + paint + thread + engage + pressSetup;
+        let total = laser + weld + press + saw + drill + clean + paint + engage + pressSetup;
 
         row.find(".laser").text(laser.toFixed(2));
         row.find(".total").text(total.toFixed(2));
@@ -102,7 +110,7 @@ function calculateGrandTotal() {
                 grandTotal += parseFloat(total);
             }
         });
-        $("#grand-total").text("Total $" + grandTotal.toFixed(2));
+        $("#grand-total").text("$" + grandTotal.toFixed(2));
     }
 }
 
@@ -114,3 +122,35 @@ calculateGrandTotal(); // Agregar esta línea para calcular el gran total al car
 $(document).on("input", "tbody td[contenteditable='true']", function () {
     calculateGrandTotal();
 });
+
+
+// Modal de Laser Hole Calculator
+$(document).on('click', '.laser-hole-btn', function(e) {
+    e.preventDefault();
+    var $button = $(this);
+    var $modal = $('#laser-hole-modal');
+    var row = $button.closest('tr').index(); // <-- obtener el índice de la fila correspondiente al botón
+    var $circleDia = $modal.find('#circle-dia-' + (row + 1));
+    var $qty = $modal.find('#qty-' + (row + 1));
+    var $circumference = $modal.find('#circumference-' + (row + 1));
+    var $totalCirc = $modal.find('#total-cir-' + (row + 1));
+    $circleDia.val('');
+    $qty.val('');
+    $circumference.val('');
+    $totalCirc.val('');
+    $modal.modal('show');
+    $modal.attr('data-row', row); // <-- guardar el índice de la fila en el atributo data-row del modal
+});
+
+$('.calculate-btn').click(function() {
+    var row = $('#laser-hole-modal').data('row');
+    var circleDia = parseFloat($('#circle-dia-' + (row + 1)).val());
+    var qty = parseFloat($('#qty-' + (row + 1)).val());
+
+    var circumference = circleDia * 3.14;
+    $('#circumference-' + (row + 1)).val(circumference);
+
+    var totalCir = qty * circumference;
+    $('#total-cir-' + (row + 1)).val(totalCir);
+});
+

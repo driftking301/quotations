@@ -4,8 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QuotationController;
 use App\Http\Controllers\PartNumberController;
 use App\Http\Controllers\DetailsController;
-use App\Http\Controllers\DetailsProcessController;
 use App\Http\Controllers\ProcessController;
+use App\Http\Controllers\LaserController;
+use App\Http\Controllers\WeldController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,6 +34,8 @@ Route::resource('details', DetailsController::class)->middleware('auth');
 Route::resource('detailsprocess', DetailsProcessController::class)->middleware('auth');
 Route::resource('details', DetailsController::class)->middleware('auth');
 Route::resource('process', ProcessController::class)->middleware('auth');
+Route::resource('laser', LaserController::class)->middleware('auth');
+Route::resource('weld', WeldController::class)->middleware('auth');
 Route::get('/', function () {
     return view('auth.login');
 });

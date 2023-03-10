@@ -1,20 +1,4 @@
-table td {
-    position: relative;
-}
 
-table td input {
-    position: absolute;
-    display: block;
-    top:0;
-    left:0;
-    margin: 0;
-    height: 100% !important;
-    width: 100%;
-    border-radius: 0 !important;
-    border: 2px;
-    padding: 10px;
-    box-sizing: border-box;
-}
 
 /* Dropdown Button */
 .dropbtn {
@@ -83,3 +67,81 @@ table td input {
 .select2-container {
     width: 100% !important;
 }
+/* --- hide horizontal scrollbar and add vertical scrollbar to the main table
+
+.table-wrapper-scroll-y{
+    display: block;
+    max-height: 400px;
+    max-width: 2000px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+*/
+
+.table-wrapper-scroll-y table {
+    font-size: 14px;
+}
+
+.table-wrapper-scroll-y table td, .table-wrapper-scroll-y table th {
+    text-align: center;
+    vertical-align: middle;
+    padding: 0.5rem;
+}
+
+.table-wrapper-scroll-y table th {
+    background-color: #e9ecef;
+    border: 1px solid #dee2e6;
+    font-weight: bold;
+}
+
+.table-wrapper-scroll-y table td {
+    border: 1px solid #dee2e6;
+}
+
+.table-wrapper-scroll-y table td:nth-child(2) {
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.table-wrapper-scroll-y table td:last-child {
+    min-width: 100px;
+    max-width: 300px;
+}
+
+.table-wrapper-scroll-y table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.btn-save {
+    position: fixed;
+    top: 240px; /* ajusta el valor según la posición deseada */
+    left: 120px; /* ajusta el valor según la posición deseada */
+    bottom: auto;
+}
+
+.grand-total {
+    position: fixed;
+    top: 200px; /* ajusta el valor según la posición deseada */
+    left: 120px; /* ajusta el valor según la posición deseada */
+    bottom: auto;
+}
+
+.table-left-fixed {
+    position: fixed;
+    top: 300px; /* ajusta el valor según la posición deseada */
+    left: 120px; /* ajusta el valor según la posición deseada */
+    bottom: auto;
+}
+
+/* Modal background transparent */
+.modal-backdrop {
+    background-color: transparent !important;
+}
+
+.navbar {
+    width: 100%;
+}
+

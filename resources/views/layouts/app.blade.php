@@ -5,8 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <script>
-        document.documentElement.style.zoom = "90%";
+   <script>
+        document.documentElement.style.zoom = "80%";
     </script>
 
     <!-- CSRF Token -->
@@ -27,7 +27,7 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
-            <div class="container">
+            <div class="container" style="width: 100% !important;">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     Pollux Quotation Calculator
                 </a>
@@ -54,10 +54,10 @@
                                     {{ __('Processes') }}
                                 </a>
                                 <div class="dropdown-divider"></div> <!-- Agregamos una línea divisoria -->
-                                <a class="dropdown-item" href="">
+                                <a class="dropdown-item" href="{{ route('weld.index') }}">
                                     {{ __('Welding') }}
                                 </a>
-                                <a class="dropdown-item" href="">
+                                <a class="dropdown-item" href="{{ route('laser.index') }}">
                                     {{ __('Laser') }}
                                 </a>
                             </div>

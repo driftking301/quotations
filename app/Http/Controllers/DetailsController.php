@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Details;
+use App\Models\Laser;
 use App\Models\PartNumber;
 use App\Models\Quotation;
+use App\Models\Weld;
 use Illuminate\Http\Request;
 
 class DetailsController extends Controller
@@ -100,7 +102,9 @@ class DetailsController extends Controller
     {
         $quotation = Quotation::find($id);
         $partnumbers = PartNumber::all();
-        return view('details.edit', compact('partnumbers', 'quotation'));
+        $welds = Weld::all();
+        $lasers = Laser::all();
+        return view('details.edit', compact('partnumbers', 'quotation', 'welds', 'lasers'));
 
     }
 
