@@ -15,7 +15,7 @@ class QuotationController extends Controller
     public function index()
     {
 
-        $quotationData['quotations']=Quotation::paginate(5);
+        $quotationData['quotations']=Quotation::paginate(15);
         return view('quotation.index', $quotationData);
     }
 
@@ -34,16 +34,22 @@ class QuotationController extends Controller
     {
         $fields=[
           'name'=>'required|string|max:100',
+          'client'=>'required|string|max:200',
+          'date'=>'required|string|max:200',
           'description'=>'required|string|max:200',
         ];
         $message=[
             'name.required'=>'Name is required',
-            'description.required'=>'Description is required'
+            'client.required'=>'Client is required',
+            'date.required'=>'Date is required',
+            'description.required'=>'Description is required',
         ];
         $this->validate($request,$fields,$message);
 
         $quotation = new Quotation;
         $quotation->name = request()->input('name');
+        $quotation->client = request()->input('client');
+        $quotation->date = request()->input('date');
         $quotation->description = request()->input('description');
         $quotation->save();
         return redirect('quotation')->with('message', 'Quotation added successfully');
@@ -79,10 +85,14 @@ class QuotationController extends Controller
     {
         $fields=[
             'name'=>'required|string|max:100',
+            'client'=>'required|string|max:200',
+            'date'=>'required|string|max:200',
             'description'=>'required|string|max:200',
         ];
         $message=[
             'name.required'=>'Name is required',
+            'client.required'=>'Client is required',
+            'date.required'=>'Date is required',
             'description.required'=>'Description is required'
         ];
         $this->validate($request,$fields,$message);
