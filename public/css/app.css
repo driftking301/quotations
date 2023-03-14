@@ -145,3 +145,26 @@
     width: 100%;
 }
 
+table {
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 100%;
+}
+
+th, td {
+    padding: 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+thead th {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 1;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+

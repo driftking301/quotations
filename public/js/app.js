@@ -71,14 +71,31 @@ $(document).ready(function () {
         $(row).find('select').prop('selectedIndex', -1);
     }
 
-    // Función para calcular totales en cada fila
+// Función para calcular totales en cada fila
     $(document).on("input", "tbody td[contenteditable='true']", function () {
         let row = $(this).closest("tr");
         let width = parseFloat(row.find("td:nth-child(3)").text()) || 0;
         let length = parseFloat(row.find("td:nth-child(4)").text()) || 0;
         let quantity = parseFloat(row.find("td:nth-child(5)").text()) || 0;
-        let laser = (width + length) * 2 * quantity;
+
+        let laserSelect = row.find("td:nth-child(7) select");
+        let laserPrice = laserSelect.find(":selected").data("price");
+        if (typeof laserPrice !== "number") {
+            laserPrice = parseFloat(laserPrice.split("- $")[1]) || 0;
+        }
+
+        let laser = parseFloat(row.find("td:nth-child(6)").text()) || 0;
+        laser += (width + length) * 2 * quantity * laserPrice;
+        row.find(".laser").text(laser.toFixed(2));
+
+        laser += (laser * laserPrice);
+
+        let weldSelect = row.find("td:nth-child(9) select");
+        let weldPrice = parseFloat(weldSelect.find("option:selected").data("price")) || 0;
+
         let weld = parseFloat(row.find("td:nth-child(8)").text()) || 0;
+        weld += quantity * weldPrice;
+
         let press = parseFloat(row.find("td:nth-child(10)").text() * 1.06) || 0;
         let saw = parseFloat(row.find("td:nth-child(11)").text()) || 0;
         let drill = parseFloat(row.find("td:nth-child(12)").text()) || 0;
@@ -87,17 +104,33 @@ $(document).ready(function () {
         let thread = parseFloat(row.find("td:nth-child(15)").text()) || 0;
         let engage = parseFloat(row.find("td:nth-child(16)").text()) || 0;
         let pressSetup = parseFloat(row.find("td:nth-child(17)").text()) || 0;
+
         let total = laser + weld + press + saw + drill + clean + paint + engage + pressSetup;
 
         row.find(".laser").text(laser.toFixed(2));
         row.find(".total").text(total.toFixed(2));
 
-        calculateGrandTotal(); // Agregar esta línea para calcular el gran total después de actualizar todos los totales de cada fila
+        calculateGrandTotal();
     });
+
+// Función para calcular el gran total
+    function calculateGrandTotal() {
+        let grandTotal = 0;
+        $("tbody tr").each(function () {
+            grandTotal += parseFloat($(this).find(".total").text()) || 0;
+        });
+        $("#grandtotal").text(grandTotal.toFixed(2));
+    }
+
+// Calcular el gran total al cargar la página
+    calculateGrandTotal();
+
+
 
     // Función para calcular totales en todas las filas al cargar la página
     $("tbody td[contenteditable='true']").trigger("input");
 });
+
 function calculateGrandTotal() {
     let grandTotal = 0;
     let rowCount = $("tbody tr").length;
@@ -153,4 +186,5 @@ $('.calculate-btn').click(function() {
     var totalCir = qty * circumference;
     $('#total-cir-' + (row + 1)).val(totalCir);
 });
+
 

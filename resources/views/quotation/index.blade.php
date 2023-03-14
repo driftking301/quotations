@@ -11,14 +11,14 @@
                 </button>
             </div>
             @endif
-<a href="{{ url('/quotation/create') }}" class="btn btn-success">Add a new Quotation</a>
+<a href="{{ url('/quotation/create') }}" class="btn btn-success">Add a new Quote</a>
     <br>
     <br>
 <table class="table table-light">
     <thead class="thead-light">
         <tr>
             <th>ID</th>
-            <th>Quotation name</th>
+            <th>Quote name</th>
             <th>Description</th>
             <th>Actions</th>
         </tr>
@@ -45,6 +45,8 @@
     @endforeach
     </tbody>
 </table>
+
+
         {!! $quotations->links() !!}
     </div>
 @endsection

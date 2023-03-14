@@ -9,7 +9,7 @@
     </div>
 @endif
 <div class="form-group">
-    <label for="name">Quotation name</label>
+    <label for="name">Quote name</label>
     <input type="text" name="name" class="form-control" value="{{ isset($quotation->name) ? $quotation->name: old('name') }}">
 </div>
 
