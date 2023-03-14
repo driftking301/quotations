@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid ml-5 mr-5">
 
             @if(Session::has('message'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -14,13 +14,15 @@
 <a href="{{ url('/quotation/create') }}" class="btn btn-success">Add a new Quote</a>
     <br>
     <br>
-<table class="table table-light">
+<table class="table table-light table-hover">
     <thead class="thead-light">
         <tr>
             <th>ID</th>
             <th>Quote name</th>
+            <th>Client</th>
             <th>Description</th>
-            <th>Actions</th>
+            <th>Date</th>
+            <th class="text-center">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -28,17 +30,18 @@
         <tr>
             <td>{{ $quotation->id }}</td>
             <td>{{ $quotation->name }}</td>
+            <td>{{ $quotation->client }}</td>
             <td>{{ $quotation->description }}</td>
-
-            <td>
-                <a href="{{ url('/quotation/' . $quotation->id . '/edit') }}" class="btn btn-warning">Edit</a>
-                <a href="{{ url('/details/' . $quotation->id . '/edit') }}" class="btn btn-primary">Details</a>
+            <td>{{ $quotation->date }}</td>
+            <td class="text-center">
+                <a href="{{ url('/quotation/' . $quotation->id . '/edit') }}" class="btn btn-secondary">Edit</a>
+                <a href="{{ url('/details/' . $quotation->id . '/edit') }}" class="btn btn-secondary">Details</a>
 
 
                 <form action="{{ url('/quotation/'.$quotation->id) }}" class="d-inline" method="post">
                     @csrf
                     {{ method_field('DELETE') }}
-                    <input class="btn btn-danger" type="submit" onclick="return confirm('¿Quieres borrar?')" value="Delete">
+                    <input class="btn btn-danger" type="submit" onclick="return confirm('¿Do you want to delete the item?')" value="Delete">
                 </form>
             </td>
         </tr>

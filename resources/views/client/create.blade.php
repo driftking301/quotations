@@ -3,9 +3,9 @@
 @section('content')
     <div class="container">
 <br>
-<form action="{{ url('/quotation') }}" method="post">
+<form action="{{ url('/client') }}" method="post">
     @csrf
-    @include('quotation.form', ['mode'=>'Create'])
+    @include('client.form', ['mode'=>'Create'])
 
 </form>
     </div>

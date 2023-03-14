@@ -1,4 +1,4 @@
-<h1>{{ $mode }} Quote</h1>
+<h1>{{ $mode }} Client</h1>
 @if(count($errors)>0)
     <div class="alert alert-danger" role="alert">
         <ul>
@@ -10,26 +10,24 @@
 @endif
 <div class="form-group">
     <div class="row">
-        <div class="col-md-4">
-            <label for="name">Quote name</label>
-            <input type="text" name="name" class="form-control" value="{{ isset($quotation->name) ? $quotation->name: old('name') }}">
+        <div class="col-md-6">
+            <label for="name">Client name</label>
+            <input type="text" name="name" class="form-control" value="{{ isset($client->name) ? $client->name: old('name') }}">
         </div>
-        <div class="col-md-4">
-            <label for="client">Client</label>
-            <input type="text" name="client" class="form-control" value="{{ old('client') }}">
+        <div class="col-md-6">
+            <label for="description">Description</label>
+            <input type="text" name="description" class="form-control" value="{{ isset($client->description) ? $client->description: old('description') }}">
         </div>
-        <div class="col-md-4">
-            <label for="description">Date</label>
-            <input type="date" name="date" class="form-control" value="{{ old('date') }}">
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <label for="notes">Notes</label>
+            <textarea type="text" name="notes" class="form-control">{{ isset($client->notes) ? $client->notes: old('notes') }}</textarea>
         </div>
+
     </div>
 </div>
 
-<div class="form-group">
-    <label for="description">Description</label>
-    <textarea type="text" class="form-control" name="description">{{ isset($quotation->description) ? $quotation->description : old('description') }}</textarea>
-</div>
-
 <br>
-<input type="submit" class="btn btn-secondary" value="{{ $mode }} quotation">
-    <a class="btn btn-secondary" href="{{ url('quotation/') }}">Return</a>
+<input type="submit" class="btn btn-secondary" value="{{ $mode }} client">
+    <a class="btn btn-secondary" href="{{ url('client/') }}">Return</a>

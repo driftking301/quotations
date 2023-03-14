@@ -2,10 +2,10 @@
 
 @section('content')
     <div class="container">
-<form action="{{ url('/quotation/' . $quotation->id) }}" method="post">
+<form action="{{ url('/quotation/' . $client->id) }}" method="post">
     @csrf
     {{ method_field('PATCH') }}
-    @include('quotation.form', ['mode'=>'Edit'])
+    @include('client.form', ['mode'=>'Edit'])
 </form>
     </div>
 @endsection

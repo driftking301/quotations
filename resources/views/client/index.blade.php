@@ -11,34 +11,29 @@
                 </button>
             </div>
             @endif
-<a href="{{ url('/quotation/create') }}" class="btn btn-success">Add a new Quote</a>
+<a href="{{ url('/client/create') }}" class="btn btn-success">Add a new Client</a>
     <br>
     <br>
 <table class="table table-light table-hover">
     <thead class="thead-light">
         <tr>
             <th>ID</th>
-            <th>Quote name</th>
+            <th>Client name</th>
             <th>Description</th>
-            <th>Client</th>
-            <th>Date</th>
+            <th>Notes</th>
             <th class="text-center">Actions</th>
         </tr>
     </thead>
     <tbody>
-    @foreach($quotations as $quotation)
+    @foreach($clients as $client)
         <tr>
-            <td>{{ $quotation->id }}</td>
-            <td>{{ $quotation->name }}</td>
-            <td>{{ $quotation->description }}</td>
-            <td></td>
-            <td></td>
+            <td>{{ $client->id }}</td>
+            <td>{{ $client->name }}</td>
+            <td>{{ $client->description }}</td>
+            <td>{{ $client->notes }}</td>
             <td class="text-center">
-                <a href="{{ url('/quotation/' . $quotation->id . '/edit') }}" class="btn btn-secondary">Edit</a>
-                <a href="{{ url('/details/' . $quotation->id . '/edit') }}" class="btn btn-secondary">Details</a>
-
-
-                <form action="{{ url('/quotation/'.$quotation->id) }}" class="d-inline" method="post">
+                <a href="{{ url('/client/' . $client->id . '/edit') }}" class="btn btn-secondary">Edit</a>
+                <form action="{{ url('/client/'.$client->id) }}" class="d-inline" method="post">
                     @csrf
                     {{ method_field('DELETE') }}
                     <input class="btn btn-danger" type="submit" onclick="return confirm('¿Do you want to delete the item?')" value="Delete">
@@ -50,6 +45,6 @@
 </table>
 
 
-        {!! $quotations->links() !!}
+        {!! $clients->links() !!}
     </div>
 @endsection
