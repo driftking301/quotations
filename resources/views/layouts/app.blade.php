@@ -5,9 +5,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-   <script>
-        document.documentElement.style.zoom = "80%";
-    </script>
+
+
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -27,7 +26,7 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
-            <div class="container" style="width: 100% !important;">
+            <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     POLLUX MES
                 </a>
