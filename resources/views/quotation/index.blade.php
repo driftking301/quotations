@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid ml-5 mr-5">
+    <div class="container">
 
             @if(Session::has('message'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -11,37 +11,41 @@
                 </button>
             </div>
             @endif
-<a href="{{ url('/quotation/create') }}" class="btn btn-success">Add a new Quote</a>
-    <br>
-    <br>
+        <div class="row">
+            <div class="col-md-2">
+                <h4>Clients</h4>
+            </div>
+            <div class="offset-md-8 col-md-1">
+                <a href="{{ url('/quotation/create') }}" class="btn btn-success">New</a>
+            </div>
+            <div class="col-md-1 ">
+                {!! $quotations->links() !!}
+            </div>
+        </div>
 <table class="table table-light table-hover">
     <thead class="thead-light">
         <tr>
-            <th>ID</th>
             <th>Quote name</th>
             <th>Client</th>
             <th>Description</th>
             <th>Date</th>
-            <th class="text-center">Actions</th>
+            <th class="text-center text-nowrap">Actions</th>
         </tr>
     </thead>
     <tbody>
     @foreach($quotations as $quotation)
         <tr>
-            <td>{{ $quotation->id }}</td>
-            <td>{{ $quotation->name }}</td>
+            <td>
+                <a href="{{ url('/details/' . $quotation->id . '/edit') }}">{{ $quotation->name }}</a>
+            </td>
             <td>{{ $quotation->client }}</td>
             <td>{{ $quotation->description }}</td>
             <td>{{ $quotation->date }}</td>
             <td class="text-center">
-                <a href="{{ url('/quotation/' . $quotation->id . '/edit') }}" class="btn btn-secondary">Edit</a>
-                <a href="{{ url('/details/' . $quotation->id . '/edit') }}" class="btn btn-secondary">Details</a>
-
-
                 <form action="{{ url('/quotation/'.$quotation->id) }}" class="d-inline" method="post">
                     @csrf
                     {{ method_field('DELETE') }}
-                    <input class="btn btn-danger" type="submit" onclick="return confirm('¿Do you want to delete the item?')" value="Delete">
+                    <input class="btn btn-secondary" type="submit" onclick="return confirm('¿Do you want to delete the item?')" value="Delete">
                 </form>
             </td>
         </tr>
@@ -50,6 +54,8 @@
 </table>
 
 
-        {!! $quotations->links() !!}
+
     </div>
 @endsection
+
+
