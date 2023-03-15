@@ -30,11 +30,15 @@ Route::get('/quotation', function () {
 
 //eliminar funcion ->middleware('auth') para quitar verificación de login
 Route::resource('quotation', QuotationController::class)->middleware('auth');
+Route::get('quotation/{id}/processes', [QuotationController::class, 'editProcesses']);
+Route::post('quotation/{id}/processes', [QuotationController::class, 'updateProcesses']);
 Route::resource('partnumber', PartNumberController::class)->middleware('auth');
 Route::resource('details', DetailsController::class)->middleware('auth');
 Route::resource('detailsprocess', DetailsProcessController::class)->middleware('auth');
 Route::resource('details', DetailsController::class)->middleware('auth');
-Route::resource('process', ProcessController::class)->middleware('auth');
+// Route::resource('process', ProcessController::class)->middleware('auth');
+Route::get('processes', [ProcessController::class, 'edit'])->name('processes');
+Route::post('processes', [ProcessController::class, 'update']);
 Route::resource('laser', LaserController::class)->middleware('auth');
 Route::resource('weld', WeldController::class)->middleware('auth');
 Route::resource('client', ClientController::class)->middleware('auth');

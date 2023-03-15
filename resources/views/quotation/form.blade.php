@@ -1,4 +1,3 @@
-<h1>{{ $mode }} Quote</h1>
 @if(count($errors)>0)
     <div class="alert alert-danger" role="alert">
         <ul>
@@ -8,6 +7,11 @@
         </ul>
     </div>
 @endif
+<div class="card">
+    <div class="card-header">
+        <h1>{{ $mode }} Quote</h1>
+    </div>
+<div class="card-body">
 <div class="form-group">
     <div class="row">
         <div class="col-md-4">
@@ -24,12 +28,14 @@
         </div>
     </div>
 </div>
-
 <div class="form-group">
     <label for="description">Description</label>
     <textarea type="text" class="form-control" name="description">{{ isset($quotation->description) ? $quotation->description : old('description') }}</textarea>
 </div>
-
+</div>
 <br>
-<input type="submit" class="btn btn-secondary" value="{{ $mode }} quotation">
-    <a class="btn btn-secondary" href="{{ url('quotation/') }}">Return</a>
+    <div class="card-footer">
+        <input type="submit" class="btn btn-primary" value="{{ $mode }} quote">
+        <a class="btn btn-secondary" href="{{ url('quotation/') }}">Return</a>
+    </div>
+</div>

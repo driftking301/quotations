@@ -55,7 +55,7 @@ class DetailsController extends Controller
         $welds = Weld::all();
         $lasers = Laser::all();
 
-        $jsonFilePath = storage_path('app/public/processes.json');
+        $jsonFilePath = storage_path('\processes.json');
         $jsonString = File::get($jsonFilePath);
         $jsonData = json_decode($jsonString, true);
 

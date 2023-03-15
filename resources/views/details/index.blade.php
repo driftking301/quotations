@@ -1,7 +1,7 @@
-
 @extends('layouts.app')
 
 @section('content')
+
     <link rel="stylesheet" href="/css/app.css">
 
     <!-- CSS de Bootstrap Select -->
@@ -13,15 +13,6 @@
 
     <script src="/js/app.js"></script>
     <div class="container">
-
-        @if(Session::has('message'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ Session::get('message') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-
-                </button>
-            </div>
-        @endif
         <a href="{{ url('/quotation/create') }}" class="btn btn-success">Add a new Quotation</a>
         <br>
         <br>

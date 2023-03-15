@@ -10,11 +10,11 @@
                 <h5>Quote name: {{ $quotation->name }}</h5>
             </div>
             <div class="col-md-2 align-self-end">
-                <a class="btn btn-dark" href="{{ url('quotation/') }}"><-</a>
-                <button type="button" class="btn btn-secondary" data-toggle="add process" data-placement="top" data-bs-toggle="modal" data-bs-target="#configModal">C</button>
-                <a class="btn btn-primary" href="{{ url('quotation/'. $quotation->id . '/edit' ) }}">E</a>
+                <a class="btn btn-dark" href="{{ url('quotation/') }}"><i class="fa-solid fa-arrow-left"></i></a>
+                <button type="button" class="btn btn-secondary" data-toggle="add process" data-placement="top" data-bs-toggle="modal" data-bs-target="#configModal"><i class="fa-solid fa-gear"></i></button>
+                <a class="btn btn-primary" href="{{ url('quotation/'. $quotation->id . '/edit' ) }}"><i class="fa-solid fa-pen-to-square"></i></a>
 
-                <button type="button" class="btn btn-warning" data-toggle="add process" data-placement="top" data-bs-toggle="modal" data-bs-target="#exampleModal">+</button>
+                <button type="button" class="btn btn-warning" data-toggle="add process" data-placement="top" data-bs-toggle="modal" data-bs-target="#processModal"><i class="fa-solid fa-plus"></i></button>
 
             </div>
         </div>
@@ -55,8 +55,12 @@
 
 </div>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- ---------------------------------------------------- PROCESSES PRICES MODAL --------------------------------------------------------
+     ----------------------------------------------------------------------------------------------------------------------------- -->
+
+    <!-- ---------------------------------------------------- PROCESS MODAL --------------------------------------------------------
+     ----------------------------------------------------------------------------------------------------------------------------- -->
+    <div class="modal fade" id="processModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -163,19 +167,14 @@
             </div>
         </div>
     </div>
-    <script>
-        document.getElementById('exampleModal').addEventListener('shown.bs.modal', function () {
-            // myInput.focus();
-        });
-        document.getElementById('exampleModalToggle2').addEventListener('shown.bs.modal', function () {
-            // myInput.focus();
-        });
-    </script>
-    <div class="modal fade" id="laserHoleCalculator" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <!-- --------------------------------------- LASER HOLE CALCULATOR MODAL --------------------------------------------------------
+     ----------------------------------------------------------------------------------------------------------------------------- -->
+    <div class="modal fade" id="laserHoleCalculator" tabindex="-1" data-bs-backdrop="static" aria-labelledby="laserHoleCalculatorLabel" aria-hidden="true">
         <div class="modal-dialog modal-md modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Laser Hole Calculator</h1>
+                    <h1 class="modal-title fs-5" id="laserHoleCalculatorLabel2">Laser Hole Calculator</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -264,8 +263,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-primary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Apply</button>
-                    <button class="btn btn-secondary" data-bs-target="#exampleModalToggle" data-bs-toggle="modal">Back</button>
+                    <button class="btn btn-primary" data-bs-target="#processModal" data-bs-toggle="modal">Apply</button>
+                    <button class="btn btn-secondary" data-bs-target="#processModal" data-bs-toggle="modal">Back</button>
 
                 </div>
             </div>

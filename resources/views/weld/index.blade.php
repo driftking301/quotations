@@ -2,15 +2,6 @@
 
 @section('content')
     <div class="container">
-
-            @if(Session::has('message'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                {{ Session::get('message') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
-
-                </button>
-            </div>
-            @endif
 <a href="{{ url('/weld/create') }}" class="btn btn-success">Add a new Weld Process</a>
     <br>
     <br>

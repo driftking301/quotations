@@ -18,6 +18,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Icons -->
+    <script src="https://kit.fontawesome.com/283d08d6db.js" crossorigin="anonymous"></script>
 
 
     <!-- Scripts -->
@@ -53,7 +54,7 @@
                                 <a class="dropdown-item" href="{{ route('partnumber.index') }}">
                                     {{ __('Partnumbers') }}
                                 </a>
-                                <a class="dropdown-item" href="{{ route('process.index') }}">
+                                <a class="dropdown-item" href="{{ route('processes') }}">
                                     {{ __('Processes') }}
                                 </a>
                                 <div class="dropdown-divider"></div> <!-- Agregamos una línea divisoria -->
@@ -107,6 +108,14 @@
         </nav>
 
         <main class="py-4">
+            @if(Session::has('message'))
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ Session::get('message') }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+
+                    </button>
+                </div>
+            @endif
             @yield('content')
         </main>
     </div>

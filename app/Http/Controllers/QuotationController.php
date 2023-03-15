@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Internal\ProcessesSettings;
 use App\Models\Quotation;
 use App\Models\Weld;
 use Illuminate\Http\Request;
@@ -30,7 +31,7 @@ class QuotationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, ProcessesSettings $processesSettings)
     {
         $fields=[
           'name'=>'required|string|max:100',
@@ -51,6 +52,9 @@ class QuotationController extends Controller
         $quotation->client = request()->input('client');
         $quotation->date = request()->input('date');
         $quotation->description = request()->input('description');
+        foreach ($processesSettings->defaultSettings() as $key => $values) {
+            $quotation->{$key} = $values['price'];
+        }
         $quotation->save();
         return redirect('quotation')->with('message', 'Quotation added successfully');
 
@@ -72,16 +76,26 @@ class QuotationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Quotation $quotation)
     {
-        $quotation=Quotation::findOrFail($id);
         return view('quotation.edit', compact('quotation'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function editProcesses(Quotation $quotation, ProcessesSettings $processesSettings)
+    {
+        return view('quotation.edit-processes', [
+            'quotation' => $quotation,
+            'processesSettings' => $processesSettings->defaultSettings(),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Quotation $quotation)
     {
         $fields=[
             'name'=>'required|string|max:100',
@@ -95,12 +109,26 @@ class QuotationController extends Controller
             'date.required'=>'Date is required',
             'description.required'=>'Description is required'
         ];
-        $this->validate($request,$fields,$message);
+        $this->validate($request, $fields, $message);
 
-        $quotationData = request()->except(['_token','_method']);
-        Quotation::where('id', '=', $id)->update($quotationData);
+        $quotationData = $request->except(['_token','_method']);
+        $quotation->update($quotationData);
         return redirect('quotation')->with('message','Quotation updated successfully');
+    }
 
+    public function updateProcesses(Request $request, Quotation $quotation, ProcessesSettings $processesSettings)
+    {
+        $fields = [];
+        $messages = [];
+        $defaultSettings = $processesSettings->defaultSettings();
+        foreach ($defaultSettings as $key => $values) {
+            $fields[$key] = 'required|string';
+            $messages[$key . '.required'] = sprintf('%s is required', $values['name']);
+        }
+        $this->validate($request, $fields, $messages);
+        $dataToUpdate = $request->only(array_keys($defaultSettings));
+        $quotation->update($dataToUpdate);
+        return redirect('details')->with('message','Quotation processes updated successfully');
     }
 
     /**
