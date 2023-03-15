@@ -27,7 +27,8 @@
 
     </div>
 </div>
-
 <br>
-<input type="submit" class="btn btn-secondary" value="{{ $mode }} client">
-    <a class="btn btn-secondary" href="{{ url('client/') }}">Return</a>
+    <div class="offset-10">
+        <input type="submit" class="btn btn-primary" value="Save">
+        <a class="btn btn-secondary" href="{{ url('client/') }}">Back</a>
+    </div>

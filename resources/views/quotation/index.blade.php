@@ -13,12 +13,12 @@
             @endif
         <div class="row">
             <div class="col-md-2">
-                <h4>Clients</h4>
+                <h4>Quotes</h4>
             </div>
-            <div class="offset-md-8 col-md-1">
-                <a href="{{ url('/quotation/create') }}" class="btn btn-success">New</a>
+            <div class="offset-md-6 col-md-2">
+                <a href="{{ url('/quotation/create') }}" class="btn btn-success">New Quote</a>
             </div>
-            <div class="col-md-1 ">
+            <div class="col-md-2 ">
                 {!! $quotations->links() !!}
             </div>
         </div>

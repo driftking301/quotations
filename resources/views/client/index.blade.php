@@ -11,14 +11,20 @@
                 </button>
             </div>
             @endif
-<a href="{{ url('/client/create') }}" class="btn btn-success">Add a new Client</a>
-    <br>
-    <br>
+
+            <div class="row">
+                <div class="offset-8 col-md-2">
+                    <a href="{{ url('/client/create') }}" class="btn btn-success">New Client</a>
+                </div>
+                <div class="col-md-2">
+                    {!! $clients->links() !!}
+                </div>
+            </div>
 <table class="table table-light table-hover">
     <thead class="thead-light">
         <tr>
-            <th>ID</th>
-            <th>Client name</th>
+            <th>Client Alias</th>
+            <th>Client Real Name</th>
             <th>Description</th>
             <th>Notes</th>
             <th class="text-center">Actions</th>
@@ -27,8 +33,8 @@
     <tbody>
     @foreach($clients as $client)
         <tr>
-            <td>{{ $client->id }}</td>
             <td>{{ $client->name }}</td>
+            <td></td>
             <td>{{ $client->description }}</td>
             <td>{{ $client->notes }}</td>
             <td class="text-center">
@@ -45,6 +51,6 @@
 </table>
 
 
-        {!! $clients->links() !!}
+
     </div>
 @endsection
