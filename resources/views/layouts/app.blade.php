@@ -57,13 +57,6 @@
                                 <a class="dropdown-item" href="{{ route('processes') }}">
                                     {{ __('Processes') }}
                                 </a>
-                                <div class="dropdown-divider"></div> <!-- Agregamos una línea divisoria -->
-                                <a class="dropdown-item" href="{{ route('weld.index') }}">
-                                    {{ __('Welding') }}
-                                </a>
-                                <a class="dropdown-item" href="{{ route('laser.index') }}">
-                                    {{ __('Laser') }}
-                                </a>
                             </div>
                         </li>
                     </ul>

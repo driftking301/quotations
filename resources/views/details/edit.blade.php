@@ -11,7 +11,7 @@
             </div>
             <div class="col-md-2 align-self-end">
                 <a class="btn btn-dark" href="{{ url('quotation/') }}"><i class="fa-solid fa-arrow-left"></i></a>
-                <button type="button" class="btn btn-secondary" data-toggle="add process" data-placement="top" data-bs-toggle="modal" data-bs-target="#configModal"><i class="fa-solid fa-gear"></i></button>
+                <button type="button" class="btn btn-secondary" data-toggle="processConfig" data-placement="top" data-bs-toggle="modal" data-bs-target="#processConfigModal"><i class="fa-solid fa-gear"></i></button>
                 <a class="btn btn-primary" href="{{ url('quotation/'. $quotation->id . '/edit' ) }}"><i class="fa-solid fa-pen-to-square"></i></a>
 
                 <button type="button" class="btn btn-warning" data-toggle="add process" data-placement="top" data-bs-toggle="modal" data-bs-target="#processModal"><i class="fa-solid fa-plus"></i></button>
@@ -57,7 +57,50 @@
 
     <!-- ---------------------------------------------------- PROCESSES PRICES MODAL --------------------------------------------------------
      ----------------------------------------------------------------------------------------------------------------------------- -->
+    <div class="modal fade" id="processConfigModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Processes for {{ $quotation->name }}</h5>
+                </div>
+                <div class="modal-body">
 
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="laser">Laser price</label>
+                                <input class="input-group" type="text" name="laser" value="{{ $quotation->laser }}">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="units">Weld price</label>
+                                <input class="input-group" type="text" name="weld" value="{{ $quotation->weld }}">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="notes">Press price</label>
+                                <input class="input-group" type="text" name="press" value="{{ $quotation->press }}">
+                            </div>
+                        </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="laser">Drilling price</label>
+                            <input class="input-group" type="text" name="laser" value="{{ $quotation->drilling }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="units">Cleaning price</label>
+                            <input class="input-group" type="text" name="weld" value="{{ $quotation->cleaning }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="notes">Painting</label>
+                            <input class="input-group" type="text" name="press" value="{{ $quotation->painting }}">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- ---------------------------------------------------- PROCESS MODAL --------------------------------------------------------
      ----------------------------------------------------------------------------------------------------------------------------- -->
     <div class="modal fade" id="processModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">

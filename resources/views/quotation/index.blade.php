@@ -13,7 +13,7 @@
                 {!! $quotations->links() !!}
             </div>
         </div>
-<table class="table table-bordered table-light table-hover">
+<table class="table table-secondary table-light table-hover">
     <thead class="thead-light">
         <tr>
             <th>Quote name</th>

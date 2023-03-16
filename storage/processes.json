@@ -2,13 +2,13 @@
     "laser": {
         "name": "Laser",
         "units": "inches",
-        "price": 0.08,
+        "price": 1,
         "notes": "carbon steel 0.076, stainless steel 0.11"
     },
     "weld": {
         "name": "Weld",
         "units": "inches",
-        "price": 0.44,
+        "price": 1,
         "notes": "carbon steel 0.44, stainless steel 0.56"
     },
     "press": {
