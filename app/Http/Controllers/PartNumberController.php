@@ -48,7 +48,7 @@ class PartNumberController extends Controller
         $partnumber->description = request()->input('description');
         $partnumber->unitmeasure = request()->input('unitmeasure');
         $partnumber->save();
-        return redirect('partnumber')->with('message', 'Part Number added successfully');
+        return redirect(route('partnumber.index'))->with('message', 'Part Number added successfully');
     }
 
     /**
@@ -89,7 +89,7 @@ class PartNumberController extends Controller
 
         $partNumberData = request()->except(['_token', '_method']);
         PartNumber::where('id', '=', $id)->update($partNumberData);
-        return redirect('partnumber')->with('message', 'Part number updated successfully');
+        return redirect(route('partnumber.index'))->with('message', 'Part number updated successfully');
     }
 
     /**
@@ -98,6 +98,6 @@ class PartNumberController extends Controller
     public function destroy(string $id)
     {
         PartNumber::destroy($id);
-        return redirect('partnumber')->with('message', 'Part number deleted successfully');
+        return redirect(route('partnumber.index'))->with('message', 'Part number deleted successfully');
     }
 }

@@ -14,8 +14,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clientsData['clients']=Client::paginate(15);
-        return view('client.index', $clientsData);
+        $clients = Client::paginate(15);
+        return view('client.index', compact('clients'));
     }
 
     /**
@@ -92,6 +92,6 @@ class ClientController extends Controller
     public function destroy(String $id)
     {
         Client::destroy($id);
-        return view('client.index')->with('message', 'Client deleted successfully');
+        return redirect(route('client.index'))->with('message', 'Client deleted successfully');
     }
 }

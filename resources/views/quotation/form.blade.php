@@ -7,22 +7,27 @@
         </ul>
     </div>
 @endif
+
 <div class="card">
     <div class="card-header">
-        <h1>{{ $mode }} Quote</h1>
+        <h4><i class="fa-solid fa-list"></i> {{ $mode }} Quote</h4>
     </div>
 <div class="card-body">
 <div class="form-group">
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-5">
             <label for="name">Quote name</label>
             <input type="text" name="name" class="form-control" value="{{ isset($quotation->name) ? $quotation->name: old('name') }}">
         </div>
-        <div class="col-md-4">
-            <label for="client">Client</label>
-            <input type="text" name="client" class="form-control" value="{{ isset($quotation->client) ? $quotation->client: old('client') }}">
+        <div class="col-md-5">
+            <label for="client">Customer</label>
+            <select class="form-select select2 select2-selection--single" name="client_id">
+                @foreach($customers as $customer)
+                    <option value="{{ $customer->id }}" @selected($customer->id == $quotation->client_id ?? old('client_id'))>{{ $customer->name }}</option>
+                @endforeach
+            </select>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
             <label for="description">Date</label>
             <input type="date" name="date" class="form-control" value="{{ isset($quotation->date) ? $quotation->date: old('date') }}">
         </div>
@@ -35,7 +40,8 @@
 </div>
 <br>
     <div class="card-footer">
-        <input type="submit" class="btn btn-primary" value="{{ $mode }} quote">
-        <a class="btn btn-secondary" href="{{ url('quotation/') }}">Return</a>
+        <button type="submit" class="btn btn-sm btn-primary" value="Save"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+        <a class="btn btn-sm btn-secondary" href="{{ route('quotation.details.index', $quotation) }}"><i class="fa-solid fa-arrow-left"></i> Back</a>
     </div>
 </div>
+

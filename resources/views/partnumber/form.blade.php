@@ -9,7 +9,7 @@
 @endif
 <div class="card">
     <div class="card-header">
-        <h3>{{ $mode }} Part Number</h3>
+        <h4><i class="fa-solid fa-layer-group"></i> {{ $mode }} Part Number</h4>
     </div>
     <div class="card-body">
         <div class="form-group">
@@ -41,8 +41,9 @@
                 </div>
         </div>
     </div>
+</div>
     <div class="card-footer">
-        <input type="submit" class="btn btn-sm btn-primary" value="Save">
-        <a class="btn btn-sm btn-secondary" href="{{ url('partnumber/') }}">Return</a>
+        <button type="submit" class="btn btn-sm btn-primary" value="Save"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+        <a class="btn btn-sm btn-secondary" href="{{ route('partnumber.index') }}"><i class="fa-solid fa-arrow-left"></i> Back</a>
     </div>
 </div>

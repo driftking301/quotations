@@ -1,58 +1,322 @@
 @extends('layouts.app')
 
 @section('content')
+    <script src="https://kit.fontawesome.com/283d08d6db.js" crossorigin="anonymous" defer="defer"></script>
 
-    <link rel="stylesheet" href="/css/app.css">
-
-    <!-- CSS de Bootstrap Select -->
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" />
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-
-    <script src="/js/app.js"></script>
-    <div class="container">
-        <a href="{{ url('/quotation/create') }}" class="btn btn-success">Add a new Quotation</a>
-        <br>
-        <br>
-            <div class="container mt-4">
-                <select class="form-control" id="select">
-                    <option value="1">Opción 1</option>
-                    <option value="2">Opción 2</option>
-                    <option value="3">Opción 3</option>
-                    <option value="4">Opción 4</option>
-                    <option value="5">Opción 5</option>
-                    <option value="6">Opción 6</option>
-                    <option value="7">Opción 7</option>
-                    <option value="8">Opción 8</option>
-                    <option value="9">Opción 9</option>
-                    <option value="10">Opción 10</option>
-                    <option value="11">Opción 11</option>
-                    <option value="12">Opción 12</option>
-                </select>
-            </div>
-    </div>
     <div class="container">
         <div class="row">
-            <div class="container mt-4">
-                <button class="btn btn-primary" onclick="generarFormulario()">Agregar formulario</button>
-                <div id="formularios"></div>
+            <br>
+            <div class="col-md-10">
+                <h5>Quote name: {{ $quotation->name }} / {{$quotation->client->name }} </h5>
+                <p>{{ $quotation->description }}</p>
+            </div>
+            <div class="col-md-2 align-self-end">
+                <a class="btn btn-dark" href="{{ route('quotation.index') }}"><i class="fa-solid fa-arrow-left"></i></a>
+                <!--button type="button" class="btn btn-secondary" data-toggle="processConfig" data-placement="top" data-bs-toggle="modal" data-bs-target="#processConfigModal"><i class="fa-solid fa-gear"></i></button-->
+                <a class="btn btn-secondary" href="{{ route('quotation.processes', $quotation) }}"><i class="fa-solid fa-gear"></i></a>
+                <a class="btn btn-primary" href="{{ route('quotation.edit', $quotation) }}"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a class="btn btn-warning" href="{{ route('details.processes.edit', $quotation) }}"><i class="fa-solid fa-plus"></i></a>
+
+
+                <!--<button type="button" class="btn btn-warning" data-toggle="add process" data-placement="top" data-bs-toggle="modal" data-bs-target="#processModal"><i class="fa-solid fa-plus"></i></button>-->
+
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover" id="partnumber-table">
+                    <thead>
+                    <tr>
+                        <th>Part Number</th>
+                        <th>Part desc.</th>
+                        <th class="text-center w-10 text-nowrap">Width</th>
+                        <th class="text-center w-10 text-nowrap">Length</th>
+                        <th class="text-center w-10 text-nowrap">Quantity</th>
+                        <th class="text-center w-10 text-nowrap">Factor</th>
+                        <th>Total</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
+</div>
+
+    <!-- ---------------------------------------------------- PROCESSES PRICES MODAL --------------------------------------------------------
+     ----------------------------------------------------------------------------------------------------------------------------- -->
+    <div class="modal fade" id="processConfigModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5>Processes for {{ $quotation->name }}</h5>
+                </div>
+                <div class="modal-body">
+                    @foreach($processesSettings as $key => $values)
+                        <div class="form-group">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $values['name'] }}</h5>
+                                <div class="row g-3 align-items-center">
+                                    <div class="col-md-4">
+                                        <label for="{{ $key }}" class="col-form-label">Price</label>
+                                        <input type="text" name="{{ $key }}" class="form-control-sm" value="{{ number_format(floatval($quotation->{$key} ?? $values['price'] ?? old($key)), 2) }}">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="units">Units</label>
+                                        <input value="{{ $values['units'] }}" class="form-control-sm" disabled>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="notes">Notes</label>
+                                        <input value="{{ $values['notes']}}" name="notes" class="form-control-sm" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    @endforeach
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ---------------------------------------------------- PROCESS MODAL --------------------------------------------------------
+     ----------------------------------------------------------------------------------------------------------------------------- -->
+    <div class="modal fade" id="processModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{ $quotation->name }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="partnumber">Part number</label>
+                            <select name="partnumber[]" class="select2" style="width: 100%;">
+                                @foreach ($partnumbers as $partnumber)
+                                    <option value="{{ $partnumber->partnumber }}">{{ $partnumber->partnumber }} {{ $partnumber->description }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="partdesc">Part desc.</label>
+                            <input class="input-group" type="text">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="width">Width</label>
+                            <input class="input-group" type="text" name="width">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="length">Width</label>
+                            <input class="input-group" type="text" name="width">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="quantity">Quantity</label>
+                            <input class="input-group" type="text" name="width">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="laser">Laser</label>
+                            <input class="input-group" type="text" name="laser">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="customprice">Custom Laser Price</label>
+                            <input class="input-group" type="text" name="customprice">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="lhc">Laser Hole Calc.</label>
+                            <button class="btn btn-primary input-group" name="lhc" id="lhc" data-bs-toggle="modal" data-bs-target="#laserHoleCalculator">
+                                LHC
+                            </button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="weld">Weld</label>
+                            <input class="input-group" type="text" name="weld">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="press">Press</label>
+                            <input class="input-group" type="text" name="weld">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="saw">Saw</label>
+                            <input class="input-group" type="text" name="weld">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="weld">Drilling</label>
+                            <input class="input-group" type="text" name="weld">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="press">Cleaning</label>
+                            <input class="input-group" type="text" name="weld">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="saw">Paint</label>
+                            <input class="input-group" type="text" name="weld">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="weld">Pipe Thread</label>
+                            <input class="input-group" type="text" name="weld">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="press">Pipe Engage</label>
+                            <input class="input-group" type="text" name="weld">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="saw">Press Setup</label>
+                            <input class="input-group" type="text" name="weld">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-2 input-group">
+                            <h5>Total: $0.00</h5>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
 
+    <!-- --------------------------------------- LASER HOLE CALCULATOR MODAL --------------------------------------------------------
+     ----------------------------------------------------------------------------------------------------------------------------- -->
+    <div class="modal fade" id="laserHoleCalculator" tabindex="-1" data-bs-backdrop="static" aria-labelledby="laserHoleCalculatorLabel" aria-hidden="true">
+        <div class="modal-dialog modal-md modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="laserHoleCalculatorLabel2">Laser Hole Calculator</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
 
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label for="circleDiameter1">Circle Dia.</label>
+                            <input class="input-group" type="text" name="circleDiameter1">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="quantity1">Qty</label>
+                            <input class="input-group" type="text" name="quantity1">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="circumference1">Circumference</label>
+                            <input class="input-group" type="text" name="circumference1"disabled value="$0.00">
+                        </div>
+                        <div class="col-md-3">
+                            <label for="totalCircumference5">Total Cir.</label>
+                            <input class="input-group" type="text" name="totalCircumference1" disabled value="$0.00">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input class="input-group" type="text" name="circleDiameter2">
+                        </div>
+                        <div class="col-md-3">
+                            <input class="input-group" type="text" name="quantity2">
+                        </div>
+                        <div class="col-md-3">
+                            <input class="input-group" type="text" name="circumference2"disabled value="$0.00">
+                        </div>
+                        <div class="col-md-3">
+                            <input class="input-group" type="text" name="totalCircumference2" disabled value="$0.00">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input class="input-group" type="text" name="circleDiameter3">
+                        </div>
+                        <div class="col-md-3">
+                            <input class="input-group" type="text" name="quantity3">
+                        </div>
+                        <div class="col-md-3">
+                            <input class="input-group" type="text" name="circumference3"disabled value="$0.00">
+                        </div>
+                        <div class="col-md-3">
+                            <input class="input-group" type="text" name="totalCircumference3" disabled value="$0.00">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input class="input-group" type="text" name="circleDiameter4">
+                        </div>
+                        <div class="col-md-3">
+                            <input class="input-group" type="text" name="quantity4">
+                        </div>
+                        <div class="col-md-3">
+                            <input class="input-group" type="text" name="circumference4"disabled value="$0.00">
+                        </div>
+                        <div class="col-md-3">
+                            <input class="input-group" type="text" name="totalCircumference3" disabled value="$0.00">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input class="input-group" type="text" name="circleDiameter5">
+                        </div>
+                        <div class="col-md-3">
+                            <input class="input-group" type="text" name="quantity5">
+                        </div>
+                        <div class="col-md-3">
+                            <input class="input-group" type="text" name="circumference5"disabled value="$0.00">
+                        </div>
+                        <div class="col-md-3">
+                            <input class="input-group" type="text" name="totalCircumference5" disabled value="$0.00">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <h5>Total: $0.00</h5>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-target="#processModal" data-bs-toggle="modal">Apply</button>
+                    <button class="btn btn-secondary" data-bs-target="#processModal" data-bs-toggle="modal">Back</button>
 
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!-- JS de Bootstrap Select (requiere jQuery) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.14.0/js/bootstrap-select.min.js"></script>
-
-    <!-- JS de Bootstrap 5 (requiere jQuery 3.5+) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
-
-    <!-- Tu archivo de JavaScript -->
-    <script src="/js/app.js"></script>
 @endsection

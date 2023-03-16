@@ -15,7 +15,10 @@ return new class extends Migration
             $table->engine="InnoDB";
             $table->bigIncrements('id');
             $table->string('name');
-            $table->string('client');
+            $table->foreignId('client_id')
+                ->constrained()
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
             $table->date('date');
             $table->string('description');
             $table->decimal('laser', 5, 2);

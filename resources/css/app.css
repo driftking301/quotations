@@ -66,17 +66,6 @@ td:nth-child(1) {
 .select2-container {
     width: 100% !important;
 }
-/* --- hide horizontal scrollbar and add vertical scrollbar to the main table
-
-.table-wrapper-scroll-y{
-    display: block;
-    max-height: 400px;
-    max-width: 2000px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    -ms-overflow-style: -ms-autohiding-scrollbar;
-}
-*/
 
 .table-wrapper-scroll-y table {
     font-size: 14px;
@@ -121,50 +110,9 @@ td:nth-child(1) {
     bottom: auto;
 }
 
-.grand-total {
-    position: fixed;
-    top: 200px; /* ajusta el valor según la posición deseada */
-    left: 120px; /* ajusta el valor según la posición deseada */
-    bottom: auto;
-}
-
 .table-left-fixed {
     position: fixed;
     top: 300px; /* ajusta el valor según la posición deseada */
     left: 120px; /* ajusta el valor según la posición deseada */
     bottom: auto;
-}
-
-/* Modal background transparent */
-.modal-backdrop {
-    background-color: transparent !important;
-    width: 100% !important;
-    height: 100% !important;
-}
-
-.navbar {
-    width: 100%;
-}
-
-table {
-    border-collapse: collapse;
-    width: 100%;
-    max-width: 100%;
-}
-
-th, td {
-    padding: 0.5rem;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
-}
-
-thead th {
-    position: sticky;
-    top: 0;
-    background-color: #fff;
-    z-index: 1;
-}
-
-tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
 }

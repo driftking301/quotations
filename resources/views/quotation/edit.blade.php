@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-<form action="{{ url('/quotation/' . $quotation->id) }}" method="post">
+<form action="{{ route('quotation.update', $quotation) }}" method="post">
     @csrf
     {{ method_field('PATCH') }}
     @include('quotation.form', ['mode'=>'Edit'])

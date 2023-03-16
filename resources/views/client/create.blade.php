@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
 <br>
-<form action="{{ url('/client') }}" method="post">
+<form action="{{ route('client.store') }}" method="post">
     @csrf
     @include('client.form', ['mode'=>'Create'])
 

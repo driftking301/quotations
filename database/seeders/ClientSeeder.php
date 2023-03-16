@@ -14,22 +14,13 @@ class ClientSeeder extends Seeder
      */
     public function run(): void
     {
+        $fake = fake();
         $client = [
-            ['name' => 'Juan', 'description' => 'description for client', 'notes' => 'notes for client'],
-            ['name' => 'Pedro', 'description' => 'description for client', 'notes' => 'notes for client'],
-            ['name' => 'Daniel', 'description' => 'description for client', 'notes' => 'notes for client'],
-            ['name' => 'Mario', 'description' => 'description for client', 'notes' => 'notes for client'],
-            ['name' => 'María', 'description' => 'description for client', 'notes' => 'notes for client'],
-            ['name' => 'Alberto', 'description' => 'description for client', 'notes' => 'notes for client'],
-            ['name' => 'Cristian', 'description' => 'description for client', 'notes' => 'notes for client'],
-            ['name' => 'Juana', 'description' => 'description for client', 'notes' => 'notes for client'],
-            ['name' => 'Mariana', 'description' => 'description for client', 'notes' => 'notes for client'],
-            ['name' => 'Fernanda', 'description' => 'description for client', 'notes' => 'notes for client'],
-            ['name' => 'Luisa', 'description' => 'description for client', 'notes' => 'notes for client'],
-            ['name' => 'Alicia', 'description' => 'description for client', 'notes' => 'notes for client'],
-            ['name' => 'Marcela', 'description' => 'description for client', 'notes' => 'notes for client'],
-            ['name' => 'Rocío', 'description' => 'description for client', 'notes' => 'notes for client'],
-            ['name' => 'Arturo', 'description' => 'description for client', 'notes' => 'notes for client'],
+            ['name' => $fake->name(), 'description' => $fake->company(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'description' => $fake->company(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'description' => $fake->company(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'description' => $fake->company(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'description' => $fake->company(), 'notes' => $fake->realText()],
         ];
         DB::table('clients')->insert($client);
     }

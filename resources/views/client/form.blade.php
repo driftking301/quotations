@@ -10,7 +10,7 @@
 @endif
 <div class="card">
     <div class="card-header">
-        <h4 class="cart-title">{{ $mode }} Client</h4>
+        <h4 class="cart-title"><i class="fa-solid fa-user-tie"></i> {{ $mode }} Client</h4>
     </div>
     <div class="card-body">
 <div class="form-group">
@@ -39,9 +39,7 @@
 </div>
 <br>
     <div class="card-footer">
-        <div class="offset-10">
-            <input type="submit" class="btn btn-primary" value="Save">
-            <a class="btn btn-secondary" href="{{ url('client/') }}">Back</a>
-        </div>
+        <button type="submit" class="btn btn-sm btn-primary" value="Save"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+        <a class="btn btn-sm btn-secondary" href="{{ route('client.index') }}"><i class="fa-solid fa-arrow-left"></i> Back</a>
     </div>
 </div>

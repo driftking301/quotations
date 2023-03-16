@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Internal\ProcessesSettings;
 use App\Models\Details;
 use App\Models\Laser;
 use App\Models\PartNumber;
@@ -15,9 +16,13 @@ class DetailsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Quotation $quotation, ProcessesSettings $processesSettings)
     {
-        return view('details.index');
+        return view('details.index', [
+            'partnumbers' => PartNumber::all(),
+            'quotation' => $quotation,
+            'processesSettings' => $processesSettings->defaultSettings(),
+        ]);
     }
 
     /**
@@ -48,19 +53,8 @@ class DetailsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Details $details, String $id)
+    public function edit(Quotation $quotation, ProcessesSettings $processesSettings)
     {
-        $quotation = Quotation::find($id);
-        $partnumbers = PartNumber::all();
-        $welds = Weld::all();
-        $lasers = Laser::all();
-
-        $jsonFilePath = storage_path('\processes.json');
-        $jsonString = File::get($jsonFilePath);
-        $jsonData = json_decode($jsonString, true);
-
-        return view('details.edit', compact('partnumbers', 'quotation', 'welds', 'lasers', 'jsonData'));
-
     }
 
     /**

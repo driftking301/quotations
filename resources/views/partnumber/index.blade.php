@@ -12,7 +12,7 @@
             <th>Description</th>
             <th>Unit Measure</th>
             <th>Price</th>
-            <th class="text-center">Actions <a href="{{ url('/partnumber/create') }}" class="btn btn-sm btn-success"><i class="fa-solid fa-plus"></i></a></th>
+            <th class="text-center">Actions <a href="{{ route('partnumber.create') }}" class="btn btn-sm btn-success"><i class="fa-solid fa-plus"></i></a></th>
         </tr>
     </thead>
     <tbody>
@@ -26,10 +26,10 @@
             <td>$ {{ $partnumber->price }}</td>
 
             <td class="text-center">
-                <a href="{{ url('/partnumber/' . $partnumber->id . '/edit') }}" class="btn btn-sm btn-secondary"><i class="fa-solid fa-pen-to-square"></i></a>
+                <a href="{{ route('partnumber.edit', $partnumber) }}" class="btn btn-sm btn-secondary"><i class="fa-solid fa-pen-to-square"></i></a>
 
 
-                <form action="{{ url('/partnumber/'.$partnumber->id) }}" class="d-inline" method="post">
+                <form action="{{ route('partnumber.destroy', $partnumber) }}" class="d-inline" method="post">
                     @csrf
                     {{ method_field('DELETE') }}
                     <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('Do you want to delete the item?')"><i class="fa-solid fa-trash"></i></button>

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-<form action="{{ url('/quotation/' . $client->id) }}" method="post">
+<form action="{{ route('client.update', $client) }}" method="post">
     @csrf
     {{ method_field('PATCH') }}
     @include('client.form', ['mode'=>'Edit'])

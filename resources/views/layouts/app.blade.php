@@ -43,21 +43,13 @@
                             <a class="nav-link" href="{{ route('quotation.index') }}">{{ __('Quotes') }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('client.index') }}">{{ __('Clients') }}</a>
+                            <a class="nav-link" href="{{ route('client.index') }}">{{ __('Customers') }}</a>
                         </li>
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                Catalogues
-                            </a>
-
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="{{ route('partnumber.index') }}">
-                                    {{ __('Partnumbers') }}
-                                </a>
-                                <a class="dropdown-item" href="{{ route('processes') }}">
-                                    {{ __('Processes') }}
-                                </a>
-                            </div>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('partnumber.index') }}">{{ __('Part numbers') }}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('processes') }}">{{ __('Processes') }}</a>
                         </li>
                     </ul>
 
@@ -79,7 +71,7 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                                    <i class="fa-solid fa-user"></i> {{ Auth::user()->name }}
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
