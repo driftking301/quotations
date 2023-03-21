@@ -3,19 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Internal\Holes;
-use App\Internal\PartNumberPrice;
-use App\Internal\PriceLineCalculations;
+use App\Models\Details;
+use App\Models\Quotation;
+use App\Models\PartNumber;
+use Illuminate\Http\Request;
 use App\Internal\PriceLineData;
 use App\Internal\PriceQuotation;
+use App\Internal\PartNumberPrice;
 use App\Internal\ProcessesManager;
 use App\Internal\ProcessesSettings;
-use App\Models\Details;
-use App\Models\Laser;
-use App\Models\PartNumber;
-use App\Models\Quotation;
-use App\Models\Weld;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 
 class DetailsController extends Controller
 {
@@ -42,7 +38,6 @@ class DetailsController extends Controller
             'quotation' => $quotation,
             'partnumbers' => PartNumber::all(),
         ]);
-
     }
 
     /**
@@ -89,21 +84,16 @@ class DetailsController extends Controller
         $details->total = $request->input('total');
         $details->save();
 
-
-
         return redirect(route('quotation.details.index', $quotation))
             ->with('message', 'Part number added to quotation successfully');
     }
 
     public function calculate(Quotation $quotation, Request $request)
     {
-        $logger = logger()->getLogger();
-        $logger->debug(print_r(['$request->all()' => $request->all()], true));
-
-        $partNumberInput = strval($request->input('partnumber'));
+        $partNumberInput = strval($request->input('partnumber_id'));
         $partNumber = PartNumber::find($partNumberInput);
         if (! $partNumber) {
-            return PriceLineCalculations::empty();
+            return '0.00';
         }
 
         $partNumberPrice = new PartNumberPrice(
@@ -112,7 +102,10 @@ class DetailsController extends Controller
             $partNumber->price, // todo
         );
 
-        $holes = new Holes();
+        $holes = Holes::fromArrayValues(
+            $request->input('holes_diameter') ?: [],
+            $request->input('holes_quantity') ?: [],
+        );
 
         $line = new PriceLineData(
             intval($request->input('width', 0)),
@@ -131,17 +124,15 @@ class DetailsController extends Controller
             intval($request->input('pipeEngage', 0)),
             intval($request->input('pressSetUp', 0)),
         );
+
         $processesManager = new ProcessesManager();
-        $settings = $processesManager->defaultSettings();
-        foreach ($settings as $key => $value) {
-            $settings[$key]['price'] = $quotation->{$key};
-        }
+        $settings = $processesManager->settingsWithValues($quotation->toArray());
         $processesSettings = new ProcessesSettings($settings);
 
         $priceQuotation = new PriceQuotation($processesSettings);
         $result = $priceQuotation->calculateLine($line);
 
-        return $result->amountTotal;
+        return number_format($result->amountTotal, 2);
     }
 
     /**
@@ -155,7 +146,7 @@ class DetailsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Quotation $quotation, String $id)
+    public function edit(Quotation $quotation, string $id)
     {
 
         $detail = Details::findOrFail($id);
