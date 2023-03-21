@@ -6,18 +6,16 @@
         function quotation_update_price()
         {
             const form = document.getElementById('quotation-details-form');
-            const formData = new FormData(form);
-
-            console.log(Object.fromEntries(formData.entries()));
-
             $.ajax({
                 type: "POST",
                 url: form.action + '/calculate',
-                data: Object.fromEntries(formData.entries()),
-                dataType: "json",
-                encode: "true"
-            }).done(function (data) {
-                console.log(data)
+                data: $(form).serialize(),
+                success: function(data) {
+                    $('#total').text(data);
+                },
+                error: function() {
+                    $('#total').text('0.00');
+                }
             });
         }
     </script>
@@ -42,10 +40,10 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label for="partnumber">Part number</label>
-                        <select name="partnumber" class="select2" style="width: 100%;">
+                        <select name="partnumber_id" class="select2" style="width: 100%;">
                             <option value=""></option>
                             @foreach ($partnumbers as $partnumber)
-                                <option value="{{ $partnumber->partnumber }}">{{ $partnumber->partnumber }} {{ $partnumber->description }}</option>
+                                <option value="{{ $partnumber->id }}">{{ $partnumber->partnumber }} {{ $partnumber->description }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -142,8 +140,8 @@
                             <tr>
                                 <th>Diameter</th>
                                 <th>Quantity</th>
-                                <th>Circumference</th>
-                                <th>Total Cir</th>
+                                <th>Hole Circum</th>
+                                <th>Total Circum</th>
                                 <th><a class="btn btn-secondary btn-sm" href="#" onclick="return table_hole_form_show();">+</a></th>
                             </tr>
                             </thead>
@@ -213,7 +211,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-md-2 input-group">
-                        <h5 id="total">Total: $0.00</h5>
+                        <h5>Total: $ <span id="total">0.00</span></h5>
                     </div>
                 </div>
                 <div class="card-footer text-end">

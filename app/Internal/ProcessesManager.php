@@ -39,6 +39,19 @@ class ProcessesManager
     }
 
     /**
+     * @param array<string, float>
+     * @return array<string, array{name: string, units: string, price: float, notes: string}>
+     */
+    public function settingsWithValues(array $values): array
+    {
+        $settings = $this->defaultSettings();
+        foreach ($settings as $key => $setting) {
+            $settings[$key]['price'] = floatval($values[$key] ?? $setting[$key]['price']);
+        }
+        return $settings;
+    }
+
+    /**
      * @param array<string, array{name: string, units: string, price: float, notes: string}> $updatedSettings
      * @return void
      */
