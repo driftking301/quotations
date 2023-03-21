@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Details extends Model
 {
+    protected $casts = [
+      'holes' => 'array',
+    ];
     use HasFactory;
 }

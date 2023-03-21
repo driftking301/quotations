@@ -35,7 +35,7 @@ Route::post('quotation/{quotation}/processes', [QuotationController::class, 'upd
 Route::get('details/{quotation}/processes', [QuotationController::class, 'editDetailsProcesses'])->name('details.processes.edit');
 Route::resource('partnumber', PartNumberController::class)->middleware('auth');
 Route::resource('quotation.details', DetailsController::class)->middleware('auth');
-Route::resource('detailsprocess', DetailsProcessController::class)->middleware('auth');
+Route::post('quotation/{quotation}/details/calculate', [DetailsController::class, 'calculate'])->middleware('auth');
 Route::resource('details', DetailsController::class)->middleware('auth');
 //Route::resource('process', ProcessController::class)->middleware('auth');
 Route::get('processes', [ProcessController::class, 'edit'])->name('processes');

@@ -6,7 +6,7 @@
         "notes": "carbon steel 0.076, stainless steel 0.11"
     },
     "weld": {
-        "name": "Weld",
+        "name": "Welding",
         "units": "inches",
         "price": 1,
         "notes": "carbon steel 0.44, stainless steel 0.56"

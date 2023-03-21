@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Internal\ProcessesSettings;
+use App\Internal\ProcessesManager;
 use App\Models\Client;
 use App\Models\PartNumber;
 use App\Models\Quotation;
@@ -30,13 +30,14 @@ class QuotationController extends Controller
     public function create()
     {
         $customers = Client::all();
-        return view('quotation.create', compact('customers'));
+        $backUrl = route('quotation.index');
+        return view('quotation.create', compact('customers', 'backUrl'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, ProcessesSettings $processesSettings)
+    public function store(Request $request, ProcessesManager $processesSettings)
     {
         $fields=[
           'name'=>'required|string|max:100',
@@ -53,10 +54,10 @@ class QuotationController extends Controller
         $this->validate($request,$fields,$message);
 
         $quotation = new Quotation;
-        $quotation->name = request()->input('name');
-        $quotation->client_id = request()->input('client_id');
-        $quotation->date = request()->input('date');
-        $quotation->description = request()->input('description');
+        $quotation->name = $request->input('name');
+        $quotation->client_id = $request->input('client_id');
+        $quotation->date = $request->input('date');
+        $quotation->description = $request->input('description');
         foreach ($processesSettings->defaultSettings() as $key => $values) {
             $quotation->{$key} = $values['price'];
         }
@@ -78,7 +79,8 @@ class QuotationController extends Controller
     public function edit(Quotation $quotation)
     {
         $customers = Client::all();
-        return view('quotation.edit', compact('quotation', 'customers'));
+        $backUrl = route('quotation.details.index', $quotation);
+        return view('quotation.edit', compact('quotation', 'customers', 'backUrl'));
     }
 
     /**
@@ -108,7 +110,7 @@ class QuotationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function editProcesses(Quotation $quotation, ProcessesSettings $processesSettings)
+    public function editProcesses(Quotation $quotation, ProcessesManager $processesSettings)
     {
         return view('quotation.edit-processes', [
             'quotation' => $quotation,
@@ -116,7 +118,7 @@ class QuotationController extends Controller
         ]);
     }
 
-    public function updateProcesses(Request $request, Quotation $quotation, ProcessesSettings $processesSettings)
+    public function updateProcesses(Request $request, Quotation $quotation, ProcessesManager $processesSettings)
     {
         $fields = [];
         $messages = [];
@@ -144,15 +146,5 @@ class QuotationController extends Controller
     {
         Quotation::destroy($id);
         return redirect(route('quotation.index'))->with('message','Quote deleted successfully');
-    }
-
-    public function editDetailsProcesses(Quotation $quotation, ProcessesSettings $processesSettings)
-    {
-        $partnumbers = PartNumber::all();
-        return view('details.details-processes', [
-            'quotation' => $quotation,
-            'processesSettings' => $processesSettings->defaultSettings(),
-            'partnumbers' => $partnumbers
-        ]);
     }
 }

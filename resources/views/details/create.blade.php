@@ -2,7 +2,25 @@
 
 @section('content')
     <script src="https://kit.fontawesome.com/283d08d6db.js" crossorigin="anonymous" defer="defer"></script>
+    <script defer="defer">
+        function quotation_update_price()
+        {
+            const form = document.getElementById('quotation-details-form');
+            const formData = new FormData(form);
 
+            console.log(Object.fromEntries(formData.entries()));
+
+            $.ajax({
+                type: "POST",
+                url: form.action + '/calculate',
+                data: Object.fromEntries(formData.entries()),
+                dataType: "json",
+                encode: "true"
+            }).done(function (data) {
+                console.log(data)
+            });
+        }
+    </script>
     <div class="container">
         <div class="card">
             <div class="card-header">
@@ -18,10 +36,14 @@
                 </div>
             </div>
             <div class="card-body">
+            <form id="quotation-details-form" action="{{ route('quotation.details.store', $quotation) }}" method="post">
+                @csrf
+                <input type="hidden" value="{{$quotation->id}}" name="quotation_id">
                 <div class="row">
                     <div class="col-md-12">
                         <label for="partnumber">Part number</label>
-                        <select name="partnumber[]" class="select2" style="width: 100%;">
+                        <select name="partnumber" class="select2" style="width: 100%;">
+                            <option value=""></option>
                             @foreach ($partnumbers as $partnumber)
                                 <option value="{{ $partnumber->partnumber }}">{{ $partnumber->partnumber }} {{ $partnumber->description }}</option>
                             @endforeach
@@ -30,26 +52,26 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <label for="partdesc">Part description</label>
-                        <input class="input-group" type="text">
+                        <label for="description">Part description</label>
+                        <input class="input-group" type="text" name="description">
                     </div>
                 </div>
                 <hr>
                 <div class="row ">
                     <div class="col-md-3">
-                        <label for="width">Length</label>
+                        <label for="width">Width</label>
                         <input class="input-group" type="text" name="width">
                     </div>
                     <div class="col-md-3">
-                        <label for="length">Width</label>
-                        <input class="input-group" type="text" name="width">
+                        <label for="length">Length</label>
+                        <input class="input-group" type="text" name="length">
                     </div>
                     <div class="col-md-3">
                         <label for="quantity">Quantity</label>
-                        <input class="input-group" type="text" name="width">
+                        <input class="input-group" type="text" name="quantity">
                     </div>
                     <div class="col-md-3">
-                        <label for="quantity">Factor</label>
+                        <label for="factor">Factor</label>
                         <input class="input-group" type="text" name="factor">
                     </div>
                 </div>
@@ -60,14 +82,14 @@
                         <input class="input-group" type="text" name="laser">
                     </div>
                     <div class="col-md-3">
-                        <label for="customprice">Custom Laser Price</label>
-                        <input class="input-group" type="text" name="customprice">
+                        <label for="custom_price">Custom Laser Price</label>
+                        <input class="input-group" type="text" name="custom_price">
                     </div>
                     <div class="col-md-6">
                         <script>
                             function table_hole_form_show()
                             {
-                                $("#hole-form-diameter").val('');
+                                $("#hole-form-diameter").val('0.00');
                                 $("#hole-form-quantity").val('1');
                                 $('#hole-form').show();
                                 return false;
@@ -99,13 +121,13 @@
                                 const holesTable = $("#holes-table tbody");
                                 holesTable.append(
                                     $('<tr></tr>').append(
-                                        $('<td></td>').append($('<input name="holes.diameter[]"/>').val(diameter.val())),
-                                        $('<td></td>').append($('<input name="holes.quantity[]"/>').val(quantity.val())),
-                                        $('<td></td>').text(3.14 * diameterValue),
-                                        $('<td></td>').text(3.14 * diameterValue * quantityValue),
+                                        $('<td></td>').append($('<input name="holes_diameter[]" readonly/>').val(diameterValue.toFixed(2))),
+                                        $('<td></td>').append($('<input name="holes_quantity[]" readonly/>').val(quantityValue.toFixed(0))),
+                                        $('<td></td>').text((3.14 * diameterValue).toFixed(2)),
+                                        $('<td></td>').text((3.14 * diameterValue * quantityValue).toFixed(2)),
                                         $('<td></td>').append(
-                                            $('<a href="#">-</a>').click(function (ev) {
-                                                console.log(ev);
+                                            $('<a href="#" class="btn btn-danger btn-sm">-</a>').click(function (event) {
+                                                $(event.target).closest('tr').remove();
                                             })
                                         ),
                                     )
@@ -113,6 +135,7 @@
 
                                 return table_hole_form_hide();
                             }
+
                         </script>
                         <table id="holes-table" class="table table-light">
                             <thead class="thead-light">
@@ -121,13 +144,13 @@
                                 <th>Quantity</th>
                                 <th>Circumference</th>
                                 <th>Total Cir</th>
-                                <th><a class="btn btn-secondary btn-sm" href="#" onclick="return table_hole_form_show()">+</a></th>
+                                <th><a class="btn btn-secondary btn-sm" href="#" onclick="return table_hole_form_show();">+</a></th>
                             </tr>
                             </thead>
                             <tbody>
                             </tbody>
                         </table>
-                        <div id="hole-form" class="container">
+                        <div id="hole-form" class="container" style="display: none">
                             <div class="row">
                                 <div class="col-md-5">
                                     <label for="hole-form-diameter">Diameter</label>
@@ -147,56 +170,57 @@
                 <hr>
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="weld">Weld</label>
-                        <input class="input-group" type="text" name="weld">
+                        <label for="welding">Weld</label>
+                        <input class="input-group" type="text" name="welding">
                     </div>
                     <div class="col-md-4">
                         <label for="press">Press</label>
-                        <input class="input-group" type="text" name="weld">
+                        <input class="input-group" type="text" name="press">
                     </div>
                     <div class="col-md-4">
                         <label for="saw">Saw</label>
-                        <input class="input-group" type="text" name="weld">
+                        <input class="input-group" type="text" name="saw">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="weld">Drilling</label>
-                        <input class="input-group" type="text" name="weld">
+                        <label for="drill">Drilling</label>
+                        <input class="input-group" type="text" name="drill">
                     </div>
                     <div class="col-md-4">
-                        <label for="press">Cleaning</label>
-                        <input class="input-group" type="text" name="weld">
+                        <label for="clean">Cleaning</label>
+                        <input class="input-group" type="text" name="clean">
                     </div>
                     <div class="col-md-4">
-                        <label for="saw">Paint</label>
-                        <input class="input-group" type="text" name="weld">
+                        <label for="paint">Paint</label>
+                        <input class="input-group" type="text" name="paint">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <label for="weld">Pipe Thread</label>
-                        <input class="input-group" type="text" name="weld">
+                        <label for="pipe_thread">Pipe Thread</label>
+                        <input class="input-group" type="text" name="pipe_thread">
                     </div>
                     <div class="col-md-4">
-                        <label for="press">Pipe Engage</label>
-                        <input class="input-group" type="text" name="weld">
+                        <label for="pipe_engage">Pipe Engage</label>
+                        <input class="input-group" type="text" name="pipe_engage">
                     </div>
                     <div class="col-md-4">
-                        <label for="saw">Press Setup</label>
-                        <input class="input-group" type="text" name="weld">
+                        <label for="press_setup">Press Setup</label>
+                        <input class="input-group" type="text" name="press_setup">
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-2 input-group">
-                        <h5>Total: $0.00</h5>
+                        <h5 id="total">Total: $0.00</h5>
                     </div>
                 </div>
                 <div class="card-footer text-end">
-                    <button type="button" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                     <a class="btn btn-secondary" href="{{ route('quotation.details.index', $quotation) }}"><i class="fa-solid fa-arrow-left"></i> Back</a>
                 </div>
+            </form>
             </div>
         </div>
     </div>

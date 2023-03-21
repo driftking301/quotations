@@ -4,51 +4,63 @@ namespace App\Internal;
 
 class ProcessesSettings
 {
-    public  const SETTINGS_FILE_NAME = 'processes.json';
-
-    public function getStoragePath(): string
+    /** @param array<string, array{name: string, units: string, price: float, notes: string}> $data */
+    public function __construct(private readonly array $data)
     {
-        return storage_path(self::SETTINGS_FILE_NAME);
     }
 
-    /**
-     * @return array<string, array{name: string, units: string, price: float, notes: string}>
-     */
-    public function defaultSettings(): array
+    private function getPrice(string $key): float
     {
-        $result = [];
-
-        $contents = (string) file_get_contents($this->getStoragePath());
-        if ('' === $contents) {
-            throw new \Exception(sprintf('Cannot read file %s', self::SETTINGS_FILE_NAME));
-        }
-        $data = json_decode($contents, associative: true, flags: JSON_THROW_ON_ERROR);
-        if (! is_array($data)) {
-            throw new \Exception(sprintf('Invalid structure on file %s', self::SETTINGS_FILE_NAME));
-        }
-        foreach ($data as $key => $values) {
-            if (! is_string($key)) {
-                throw new \Exception(sprintf('Invalid structure on file %s index %s', self::SETTINGS_FILE_NAME, $key));
-            }
-            if (! is_array($values)) {
-                throw new \Exception(sprintf('Invalid structure on file %s index %s, invalid content', self::SETTINGS_FILE_NAME, $key));
-            }
-            $result[$key] = $values;
-        }
-        return $result;
+        return $this->data[$key]['price'];
     }
 
-    /**
-     * @param array<string, array{name: string, units: string, price: float, notes: string}> $updatedSettings
-     * @return void
-     */
-    public function store(array $updatedSettings): void
+    public function getLaser(): float
     {
-        file_put_contents(
-            $this->getStoragePath(),
-            json_encode($updatedSettings, JSON_PRETTY_PRINT)
-        );
+        return $this->getPrice('laser');
     }
 
+    public function getWeld(): float
+    {
+        return $this->getPrice('weld');
+    }
 
+    public function getPress(): float
+    {
+        return $this->getPrice('press');
+    }
+
+    public function getSaw(): float
+    {
+        return $this->getPrice('saw');
+    }
+
+    public function getDrilling(): float
+    {
+        return $this->getPrice('drilling');
+    }
+
+    public function getCleaning(): float
+    {
+        return $this->getPrice('cleaning');
+    }
+
+    public function getPainting(): float
+    {
+        return $this->getPrice('painting');
+    }
+
+    public function getPipeThread(): float
+    {
+        return $this->getPrice('pipe_thread');
+    }
+
+    public function getPipeEngage(): float
+    {
+        return $this->getPrice('pipe_engage');
+    }
+
+    public function getPressSetUp(): float
+    {
+        return $this->getPrice('press_setup');
+    }
 }

@@ -12,7 +12,7 @@ import '../css/app.css';
 $(document).ready(function() {
     $('.select2').select2({
         placeholder: "Select...",
-        allowClear: true
+        allowClear: true,
     });
 
 });
@@ -21,4 +21,12 @@ $(document).ready(function() {
     $(function () {
         // $('[data-toggle="tooltip"]').tooltip();
     });
+});
+
+window.$(document).ready(function() {
+    $('#quotation-details-form input').change(
+        function () {
+            quotation_update_price();
+        }
+    );
 });

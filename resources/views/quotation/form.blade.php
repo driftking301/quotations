@@ -17,31 +17,32 @@
     <div class="row">
         <div class="col-md-5">
             <label for="name">Quote name</label>
-            <input type="text" name="name" class="form-control" value="{{ isset($quotation->name) ? $quotation->name: old('name') }}">
+            <input type="text" name="name" class="form-control" value="{{ $quotation->name ?? old('name') }}">
         </div>
         <div class="col-md-5">
             <label for="client">Customer</label>
             <select class="form-select select2 select2-selection--single" name="client_id">
+                <option value=""></option>
                 @foreach($customers as $customer)
-                    <option value="{{ $customer->id }}" @selected($customer->id == $quotation->client_id ?? old('client_id'))>{{ $customer->name }}</option>
+                    <option value="{{ $customer->id }}" @selected($customer->id == isset($quotation->client_id) ? $quotation->client_id : old('client_id'))>{{ $customer->name }}</option>
                 @endforeach
             </select>
         </div>
         <div class="col-md-2">
             <label for="description">Date</label>
-            <input type="date" name="date" class="form-control" value="{{ isset($quotation->date) ? $quotation->date: old('date') }}">
+            <input type="date" name="date" class="form-control" value="{{ $quotation->date ?? old('date') }}">
         </div>
     </div>
 </div>
 <div class="form-group">
     <label for="description">Description</label>
-    <textarea type="text" class="form-control" name="description">{{ isset($quotation->description) ? $quotation->description : old('description') }}</textarea>
+    <textarea type="text" class="form-control" name="description">{{ $quotation->description ?? old('description') }}</textarea>
 </div>
 </div>
 <br>
     <div class="card-footer">
         <button type="submit" class="btn btn-sm btn-primary" value="Save"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-        <a class="btn btn-sm btn-secondary" href="{{ route('quotation.details.index', $quotation) }}"><i class="fa-solid fa-arrow-left"></i> Back</a>
+        <a class="btn btn-sm btn-secondary" href="{{ $backUrl }}"><i class="fa-solid fa-arrow-left"></i> Back</a>
     </div>
 </div>
 

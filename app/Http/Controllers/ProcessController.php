@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Internal\ProcessesSettings;
+use App\Internal\ProcessesManager;
 use App\Models\Process;
 use Illuminate\Http\Request;
 
@@ -11,7 +11,7 @@ class ProcessController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(ProcessesSettings $processesSettings)
+    public function edit(ProcessesManager $processesSettings)
     {
         return view('processes.edit', ['processesSettings' => $processesSettings->defaultSettings()]);
     }
@@ -19,7 +19,7 @@ class ProcessController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, ProcessesSettings $processesSettings)
+    public function update(Request $request, ProcessesManager $processesSettings)
     {
         $fields = [];
         $messages = [];
