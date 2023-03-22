@@ -83,7 +83,7 @@ class ClientController extends Controller
 
         $clienData = request()->except(['_token','_method']);
         Client::where('id', '=', $id)->update($clienData);
-        return redirect('quotation')->with('message','Client updated successfully');
+        return redirect('client')->with('message','Client updated successfully');
     }
 
     /**
