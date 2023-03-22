@@ -5,24 +5,24 @@
 
 
             <div class="row">
-                <div class="col-md-8">
+                <div class="col-md-4">
                     <h4>Customers</h4>
                 </div>
-
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="searchInput" placeholder="Search...">
+                </div>
                 <div class="col-md-4 text-end">
-                    {!! $clients->links() !!}
                     <a href="{{ route('client.create') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus"></i> Add new</a>
                 </div>
-
             </div>
-
+        <hr>
 <table class="table table-light table-hover">
     <thead class="thead-light">
         <tr>
-            <th>Client Alias</th>
-            <th>Client Real Name</th>
-            <th>Description</th>
-            <th>Notes</th>
+            <th class="searchable">Client Alias</th>
+            <th class="searchable">Client Real Name</th>
+            <th class="searchable">Description</th>
+            <th class="searchable">Notes</th>
             <th class="text-center">Actions</th>
         </tr>
     </thead>
@@ -45,5 +45,10 @@
     @endforeach
     </tbody>
 </table>
+        <div class="row">
+            <div class="col text-end">
+                {!! $clients->links() !!}
+            </div>
+        </div>
     </div>
 @endsection
