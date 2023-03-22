@@ -10,7 +10,7 @@
             <input type="text" class="form-control" id="searchInput" placeholder="Search...">
         </div>
         <div class="col text-end">
-            <a href="{{ route('partnumber.create') }}" class="btn btn btn-primary"><i class="fa-solid fa-plus"></i> Add new</a>
+            <a href="{{ route('partnumber.create') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus"></i> Add new</a>
         </div>
     </div>
     <hr>
@@ -29,7 +29,7 @@
             <th>Length</th>
             <th>Area in2</th>
             <th>Per sq inch</th>
-            <th class="searchable" style="text-overflow: ellipsis;">Price</th>
+            <th class="searchable">Price</th>
             <th class="text-center">Actions</th>
         </tr>
     </thead>
