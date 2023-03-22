@@ -12,6 +12,7 @@ use App\Internal\PriceQuotation;
 use App\Internal\PartNumberPrice;
 use App\Internal\ProcessesManager;
 use App\Internal\ProcessesSettings;
+use App\Internal\PriceLineCalculations;
 
 class DetailsController extends Controller
 {
@@ -92,15 +93,15 @@ class DetailsController extends Controller
     {
         $partNumberInput = strval($request->input('partnumber_id'));
         $partNumber = PartNumber::find($partNumberInput);
-        if (! $partNumber) {
-            return '0.00';
+        if ($partNumber) {
+            $partNumberPrice = new PartNumberPrice(
+                0 === strcasecmp($partNumber->unitmeasure, 'pounds'),
+                floatval($partNumber->per_sq_inch),
+                floatval($partNumber->price),
+            );
+        } else {
+            $partNumberPrice = new PartNumberPrice(false, 0, 0);
         }
-
-        $partNumberPrice = new PartNumberPrice(
-            strcasecmp($partNumber->unitmeasure, 'pounds'),
-            $partNumber->price,
-            $partNumber->price, // todo
-        );
 
         $holes = Holes::fromArrayValues(
             $request->input('holes_diameter') ?: [],
@@ -114,25 +115,31 @@ class DetailsController extends Controller
             floatval($request->input('factor', 0)),
             $partNumberPrice,
             $holes,
-            intval($request->input('weld', 0)),
+            intval($request->input('welding', 0)),
             intval($request->input('press', 0)),
             intval($request->input('saw', 0)),
-            intval($request->input('drilling', 0)),
-            intval($request->input('cleaning', 0)),
-            intval($request->input('painting', 0)),
-            intval($request->input('pipeThread', 0)),
-            intval($request->input('pipeEngage', 0)),
-            intval($request->input('pressSetUp', 0)),
+            intval($request->input('drill', 0)),
+            intval($request->input('clean', 0)),
+            intval($request->input('paint', 0)),
+            intval($request->input('pipe_thread', 0)),
+            intval($request->input('pipe_engage', 0)),
+            intval($request->input('press_setup', 0)),
         );
 
+        $quotationPrices = $quotation->toArray();
+        $overrideLaserPrice = floatval($request->input('custom_price', 0));
+        if ($overrideLaserPrice > 0.001) {
+            $quotationPrices['laser'] = $overrideLaserPrice;
+        }
+
         $processesManager = new ProcessesManager();
-        $settings = $processesManager->settingsWithValues($quotation->toArray());
+        $settings = $processesManager->settingsWithValues($quotationPrices);
         $processesSettings = new ProcessesSettings($settings);
 
         $priceQuotation = new PriceQuotation($processesSettings);
         $result = $priceQuotation->calculateLine($line);
 
-        return number_format($result->amountTotal, 2);
+        return response()->json($result);
     }
 
     /**

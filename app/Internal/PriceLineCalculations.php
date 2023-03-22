@@ -2,7 +2,9 @@
 
 namespace App\Internal;
 
-class PriceLineCalculations
+use JsonSerializable;
+
+class PriceLineCalculations implements JsonSerializable
 {
     public readonly float $amountTotal;
 
@@ -40,5 +42,11 @@ class PriceLineCalculations
     public static function empty(): self
     {
         return new self(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+    }
+
+    /** @return array<string, scalar> */
+    public function jsonSerialize(): array
+    {
+        return get_object_vars($this);
     }
 }

@@ -11,9 +11,11 @@
                 url: form.action + '/calculate',
                 data: $(form).serialize(),
                 success: function(data) {
-                    $('#total').text(data);
+                    $('#laser').val(data.laserLength);
+                    $('#total').text(data.amountTotal);
                 },
                 error: function() {
+                    $('#laser').val('0.00');
                     $('#total').text('0.00');
                 }
             });
@@ -77,7 +79,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <label for="laser">Laser</label>
-                        <input class="input-group" type="text" name="laser">
+                        <input class="input-group" type="text" id="laser" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="custom_price">Custom Laser Price</label>
@@ -126,12 +128,15 @@
                                         $('<td></td>').append(
                                             $('<a href="#" class="btn btn-danger btn-sm">-</a>').click(function (event) {
                                                 $(event.target).closest('tr').remove();
+                                                quotation_update_price();
+                                                return false;
                                             })
                                         ),
                                     )
                                 );
-
-                                return table_hole_form_hide();
+                                quotation_update_price();
+                                table_hole_form_hide();
+                                return false;
                             }
 
                         </script>
