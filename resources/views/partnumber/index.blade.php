@@ -1,28 +1,50 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-4">
+            <h4>Part number </h4>
+        </div>
+        <div class="col-md-4">
+            <input type="text" class="form-control" id="searchInput" placeholder="Search...">
+        </div>
+        <div class="col text-end">
+            <a href="{{ route('partnumber.create') }}" class="btn btn btn-primary"><i class="fa-solid fa-plus"></i> Add new</a>
+        </div>
+    </div>
+    <hr>
+    <div class="row mb-3">
 
-<table class="table table-light">
+    </div>
+<table class="table table-light table-hover table-bordered">
     <thead class="thead-light">
         <tr>
-            <th>ID</th>
-            <th>Sheet name</th>
-            <th>Part Number</th>
-            <th>Description</th>
-            <th>Unit Measure</th>
-            <th>Price</th>
-            <th class="text-center">Actions <a href="{{ route('partnumber.create') }}" class="btn btn-sm btn-success"><i class="fa-solid fa-plus"></i></a></th>
+            <th class="searchable">Sheet name</th>
+            <th class="searchable">Part Number</th>
+            <th class="searchable">Description</th>
+            <th>Weight</th>
+            <th class="searchable">Unit Measure</th>
+            <th>Width</th>
+            <th>Length</th>
+            <th>Area in2</th>
+            <th>Per sq inch</th>
+            <th class="searchable" style="text-overflow: ellipsis;">Price</th>
+            <th class="text-center">Actions</th>
         </tr>
     </thead>
     <tbody>
     @foreach($partnumbers as $partnumber)
         <tr>
-            <td>{{ $partnumber->id }}</td>
             <td>{{ $partnumber->sheetname }}</td>
             <td>{{ $partnumber->partnumber }}</td>
             <td>{{ $partnumber->description }}</td>
+            <td>{{ $partnumber->weight }}</td>
             <td>{{ $partnumber->unitmeasure }}</td>
+            <td>{{ $partnumber->width }}</td>
+            <td>{{ $partnumber->length }}</td>
+            <td>{{ $partnumber->area_in2 }}</td>
+            <td>{{ $partnumber->per_sq_inch }}</td>
             <td>$ {{ $partnumber->price }}</td>
 
             <td class="text-center">

@@ -3,21 +3,25 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-4">
                 <h4>Quotes</h4>
+            </div>
+            <div class="col-md-4">
+                <input type="text" class="form-control" id="searchInput" placeholder="Search...">
             </div>
             <div class="col-md-4 text-end">
                 {!! $quotations->links() !!}
-                <a href="{{ route('quotation.create') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus"></i></a>
+                <a href="{{ route('quotation.create') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus"></i> Add new</a>
             </div>
         </div>
+        <hr>
 <table class="table table-secondary table-light table-hover">
     <thead class="thead-light">
         <tr>
-            <th>Quote name</th>
-            <th>Client</th>
-            <th>Description</th>
-            <th>Date</th>
+            <th class="searchable">Quote name</th>
+            <th class="searchable">Client</th>
+            <th class="searchable">Description</th>
+            <th class="searchable">Date</th>
             <th class="text-center text-nowrap">Actions</th>
         </tr>
     </thead>

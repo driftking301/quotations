@@ -26,3 +26,12 @@ $(document).ready(function() {
 window.$(document).ready(function() {
     $('#quotation-details-form input, #quotation-details-form select').change(quotation_update_price);
 });
+
+$(document).ready(function() {
+    $('#searchInput').on('keyup', function() {
+        var value = $(this).val().toLowerCase();
+        $('tbody tr').filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});

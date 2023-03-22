@@ -14,7 +14,7 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::paginate(15);
+        $clients = Client::paginate(10);
         return view('client.index', compact('clients'));
     }
 
@@ -93,5 +93,16 @@ class ClientController extends Controller
     {
         Client::destroy($id);
         return redirect(route('client.index'))->with('message', 'Client deleted successfully');
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->get('search');
+        $items = Client::where('name', 'like', '%' . $search . '%')
+            ->orWhere('description', 'like', '%' . $search . '%')
+            ->orWhere('notes', 'like', '%' . $search . '%')
+            ->paginate(10);
+
+        return view('client.index', compact('items'));
     }
 }

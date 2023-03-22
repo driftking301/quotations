@@ -28,31 +28,32 @@ Route::get('/quotation', function () {
 */
 //Route::get('/quotation/create', [QuotationController::class, 'create']);
 
+
+
 //eliminar funcion ->middleware('auth') para quitar verificación de login
-Route::resource('quotation', QuotationController::class)->middleware('auth');
+Route::resource('quotation', QuotationController::class);
 Route::get('quotation/{quotation}/processes', [QuotationController::class, 'editProcesses'])->name('quotation.processes');
 Route::post('quotation/{quotation}/processes', [QuotationController::class, 'updateProcesses']);
 Route::get('details/{quotation}/processes', [QuotationController::class, 'editDetailsProcesses'])->name('details.processes.edit');
-Route::resource('partnumber', PartNumberController::class)->middleware('auth');
-Route::resource('quotation.details', DetailsController::class)->middleware('auth');
-Route::post('quotation/{quotation}/details/calculate', [DetailsController::class, 'calculate'])->middleware('auth');
-Route::resource('details', DetailsController::class)->middleware('auth');
+Route::resource('partnumber', PartNumberController::class);
+Route::resource('quotation.details', DetailsController::class);
+Route::post('quotation/{quotation}/details/calculate', [DetailsController::class, 'calculate']);
+Route::resource('details', DetailsController::class);
 //Route::resource('process', ProcessController::class)->middleware('auth');
 Route::get('processes', [ProcessController::class, 'edit'])->name('processes');
 Route::post('processes', [ProcessController::class, 'update']);
-Route::resource('laser', LaserController::class)->middleware('auth');
-Route::resource('weld', WeldController::class)->middleware('auth');
-Route::resource('client', ClientController::class)->middleware('auth');
+Route::resource('laser', LaserController::class);
+Route::resource('weld', WeldController::class);
+Route::resource('client', ClientController::class);
 Route::get('/', function () {
     return view('auth.login');
 });
 
+Route::get('/', [QuotationController::class, 'index'])->name('quotation.index');
 
 
 //Auth::routes(['register'=>false, 'reset'=>false]);
 Auth::routes();
 
-Route::get('/home', [QuotationController::class, 'index'])->name('home');
-Route::group(['middleware'=>'auth'], function (){
-    Route::get('/', [QuotationController::class, 'index'])->name('home');
-});
+//Route::get('/home', [QuotationController::class, 'index'])->name('home');
+//Route::group(['middleware'=>'auth'], function (){Route::get('/', [QuotationController::class, 'index'])->name('home');});
