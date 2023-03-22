@@ -1,6 +1,6 @@
 # Welcome to Quotations!
 
-This is a quotation estimator developed in Laravel + Mysql
+This is a quotation estimator developed in Laravel +Vite + Mysql
 
 ## Instructions to run the app
 
