@@ -24,7 +24,7 @@
             <select class="form-select select2 select2-selection--single" name="client_id">
                 <option value=""></option>
                 @foreach($customers as $customer)
-                    <option value="{{ $customer->id }}" @selected($customer->id == isset($quotation->client_id) ? $quotation->client_id : old('client_id'))>{{ $customer->name }}</option>
+                    <option value="{{ $customer->id }}" {{ (isset($quotation->client_id) && $customer->id == $quotation->client_id) ? 'selected' : (old('client_id') == $customer->id ? 'selected' : '') }}>{{ $customer->name }}</option>
                 @endforeach
             </select>
         </div>

@@ -13,7 +13,7 @@
                         <h5 class="card-title">{{ $values['name'] }}</h5>
                             <div class="row">
                                 <div class="col-md-2">
-                                    <label for="{{ $key }}" class="col-form-label">Price</label>
+                                    <label for="{{ $key }}" >Price</label>
                                     <input type="text" name="{{ $key }}" class="form-control" value="{{ number_format(floatval($quotation->{$key} ?? $values['price'] ?? old($key)), 2) }}">
                                 </div>
                                 <div class="col-md-2">

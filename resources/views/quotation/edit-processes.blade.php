@@ -28,10 +28,10 @@
                                         <input type="text" name="{{ $key }}" class="form-control-sm" value="{{ number_format(floatval($quotation->{$key} ?? $values['price'] ?? old($key)), 2) }}">
                                     </div>
                                     <div class="col-md-2">
-                                        <label>{{ $values['units'] }}</label>
+                                        <label  class="col-form-label"> {{ $values['units'] }}</label>
                                     </div>
                                     <div class="col-md-8">
-                                        <label>{{ $values['notes'] }}</label>
+                                        <label  class="col-form-label"> {{ $values['notes'] }}</label>
                                     </div>
                                 </div>
                             </div>
