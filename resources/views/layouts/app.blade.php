@@ -18,7 +18,6 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Icons -->
-    <script src="https://kit.fontawesome.com/283d08d6db.js" crossorigin="anonymous"></script>
 
 
     <!-- Scripts -->
