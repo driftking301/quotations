@@ -25,7 +25,7 @@
                                 <div class="row g-3 align-items-center">
                                     <div class="col-md-2">
                                         <label for="{{ $key }}" class="col-form-label">Price</label>
-                                        <input type="text" name="{{ $key }}" class="form-control-sm" value="{{ number_format(floatval($quotation->{$key} ?? $values['price'] ?? old($key)), 2) }}">
+                                        <input type="text" name="{{ $key }}" class="form-control-sm" value="{{ number_format(floatval($quotation->{$key} ?? $values['price'] ?? old($key)), 4) }}">
                                     </div>
                                     <div class="col-md-2">
                                         <label  class="col-form-label"> {{ $values['units'] }}</label>

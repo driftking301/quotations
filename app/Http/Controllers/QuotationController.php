@@ -4,14 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Internal\ProcessesManager;
 use App\Models\Client;
-use App\Models\PartNumber;
 use App\Models\Quotation;
-use App\Models\Weld;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
-use Symfony\Component\Console\Input\Input;
-
 
 class QuotationController extends Controller
 {
@@ -131,7 +126,7 @@ class QuotationController extends Controller
         $dataToUpdate = $request->only(array_keys($defaultSettings));
         // $quotation->fill($dataToUpdate);
         foreach ($dataToUpdate as $key => $value) {
-            $quotation->{$key} = $value;
+            $quotation->{$key} = round(floatval($value), 4);
         }
         if ($quotation->isDirty()) {
             $quotation->saveOrFail();
