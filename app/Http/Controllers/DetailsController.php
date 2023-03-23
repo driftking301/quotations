@@ -80,7 +80,7 @@ class DetailsController extends Controller
         $details->pipe_thread = $request->input('pipe_thread');
         $details->pipe_engage = $request->input('pipe_engage');
         $details->press_setup = $request->input('press_setup');
-        $details->total = $request->input('total');
+        $details->total = $request->input('total'); // todo
         $details->save();
 
         return redirect(route('quotation.details.index', $quotation))
