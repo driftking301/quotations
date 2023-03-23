@@ -4,7 +4,7 @@
     <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <h4>Customers</h4>
+                    <h4><i class="fa-solid fa-user-tie"></i> Customers</h4>
                 </div>
                 <div class="col-md-4">
                     <input type="text" class="form-control" id="searchInput" placeholder="Search...">
@@ -14,11 +14,11 @@
                 </div>
             </div>
         <hr>
-<table class="table table-light table-hover">
-    <thead class="thead-light">
-        <tr>
-            <th class="searchable">Client Alias</th>
-            <th class="searchable">Client Real Name</th>
+<table class="table table-striped table-hover table-sm">
+    <thead>
+        <tr class="table-secondary align-middle">
+            <th class="searchable">Customer Alias</th>
+            <th class="searchable text-center">Customer Real Name</th>
             <th class="searchable">Description</th>
             <th class="searchable">Notes</th>
             <th class="text-center">Actions</th>

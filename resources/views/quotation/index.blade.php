@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <h4>Quotes</h4>
+                <h4><i class="fa-solid fa-list"></i> Quotes</h4>
             </div>
             <div class="col-md-4">
                 <input type="text" class="form-control" id="searchInput" placeholder="Search...">
@@ -15,9 +15,9 @@
             </div>
         </div>
         <hr>
-<table class="table table-secondary table-light table-hover">
-    <thead class="thead-light">
-        <tr>
+<table class="table table-hover table-striped table-sm">
+    <thead>
+        <tr class="table-secondary align-middle">
             <th class="searchable">Quote name</th>
             <th class="searchable">Client</th>
             <th class="searchable">Description</th>

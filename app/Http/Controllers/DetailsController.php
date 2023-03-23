@@ -84,7 +84,7 @@ class DetailsController extends Controller
         $details->save();
 
         return redirect(route('quotation.details.index', $quotation))
-            ->with('message', 'Part number added to quotation successfully');
+            ->with('message', 'Part number added to quote successfully');
     }
 
     public function calculate(Quotation $quotation, Request $request)

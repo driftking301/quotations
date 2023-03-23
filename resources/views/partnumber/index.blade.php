@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row mb-3">
         <div class="col-md-4">
-            <h4>Part number </h4>
+            <h4><i class="fa-solid fa-layer-group"></i> Part number </h4>
         </div>
         <div class="col-md-4">
             <input type="text" class="form-control" id="searchInput" placeholder="Search...">
@@ -17,9 +17,9 @@
     <div class="row mb-3">
 
     </div>
-<table class="table table-light table-hover table-bordered">
-    <thead class="thead-light">
-        <tr>
+<table class="table table-light table-hover table-sm  table-striped-columns">
+    <thead>
+        <tr class="table-secondary">
             <th class="searchable">Sheet name</th>
             <th class="searchable">Part Number</th>
             <th class="searchable">Description</th>

@@ -46,7 +46,7 @@ class ClientController extends Controller
         $client->description = request()->input('description');
         $client->notes = request()->input('notes');
         $client->save();
-        return redirect('quotation')->with('message', 'Client added successfully');
+        return redirect('quotation')->with('message', 'Customer added successfully');
     }
 
     /**
@@ -83,7 +83,7 @@ class ClientController extends Controller
 
         $clienData = request()->except(['_token','_method']);
         Client::where('id', '=', $id)->update($clienData);
-        return redirect('client')->with('message','Client updated successfully');
+        return redirect('client')->with('message','Customer updated successfully');
     }
 
     /**
@@ -92,7 +92,7 @@ class ClientController extends Controller
     public function destroy(String $id)
     {
         Client::destroy($id);
-        return redirect(route('client.index'))->with('message', 'Client deleted successfully');
+        return redirect(route('client.index'))->with('message', 'Customer deleted successfully');
     }
 
     public function search(Request $request)

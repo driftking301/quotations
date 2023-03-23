@@ -60,7 +60,7 @@
         </div>
     </div>
 
-    <div class="card-footer">
+    <div class="card-footer text-end">
         <button type="submit" class="btn btn-sm btn-primary" value="Save"><i class="fa-solid fa-floppy-disk"></i> Save</button>
         <a class="btn btn-sm btn-secondary" href="{{ route('partnumber.index') }}"><i class="fa-solid fa-arrow-left"></i> Back</a>
     </div>

@@ -10,17 +10,17 @@
 @endif
 <div class="card">
     <div class="card-header">
-        <h4 class="cart-title"><i class="fa-solid fa-user-tie"></i> {{ $mode }} Client</h4>
+        <h4 class="cart-title"><i class="fa-solid fa-user-tie"></i> {{ $mode }} Customer</h4>
     </div>
     <div class="card-body">
 <div class="form-group">
     <div class="row">
         <div class="col-md-4">
-            <label for="name">Client alias</label>
+            <label for="name">Customer alias</label>
             <input type="text" name="name" class="form-control" value="{{ isset($client->name) ? $client->name: old('name') }}">
         </div>
         <div class="col-md-4">
-            <label for="realname">Client real name</label>
+            <label for="realname">Customer real name</label>
             <input type="text" name="description" class="form-control" value="{{ isset($client->description) ? $client->description: old('description') }}">
         </div>
         <div class="col-md-4">
@@ -38,7 +38,7 @@
 </div>
 </div>
 <br>
-    <div class="card-footer">
+    <div class="card-footer text-end">
         <button type="submit" class="btn btn-sm btn-primary" value="Save"><i class="fa-solid fa-floppy-disk"></i> Save</button>
         <a class="btn btn-sm btn-secondary" href="{{ route('client.index') }}"><i class="fa-solid fa-arrow-left"></i> Back</a>
     </div>
