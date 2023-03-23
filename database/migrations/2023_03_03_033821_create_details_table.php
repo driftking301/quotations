@@ -15,7 +15,7 @@ return new class extends Migration
             $table->engine = "InnoDB";
             $table->bigIncrements('id');
             $table->bigInteger('quotation_id')->unsigned();
-            $table->bigInteger('partnumber_id')->unsigned();
+            $table->bigInteger('part_number_id')->unsigned();
             $table->string('description')->nullable();
             $table->float('width')->nullable();
             $table->float('length')->nullable();
@@ -39,9 +39,9 @@ return new class extends Migration
                 ->references('id')
                 ->on('quotations')
                 ->onDelete("cascade");
-            $table->foreign('partnumber_id')
+            $table->foreign('part_number_id')
                 ->references('id')
-                ->on('partnumbers')
+                ->on('part_numbers')
                 ->onDelete("cascade");
         });
     }

@@ -19,14 +19,12 @@ class DetailsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Quotation $quotation, ProcessesManager $processesSettings, Details $details)
+    public function index(Quotation $quotation)
     {
-        $quotation = Quotation::findOrFail($quotation->id);
+        $details = Details::with('partnumber')->whereBelongsTo($quotation)->get();
         return view('details.index', [
-            'partnumbers' => PartNumber::all(),
             'quotation' => $quotation,
-            'details' => $quotation->details,
-            'processesSettings' => $processesSettings->defaultSettings(),
+            'details' => $details,
         ]);
     }
 
@@ -49,7 +47,7 @@ class DetailsController extends Controller
     {
         // dd($request->toArray());
         $fields=[
-            'partnumber'=>'required|string|max:100',
+            'part_number_id'=>'required|int|min:1',
             'width'=>'required|string|max:100',
             'length'=>'required|numeric|max:100',
             'quantity'=>'required|numeric|max:100',
@@ -63,8 +61,8 @@ class DetailsController extends Controller
         $this->validate($request,$fields,$message);
 
         $details = new Details();
-        $details->quotation_id = $request->input('quotation_id');
-        $details->partnumber = $request->input('partnumber');
+        $details->quotation_id = $quotation->id;
+        $details->part_number_id = $request->input('part_number_id');
         $details->description = $request->input('description');
         $details->width = $request->input('width');
         $details->length = $request->input('length');
@@ -91,7 +89,7 @@ class DetailsController extends Controller
 
     public function calculate(Quotation $quotation, Request $request)
     {
-        $partNumberInput = strval($request->input('partnumber_id'));
+        $partNumberInput = strval($request->input('part_number_id'));
         $partNumber = PartNumber::find($partNumberInput);
         if ($partNumber) {
             $partNumberPrice = new PartNumberPrice(

@@ -41,8 +41,8 @@
                     <tbody>
                     @foreach($details as $detail)
                     <tr>
-                        <td>{{ $detail->partnumber }}</td>
-                        <td>{{ $detail->description }}</td>
+                        <td>{{ $detail->partnumber->partnumber }}</td>
+                        <td>{{ $detail->description ?: $detail->partnumber->description }}</td>
                         <td class="text-center">{{ $detail->width }}</td>
                         <td class="text-center">{{ $detail->length }}</td>
                         <td class="text-center">{{ $detail->quantity }}</td>

@@ -42,7 +42,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label for="partnumber">Part number</label>
-                        <select name="partnumber_id" class="select2" style="width: 100%;">
+                        <select name="part_number_id" class="select2" style="width: 100%;">
                             <option value=""></option>
                             @foreach ($partnumbers as $partnumber)
                                 <option value="{{ $partnumber->id }}">{{ $partnumber->partnumber }} {{ $partnumber->description }}</option>
