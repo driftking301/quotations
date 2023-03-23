@@ -1,6 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+    @if(count($errors)>0)
+        <div class="alert alert-danger" role="alert">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li> {{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <script src="https://kit.fontawesome.com/283d08d6db.js" crossorigin="anonymous" defer="defer"></script>
     <script defer="defer">
         function quotation_update_price()
