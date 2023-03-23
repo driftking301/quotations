@@ -12,8 +12,8 @@ class PartNumberController extends Controller
      */
     public function index()
     {
-        $partNumberData['partnumbers']=PartNumber::paginate(15);
-        return view('partnumber.index', $partNumberData);
+        $partnumbers = PartNumber::paginate(15);
+        return view('partnumber.index', compact('partnumbers'));
     }
 
     /**
@@ -29,24 +29,31 @@ class PartNumberController extends Controller
      */
     public function store(Request $request)
     {
-        $fields=[
-            'sheetname'=>'required|string|max:100',
-            'partnumber'=>'required|string|max:100',
-            'description'=>'required|string|max:100',
-            'unitmeasure'=>'required|string|max:100',
+        $fields = [
+            'sheetname' => 'required|string|max:100',
+            'partnumber' => 'required|string|max:100',
+            'description' => 'required|string|max:100',
+            'unitmeasure' => 'required|string|max:100',
+            'price' => 'required|numeric|min:0.01|max:999.99',
         ];
-        $message=[
-            'sheetname'=>'Sheet name is required',
-            'partnumber'=>'Part number is required',
-            'description'=>'Description is required',
-            'unitmeasure'=>'Unit Measure is required'
+        $messages = [
+            'sheetname' => 'Sheet name is required',
+            'partnumber' => 'Part number is required',
+            'description' => 'Description is required',
+            'unitmeasure' => 'Unit Measure is required',
+            'price' => 'Price is required',
         ];
-        $this->validate($request, $fields, $message);
+        $this->validate($request, $fields, $messages);
+
         $partnumber = new PartNumber();
         $partnumber->sheetname = request()->input('sheetname');
         $partnumber->partnumber = request()->input('partnumber');
         $partnumber->description = request()->input('description');
         $partnumber->unitmeasure = request()->input('unitmeasure');
+        $partnumber->price = floatval(request()->input('price'));
+        $partnumber->weight = floatval(request()->input('weight', 0.0));
+        $partnumber->width = intval(request()->input('width', 0));
+        $partnumber->length = intval(request()->input('length', 0));
         $partnumber->save();
         return redirect(route('partnumber.index'))->with('message', 'Part Number added successfully');
     }
@@ -54,7 +61,7 @@ class PartNumberController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PartNumber $partNumber)
+    public function show(PartNumber $partnumber)
     {
         //
     }
@@ -62,33 +69,40 @@ class PartNumberController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(PartNumber $partnumber)
     {
-        $partnumber=PartNumber::findOrFail($id);
         return view('partnumber.edit', compact('partnumber'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request,string $id)
+    public function update(Request $request, PartNumber $partnumber)
     {
-        $fields=[
-            'sheetname'=>'required|string|max:100',
-            'partnumber'=>'required|string|max:100',
-            'description'=>'required|string|max:100',
-            'unitmeasure'=>'required|string|max:100',
+        $fields = [
+            'sheetname' => 'required|string|max:100',
+            'partnumber' => 'required|string|max:100',
+            'description' => 'required|string|max:100',
+            'unitmeasure' => 'required|string|max:100',
+            'price' => 'required|numeric|min:0.01|max:999.99',
+            'weight' => 'required|numeric|min:0.00|max:999.99',
+            'width' => 'required|int|min:0|max:99999',
+            'length' => 'required|int|min:0|max:99999',
         ];
-        $message=[
-            'sheetname'=>'Sheet name is required',
-            'partnumber'=>'Part number is required',
-            'description'=>'Description is required',
-            'unitmeasure'=>'Unit Measure is required'
+        $message = [
+            'sheetname' => 'Sheet name is required',
+            'partnumber' => 'Part number is required',
+            'description' => 'Description is required',
+            'unitmeasure' => 'Unit Measure is required',
+            'price' => 'Invalid Price',
+            'weight' => 'Invalid Weight',
+            'width' => 'Invalid Width',
+            'length' => 'Invalid Length',
         ];
         $this->validate($request, $fields, $message);
 
-        $partNumberData = request()->except(['_token', '_method']);
-        PartNumber::where('id', '=', $id)->update($partNumberData);
+        $inputs = request()->except(['_token', '_method']);
+        $partnumber->update($inputs);
         return redirect(route('partnumber.index'))->with('message', 'Part number updated successfully');
     }
 

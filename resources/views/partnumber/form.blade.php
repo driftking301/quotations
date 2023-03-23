@@ -32,16 +32,34 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4">
+                    <label for="price">Weight</label>
+                    <input type="text" class="form-control" name="weight" value="{{ isset($partnumber->weight) ? $partnumber->weight : old('weight') }}">
+                </div>
+                <div class="col-md-4">
+                    <label for="price">Width</label>
+                    <input type="text" class="form-control" name="width" value="{{ isset($partnumber->width) ? $partnumber->width : old('width') }}">
+                </div>
+                <div class="col-md-4">
+                    <label for="partnumber">Length</label>
+                    <input type="text" class="form-control" name="length" value="{{ isset($partnumber->length) ? $partnumber->length: old('length') }}">
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-4">
                     <label for="partnumber">Unit Measure</label>
                     <input type="text" class="form-control" name="unitmeasure" value="{{ isset($partnumber->unitmeasure) ? $partnumber->unitmeasure: old('unitmeasure') }}">
                 </div>
                 <div class="col-md-4">
                     <label for="price">Price</label>
-                    <input type="text" class="form-control" name="Price" value="{{ isset($partnumber->price) ? $partnumber->price: old('price') }}">
+                    <input type="text" class="form-control" name="price" value="{{ isset($partnumber->price) ? $partnumber->price: old('price') }}">
                 </div>
+            </div>
         </div>
     </div>
-</div>
+
     <div class="card-footer">
         <button type="submit" class="btn btn-sm btn-primary" value="Save"><i class="fa-solid fa-floppy-disk"></i> Save</button>
         <a class="btn btn-sm btn-secondary" href="{{ route('partnumber.index') }}"><i class="fa-solid fa-arrow-left"></i> Back</a>
