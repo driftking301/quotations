@@ -80,7 +80,7 @@ class DetailsController extends Controller
         $details->pipe_thread = $request->input('pipe_thread');
         $details->pipe_engage = $request->input('pipe_engage');
         $details->press_setup = $request->input('press_setup');
-        $details->total = $request->input('total'); // todo
+        $details->total = $this->calculateLineFromRequest($quotation, $request)->amountTotal;
         $details->save();
 
         return redirect(route('quotation.details.index', $quotation))
@@ -88,6 +88,12 @@ class DetailsController extends Controller
     }
 
     public function calculate(Quotation $quotation, Request $request)
+    {
+        $result = $this->calculateLineFromRequest($quotation, $request);
+        return response()->json($result);
+    }
+
+    private function calculateLineFromRequest(Quotation $quotation, Request $request): PriceLineCalculations
     {
         $partNumberInput = strval($request->input('part_number_id'));
         $partNumber = PartNumber::find($partNumberInput);
@@ -135,9 +141,7 @@ class DetailsController extends Controller
         $processesSettings = new ProcessesSettings($settings);
 
         $priceQuotation = new PriceQuotation($processesSettings);
-        $result = $priceQuotation->calculateLine($line);
-
-        return response()->json($result);
+        return $priceQuotation->calculateLine($line);
     }
 
     /**
