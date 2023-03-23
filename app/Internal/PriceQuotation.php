@@ -17,7 +17,7 @@ class PriceQuotation
     ) {
         $this->lines = $lines;
         $this->calculations = array_map(
-            fn (PriceLineData $line):PriceLineCalculations => $this->calculateLine($line),
+            fn (PriceLineData $line): PriceLineCalculations => $this->calculateLine($line),
             $this->lines
         );
 
@@ -41,7 +41,8 @@ class PriceQuotation
             $perimeters,
             $laserLength,
             $amountMaterial,
-            $this->processes->getLaser() * $laserLength,
+            // $this->processes->getLaser($line->customLaserPrice) * $laserLength, // todo
+            $this->processes->getLaser(0.0) * $laserLength,
             $this->processes->getWeld() * $line->quantity * $line->weld,
             $this->processes->getPress() * $line->quantity * $line->press,
             $this->processes->getSaw() * $line->quantity * $line->saw,

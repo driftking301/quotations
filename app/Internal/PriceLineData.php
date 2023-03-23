@@ -11,6 +11,7 @@ class PriceLineData
         public readonly float             $factor,
         public readonly PartNumberPrice   $partNumberPrice,
         public readonly Holes             $holes,
+        public readonly float             $customLaserPrice,
         public readonly int               $weld,
         public readonly int               $press,
         public readonly int               $saw,
