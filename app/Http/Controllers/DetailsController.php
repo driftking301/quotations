@@ -70,7 +70,7 @@ class DetailsController extends Controller
         $details->factor = $request->input('factor');
         $details->laser = $request->input('laser');
         $details->custom_price = $request->input('custom_price');
-        $details->holes = $request->input('holes');
+        $details->holes = $request->input('holes') ?: [];
         $details->welding = $request->input('welding');
         $details->press = $request->input('press');
         $details->saw = $request->input('saw');
