@@ -91,8 +91,8 @@
                         <input class="input-group" type="text" id="laser" readonly>
                     </div>
                     <div class="col-md-3">
-                        <label for="custom_price">Custom Laser Price</label>
-                        <input class="input-group" type="text" name="custom_price">
+                        <label for="custom_laser_price">Custom Laser Price</label>
+                        <input class="input-group" type="text" name="custom_laser_price">
                     </div>
                     <div class="col-md-6">
                         <script>

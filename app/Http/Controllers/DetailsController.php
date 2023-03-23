@@ -63,23 +63,23 @@ class DetailsController extends Controller
         $details = new Details();
         $details->quotation_id = $quotation->id;
         $details->part_number_id = $request->input('part_number_id');
-        $details->description = $request->input('description');
-        $details->width = $request->input('width');
-        $details->length = $request->input('length');
-        $details->quantity = $request->input('quantity');
-        $details->factor = $request->input('factor');
-        $details->laser = $request->input('laser');
-        $details->custom_price = $request->input('custom_price');
+        $details->description = (string) $request->input('description');
+        $details->width = (int) $request->input('width');
+        $details->length = (int) $request->input('length');
+        $details->quantity = (int) $request->input('quantity');
+        $details->factor = (float) $request->input('factor');
+        $details->laser = (float) $request->input('laser');
+        $details->custom_laser_price = (float) $request->input('custom_laser_price');
         $details->holes = $request->input('holes') ?: [];
-        $details->welding = $request->input('welding');
-        $details->press = $request->input('press');
-        $details->saw = $request->input('saw');
-        $details->drill = $request->input('drill');
-        $details->clean = $request->input('clean');
-        $details->paint = $request->input('paint');
-        $details->pipe_thread = $request->input('pipe_thread');
-        $details->pipe_engage = $request->input('pipe_engage');
-        $details->press_setup = $request->input('press_setup');
+        $details->welding = (int) $request->input('welding');
+        $details->press = (int) $request->input('press');
+        $details->saw = (int) $request->input('saw');
+        $details->drill = (int) $request->input('drill');
+        $details->clean = (int) $request->input('clean');
+        $details->paint = (int) $request->input('paint');
+        $details->pipe_thread = (int) $request->input('pipe_thread');
+        $details->pipe_engage = (int) $request->input('pipe_engage');
+        $details->press_setup = (int) $request->input('press_setup');
         $details->total = $this->calculateLineFromRequest($quotation, $request)->amountTotal;
         $details->save();
 
@@ -119,6 +119,7 @@ class DetailsController extends Controller
             floatval($request->input('factor', 0)),
             $partNumberPrice,
             $holes,
+            floatval($request->input('custom_laser_price', 0)),
             intval($request->input('welding', 0)),
             intval($request->input('press', 0)),
             intval($request->input('saw', 0)),
@@ -130,14 +131,8 @@ class DetailsController extends Controller
             intval($request->input('press_setup', 0)),
         );
 
-        $quotationPrices = $quotation->toArray();
-        $overrideLaserPrice = floatval($request->input('custom_price', 0));
-        if ($overrideLaserPrice > 0.001) {
-            $quotationPrices['laser'] = $overrideLaserPrice;
-        }
-
         $processesManager = new ProcessesManager();
-        $settings = $processesManager->settingsWithValues($quotationPrices);
+        $settings = $processesManager->settingsWithValues($quotation->toArray());
         $processesSettings = new ProcessesSettings($settings);
 
         $priceQuotation = new PriceQuotation($processesSettings);
