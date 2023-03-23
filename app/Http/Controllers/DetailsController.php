@@ -8,6 +8,7 @@ use App\Models\Quotation;
 use App\Models\PartNumber;
 use Illuminate\Http\Request;
 use App\Internal\PriceLineData;
+use Illuminate\Validation\Rule;
 use App\Internal\PriceQuotation;
 use App\Internal\PartNumberPrice;
 use App\Internal\ProcessesManager;
@@ -45,20 +46,19 @@ class DetailsController extends Controller
 
     public function store(Request $request, Quotation $quotation)
     {
-        // dd($request->toArray());
-        $fields=[
-            'part_number_id'=>'required|int|min:1',
-            'width'=>'required|int|max:100',
-            'length'=>'required|numeric|max:100',
-            'quantity'=>'required|numeric|max:100',
+        $fields = [
+            'part_number_id' => ['required', 'int', 'min:1', Rule::exists(PartNumber::class, 'id')],
+            'width' => 'required|int|min:1',
+            'length' => 'required|int|min:1',
+            'quantity' => 'required|int|min:1',
         ];
-        $message=[
-            'partnumber.required'=>'Part number is required',
-            'width.required'=>'Width is required',
-            'length.required'=>'Length is required',
-            'quantity.required'=>'Quantity is required',
+        $message = [
+            'part_number_id.required' => 'Part number is required',
+            'width.required' => 'Width is required',
+            'length.required' => 'Length is required',
+            'quantity.required' => 'Quantity is required',
         ];
-        // $this->validate($request, $fields, $message);
+        $this->validate($request, $fields, $message);
 
         $details = new Details();
         $details->quotation_id = $quotation->id;
