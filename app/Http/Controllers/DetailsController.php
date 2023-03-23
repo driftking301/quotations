@@ -48,7 +48,7 @@ class DetailsController extends Controller
         // dd($request->toArray());
         $fields=[
             'part_number_id'=>'required|int|min:1',
-            'width'=>'required|string|max:100',
+            'width'=>'required|int|max:100',
             'length'=>'required|numeric|max:100',
             'quantity'=>'required|numeric|max:100',
         ];
@@ -58,7 +58,7 @@ class DetailsController extends Controller
             'length.required'=>'Length is required',
             'quantity.required'=>'Quantity is required',
         ];
-        $this->validate($request,$fields,$message);
+        // $this->validate($request, $fields, $message);
 
         $details = new Details();
         $details->quotation_id = $quotation->id;
