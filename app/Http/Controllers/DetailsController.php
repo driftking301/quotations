@@ -8,24 +8,24 @@ use App\Models\Quotation;
 use App\Models\PartNumber;
 use Illuminate\Http\Request;
 use App\Internal\PriceLineData;
+use Illuminate\Validation\Rule;
 use App\Internal\PriceQuotation;
 use App\Internal\PartNumberPrice;
 use App\Internal\ProcessesManager;
 use App\Internal\ProcessesSettings;
+use App\Internal\PriceLineCalculations;
 
 class DetailsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Quotation $quotation, ProcessesManager $processesSettings, Details $details)
+    public function index(Quotation $quotation)
     {
-        $quotation = Quotation::findOrFail($quotation->id);
+        $details = Details::with('partnumber')->whereBelongsTo($quotation)->get();
         return view('details.index', [
-            'partnumbers' => PartNumber::all(),
             'quotation' => $quotation,
-            'details' => $quotation->details,
-            'processesSettings' => $processesSettings->defaultSettings(),
+            'details' => $details,
         ]);
     }
 
@@ -46,24 +46,23 @@ class DetailsController extends Controller
 
     public function store(Request $request, Quotation $quotation)
     {
-        // dd($request->toArray());
-        $fields=[
-            'partnumber'=>'required|string|max:100',
-            'width'=>'required|string|max:100',
-            'length'=>'required|numeric|max:100',
-            'quantity'=>'required|numeric|max:100',
+        $fields = [
+            'part_number_id' => ['required', 'int', 'min:1', Rule::exists(PartNumber::class, 'id')],
+            'width' => 'required|int|min:1',
+            'length' => 'required|int|min:1',
+            'quantity' => 'required|int|min:1',
         ];
-        $message=[
-            'partnumber.required'=>'Part number is required',
-            'width.required'=>'Width is required',
-            'length.required'=>'Length is required',
-            'quantity.required'=>'Quantity is required',
+        $message = [
+            'part_number_id.required' => 'Part number is required',
+            'width.required' => 'Width is required',
+            'length.required' => 'Length is required',
+            'quantity.required' => 'Quantity is required',
         ];
-        $this->validate($request,$fields,$message);
+        $this->validate($request, $fields, $message);
 
         $details = new Details();
-        $details->quotation_id = $request->input('quotation_id');
-        $details->partnumber = $request->input('partnumber');
+        $details->quotation_id = $quotation->id;
+        $details->part_number_id = $request->input('part_number_id');
         $details->description = $request->input('description');
         $details->width = $request->input('width');
         $details->length = $request->input('length');
@@ -71,7 +70,7 @@ class DetailsController extends Controller
         $details->factor = $request->input('factor');
         $details->laser = $request->input('laser');
         $details->custom_price = $request->input('custom_price');
-        $details->holes = $request->input('holes');
+        $details->holes = $request->input('holes') ?: [];
         $details->welding = $request->input('welding');
         $details->press = $request->input('press');
         $details->saw = $request->input('saw');
@@ -81,7 +80,7 @@ class DetailsController extends Controller
         $details->pipe_thread = $request->input('pipe_thread');
         $details->pipe_engage = $request->input('pipe_engage');
         $details->press_setup = $request->input('press_setup');
-        $details->total = $request->input('total');
+        $details->total = $this->calculateLineFromRequest($quotation, $request)->amountTotal;
         $details->save();
 
         return redirect(route('quotation.details.index', $quotation))
@@ -90,17 +89,23 @@ class DetailsController extends Controller
 
     public function calculate(Quotation $quotation, Request $request)
     {
-        $partNumberInput = strval($request->input('partnumber_id'));
-        $partNumber = PartNumber::find($partNumberInput);
-        if (! $partNumber) {
-            return '0.00';
-        }
+        $result = $this->calculateLineFromRequest($quotation, $request);
+        return response()->json($result);
+    }
 
-        $partNumberPrice = new PartNumberPrice(
-            strcasecmp($partNumber->unitmeasure, 'pounds'),
-            $partNumber->price,
-            $partNumber->price, // todo
-        );
+    private function calculateLineFromRequest(Quotation $quotation, Request $request): PriceLineCalculations
+    {
+        $partNumberInput = strval($request->input('part_number_id'));
+        $partNumber = PartNumber::find($partNumberInput);
+        if ($partNumber) {
+            $partNumberPrice = new PartNumberPrice(
+                0 === strcasecmp($partNumber->unitmeasure, 'pounds'),
+                floatval($partNumber->per_sq_inch),
+                floatval($partNumber->price),
+            );
+        } else {
+            $partNumberPrice = new PartNumberPrice(false, 0, 0);
+        }
 
         $holes = Holes::fromArrayValues(
             $request->input('holes_diameter') ?: [],
@@ -114,25 +119,29 @@ class DetailsController extends Controller
             floatval($request->input('factor', 0)),
             $partNumberPrice,
             $holes,
-            intval($request->input('weld', 0)),
+            intval($request->input('welding', 0)),
             intval($request->input('press', 0)),
             intval($request->input('saw', 0)),
-            intval($request->input('drilling', 0)),
-            intval($request->input('cleaning', 0)),
-            intval($request->input('painting', 0)),
-            intval($request->input('pipeThread', 0)),
-            intval($request->input('pipeEngage', 0)),
-            intval($request->input('pressSetUp', 0)),
+            intval($request->input('drill', 0)),
+            intval($request->input('clean', 0)),
+            intval($request->input('paint', 0)),
+            intval($request->input('pipe_thread', 0)),
+            intval($request->input('pipe_engage', 0)),
+            intval($request->input('press_setup', 0)),
         );
 
+        $quotationPrices = $quotation->toArray();
+        $overrideLaserPrice = floatval($request->input('custom_price', 0));
+        if ($overrideLaserPrice > 0.001) {
+            $quotationPrices['laser'] = $overrideLaserPrice;
+        }
+
         $processesManager = new ProcessesManager();
-        $settings = $processesManager->settingsWithValues($quotation->toArray());
+        $settings = $processesManager->settingsWithValues($quotationPrices);
         $processesSettings = new ProcessesSettings($settings);
 
         $priceQuotation = new PriceQuotation($processesSettings);
-        $result = $priceQuotation->calculateLine($line);
-
-        return number_format($result->amountTotal, 2);
+        return $priceQuotation->calculateLine($line);
     }
 
     /**
@@ -164,9 +173,9 @@ class DetailsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Details $detail)
+    public function destroy(Quotation $quotation, Details $detail)
     {
         $detail->delete();
-        return redirect(route('details.index'))->with('message', 'Part number deleted successfully');
+        return redirect(route('quotation.details.index', $quotation))->with('message', 'Part number deleted successfully');
     }
 }

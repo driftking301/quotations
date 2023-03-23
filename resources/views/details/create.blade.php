@@ -1,6 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+    @if(count($errors)>0)
+        <div class="alert alert-danger" role="alert">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li> {{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
     <script src="https://kit.fontawesome.com/283d08d6db.js" crossorigin="anonymous" defer="defer"></script>
     <script defer="defer">
         function quotation_update_price()
@@ -11,9 +20,11 @@
                 url: form.action + '/calculate',
                 data: $(form).serialize(),
                 success: function(data) {
-                    $('#total').text(data);
+                    $('#laser').val(data.laserLength);
+                    $('#total').text(data.amountTotal);
                 },
                 error: function() {
+                    $('#laser').val('0.00');
                     $('#total').text('0.00');
                 }
             });
@@ -40,7 +51,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label for="partnumber">Part number</label>
-                        <select name="partnumber_id" class="select2" style="width: 100%;">
+                        <select name="part_number_id" class="select2" style="width: 100%;">
                             <option value=""></option>
                             @foreach ($partnumbers as $partnumber)
                                 <option value="{{ $partnumber->id }}">{{ $partnumber->partnumber }} {{ $partnumber->description }}</option>
@@ -77,7 +88,7 @@
                 <div class="row">
                     <div class="col-md-3">
                         <label for="laser">Laser</label>
-                        <input class="input-group" type="text" name="laser">
+                        <input class="input-group" type="text" id="laser" readonly>
                     </div>
                     <div class="col-md-3">
                         <label for="custom_price">Custom Laser Price</label>
@@ -126,12 +137,15 @@
                                         $('<td></td>').append(
                                             $('<a href="#" class="btn btn-danger btn-sm">-</a>').click(function (event) {
                                                 $(event.target).closest('tr').remove();
+                                                quotation_update_price();
+                                                return false;
                                             })
                                         ),
                                     )
                                 );
-
-                                return table_hole_form_hide();
+                                quotation_update_price();
+                                table_hole_form_hide();
+                                return false;
                             }
 
                         </script>
