@@ -43,14 +43,12 @@
             <td>{{ $partnumber->unitmeasure }}</td>
             <td>{{ $partnumber->width }}</td>
             <td>{{ $partnumber->length }}</td>
-            <td>{{ $partnumber->area_in2 }}</td>
-            <td>{{ $partnumber->per_sq_inch }}</td>
-            <td>$ {{ $partnumber->price }}</td>
+            <td>{{ $partnumber->getArea() }}</td>
+            <td>{{ number_format($partnumber->getPricePerSquareInch(), 2) }}</td>
+            <td>{{ number_format($partnumber->price, 2) }}</td>
 
-            <td class="text-center">
+            <td class="text-center text-nowrap">
                 <a href="{{ route('partnumber.edit', $partnumber) }}" class="btn btn-sm btn-secondary"><i class="fa-solid fa-pen-to-square"></i></a>
-
-
                 <form action="{{ route('partnumber.destroy', $partnumber) }}" class="d-inline" method="post">
                     @csrf
                     {{ method_field('DELETE') }}
