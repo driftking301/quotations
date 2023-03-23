@@ -31,7 +31,7 @@
                 <br>
                 <div class="card-footer">
                     <div class="row">
-                        <div class="offset-11">
+                        <div class="text-end">
                             <button type="submit" class="btn  btn-primary" value="Save"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                         </div>
                     </div>

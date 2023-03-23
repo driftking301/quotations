@@ -37,15 +37,10 @@
                     <div class="col-md-11">
                         <h4 class="card-title">Quote: {{ $quotation->name }} / {{ $quotation->client->name }}</h4>
                     </div>
-                    <div class="col-md-1 text-end">
-                        <button class="btn btn-primary input-group" name="lhc" id="lhc">
-                            LHC
-                        </button>
-                    </div>
                 </div>
             </div>
-            <div class="card-body">
             <form id="quotation-details-form" action="{{ route('quotation.details.store', $quotation) }}" method="post">
+            <div class="card-body">
                 @csrf
                 <input type="hidden" value="{{$quotation->id}}" name="quotation_id">
                 <div class="row">
@@ -228,14 +223,12 @@
                         <h5>Total: $ <span id="total">0.00</span></h5>
                     </div>
                 </div>
+            </div>
                 <div class="card-footer text-end">
                     <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save</button>
                     <a class="btn btn-secondary" href="{{ route('quotation.details.index', $quotation) }}"><i class="fa-solid fa-arrow-left"></i> Back</a>
                 </div>
             </form>
-            </div>
         </div>
     </div>
-
-
 @endsection
