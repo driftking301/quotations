@@ -69,7 +69,7 @@ class DetailsController extends Controller
         $details->quantity = $request->input('quantity');
         $details->factor = $request->input('factor');
         $details->laser = $request->input('laser');
-        $details->custom_price = $request->input('custom_price');
+        $details->custom_laser_price = $request->input('custom_laser_price');
         $details->holes = $request->input('holes') ?: [];
         $details->welding = $request->input('welding');
         $details->press = $request->input('press');
@@ -131,7 +131,7 @@ class DetailsController extends Controller
         );
 
         $quotationPrices = $quotation->toArray();
-        $overrideLaserPrice = floatval($request->input('custom_price', 0));
+        $overrideLaserPrice = floatval($request->input('custom_laser_price', 0));
         if ($overrideLaserPrice > 0.001) {
             $quotationPrices['laser'] = $overrideLaserPrice;
         }

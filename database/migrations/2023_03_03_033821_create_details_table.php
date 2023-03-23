@@ -22,7 +22,7 @@ return new class extends Migration
             $table->float('quantity')->nullable();
             $table->float('factor')->nullable();
             $table->float('laser')->nullable();
-            $table->float('custom_price')->nullable();
+            $table->decimal('custom_laser_price', 7, 4);
             $table->longText('holes')->nullable();
             $table->float('welding')->nullable();
             $table->float('press')->nullable();
