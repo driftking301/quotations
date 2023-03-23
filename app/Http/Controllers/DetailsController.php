@@ -99,8 +99,8 @@ class DetailsController extends Controller
         $partNumber = PartNumber::find($partNumberInput);
         if ($partNumber) {
             $partNumberPrice = new PartNumberPrice(
-                0 === strcasecmp($partNumber->unitmeasure, 'pounds'),
-                floatval($partNumber->per_sq_inch),
+                $partNumber->isUnitOfMeasurePounds(),
+                $partNumber->getPricePerSquareInch(),
                 floatval($partNumber->price),
             );
         } else {
