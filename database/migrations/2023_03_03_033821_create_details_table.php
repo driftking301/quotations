@@ -14,26 +14,26 @@ return new class extends Migration
         schema::create('details', function(Blueprint $table) {
             $table->engine = "InnoDB";
             $table->bigIncrements('id');
-            $table->bigInteger('quotation_id')->unsigned();
-            $table->bigInteger('part_number_id')->unsigned();
-            $table->string('description')->nullable();
-            $table->float('width')->nullable();
-            $table->float('length')->nullable();
-            $table->float('quantity')->nullable();
-            $table->float('factor')->nullable();
-            $table->float('laser')->nullable();
+            $table->unsignedBigInteger('quotation_id');
+            $table->unsignedBigInteger('part_number_id');
+            $table->string('description');
+            $table->unsignedInteger('width');
+            $table->unsignedInteger('length');
+            $table->unsignedInteger('quantity');
+            $table->decimal('factor', 7, 4);
+            $table->decimal('laser', 9, 2);
             $table->decimal('custom_laser_price', 7, 4);
-            $table->longText('holes')->nullable();
-            $table->float('welding')->nullable();
-            $table->float('press')->nullable();
-            $table->float('saw')->nullable();
-            $table->float('drill')->nullable();
-            $table->float('clean')->nullable();
-            $table->float('paint')->nullable();
-            $table->float('pipe_thread')->nullable();
-            $table->float('pipe_engage')->nullable();
-            $table->float('press_setup')->nullable();
-            $table->float('total')->nullable();
+            $table->longText('holes');
+            $table->unsignedInteger('welding');
+            $table->unsignedInteger('press');
+            $table->unsignedInteger('saw');
+            $table->unsignedInteger('drill');
+            $table->unsignedInteger('clean');
+            $table->unsignedInteger('paint');
+            $table->unsignedInteger('pipe_thread');
+            $table->unsignedInteger('pipe_engage');
+            $table->unsignedInteger('press_setup');
+            $table->decimal('total', 9, 2);
             $table->timestamps();
             $table->foreign('quotation_id')
                 ->references('id')
