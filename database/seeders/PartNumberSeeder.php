@@ -37,7 +37,7 @@ class PartNumberSeeder extends Seeder
             ['sheetname' => 'BUY OUT PARTS #700100', 'partnumber' => '700120', 'description' => 'SOCKET_HEAD_SET_SCREW_3/8-16X.50_PLN', 'weight' => 0, 'unitmeasure' => 'units', 'width' => 0, 'length' => 0, 'price' => 0.12],
 
             ['sheetname' => 'CARBON_RAW_SHEET_PLATE_ #200100', 'partnumber' => '200100', 'description' => '14GA_SHEET_60"X120"_P&O_A1011','weight' => 156.3, 'unitmeasure' => 'Pounds','width' => 60, 'length' => 120, 'price' => 0.70],
-            ['sheetname' => 'CARBON_RAW_SHEET_PLATE_ #200201', 'partnumber' => '200201', 'description' => '16GA_SHEET_60"X120"_P&O_A1011','weight' => 10, 'unitmeasure' => 'Pounds','width' => 60, 'length' => 120, 'price' => 0.70],
+            ['sheetname' => 'CARBON_RAW_SHEET_PLATE_ #200201', 'partnumber' => '200201', 'description' => '16GA_SHEET_60"X120"_P&O_A1011','weight' => 100, 'unitmeasure' => 'Pounds','width' => 60, 'length' => 120, 'price' => 0.70],
             ['sheetname' => 'CARBON_RAW_SHEET_PLATE_ #200202', 'partnumber' => '200202', 'description' => '12GA_SHEET_60"X120"_P&O_A1011','weight' => 218.8, 'unitmeasure' => 'Pounds','width' => 60, 'length' => 120, 'price' => 0.70],
             ['sheetname' => 'CARBON_RAW_SHEET_PLATE_ #200203', 'partnumber' => '200203', 'description' => '11GA_SHEET_60"X120"_P&O_A1011','weight' => 250, 'unitmeasure' => 'Pounds','width' => 60, 'length' => 120, 'price' => 0.70],
             ['sheetname' => 'CARBON_RAW_SHEET_PLATE_ #200204', 'partnumber' => '200204', 'description' => '10GA_SHEET_60"X120"_P&O_A1011','weight' => 281.3, 'unitmeasure' => 'Pounds','width' => 60, 'length' => 120, 'price' => 0.70],

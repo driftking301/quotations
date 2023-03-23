@@ -32,7 +32,7 @@ class ProcessController extends Controller
 
         $updatedSettings = $defaultSettings;
         foreach ($defaultSettings as $key => $values) {
-            $updatedSettings[$key]['price'] = floatval($request->get($key));
+            $updatedSettings[$key]['price'] = round(floatval($request->get($key)), 4);
         }
         $processesSettings->store($updatedSettings);
         return redirect('processes')->with('message','Process updated successfully');

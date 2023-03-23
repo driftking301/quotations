@@ -24,7 +24,9 @@ $(document).ready(function() {
 });
 
 window.$(document).ready(function() {
-    $('#quotation-details-form input, #quotation-details-form select').change(quotation_update_price);
+    $('#quotation-details-form input, #quotation-details-form select').change(function () {
+        quotation_update_price();
+    });
 });
 
 $(document).ready(function() {

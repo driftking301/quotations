@@ -2,13 +2,13 @@
     "laser": {
         "name": "Laser",
         "units": "inches",
-        "price": 1,
+        "price": 0.08,
         "notes": "carbon steel 0.076, stainless steel 0.11"
     },
     "weld": {
         "name": "Welding",
         "units": "inches",
-        "price": 1,
+        "price": 0.455,
         "notes": "carbon steel 0.44, stainless steel 0.56"
     },
     "press": {
@@ -26,13 +26,13 @@
     "drilling": {
         "name": "Drilling",
         "units": "minutes",
-        "price": 1.02,
+        "price": 1,
         "notes": ""
     },
     "cleaning": {
         "name": "Cleaning",
         "units": "minutes",
-        "price": 1.03,
+        "price": 1,
         "notes": ""
     },
     "painting": {

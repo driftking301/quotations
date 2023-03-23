@@ -14,15 +14,15 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <label for="{{ $key }}" >Price</label>
-                                    <input type="text" name="{{ $key }}" class="form-control" value="{{ number_format(floatval($quotation->{$key} ?? $values['price'] ?? old($key)), 2) }}">
+                                    <input type="text" name="{{ $key }}" class="form-control" value="{{ number_format(floatval($quotation->{$key} ?? $values['price'] ?? old($key)), 4) }}">
                                 </div>
                                 <div class="col-md-2">
                                     <label for="units">Units</label>
-                                    <input value="{{ $values['units'] }}" class="form-control">
+                                    <input value="{{ $values['units'] }}" class="form-control" readonly>
                                 </div>
                                 <div class="col-md-8">
                                     <label for="notes">Notes</label>
-                                    <input value="{{ $values['notes']}}" name="notes" class="form-control">
+                                    <input value="{{ $values['notes']}}" name="notes" class="form-control" readonly>
                                 </div>
                             </div>
                             <hr>
