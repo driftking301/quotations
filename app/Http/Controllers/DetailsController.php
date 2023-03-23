@@ -173,9 +173,9 @@ class DetailsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Details $detail)
+    public function destroy(Quotation $quotation, Details $detail)
     {
         $detail->delete();
-        return redirect(route('details.index'))->with('message', 'Part number deleted successfully');
+        return redirect(route('quotation.details.index', $quotation))->with('message', 'Part number deleted successfully');
     }
 }

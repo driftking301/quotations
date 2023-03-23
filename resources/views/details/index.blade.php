@@ -49,7 +49,7 @@
                         <td class="text-center">{{ $detail->total }}</td>
                         <td class="text-center">
                             <button class="btn btn-sm btn-secondary"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <form action="{{ route('details.destroy', $detail) }}" class="d-inline" method="post">
+                            <form action="{{ route('quotation.details.destroy', [$quotation, $detail]) }}" class="d-inline" method="post">
                                 @csrf
                                 {{ method_field('DELETE') }}
                                 <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('¿Do you want to delete the item?')"><i class="fa-solid fa-trash"></i></button>
