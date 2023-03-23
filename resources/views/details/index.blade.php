@@ -5,7 +5,6 @@
 
     <div class="container">
         <div class="row">
-            <br>
             <div class="col-md-10">
                 <h5>Quote name: {{ $quotation->name }} / {{$quotation->client->name }} </h5>
                 <p>{{ $quotation->description }}</p>
@@ -62,46 +61,5 @@
                 </table>
             </div>
         </div>
-
-
-</div>
-
-    <!-- ---------------------------------------------------- PROCESSES PRICES MODAL --------------------------------------------------------
-     ----------------------------------------------------------------------------------------------------------------------------- -->
-    <div class="modal fade" id="processConfigModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-md modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5>Processes for {{ $quotation->name }}</h5>
-                </div>
-                <div class="modal-body">
-                    @foreach($processesSettings as $key => $values)
-                        <div class="form-group">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $values['name'] }}</h5>
-                                <div class="row g-3 align-items-center">
-                                    <div class="col-md-4">
-                                        <label for="{{ $key }}" class="col-form-label">Price</label>
-                                        <input type="text" name="{{ $key }}" class="form-control-sm" value="{{ number_format(floatval($quotation->{$key} ?? $values['price'] ?? old($key)), 2) }}">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="units">Units</label>
-                                        <input value="{{ $values['units'] }}" class="form-control-sm" disabled>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="notes">Notes</label>
-                                        <input value="{{ $values['notes']}}" name="notes" class="form-control-sm" disabled>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                    @endforeach
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
     </div>
-
 @endsection
