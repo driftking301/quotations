@@ -20,8 +20,8 @@
                 url: form.action + '/calculate',
                 data: $(form).serialize(),
                 success: function(data) {
-                    $('#laser').val(data.laserLength);
-                    $('#total').text(data.amountTotal);
+                    $('#laser').val(data.laserLength.toFixed(2));
+                    $('#total').text(data.amountTotal.toFixed(2));
                 },
                 error: function() {
                     $('#laser').val('0.00');
