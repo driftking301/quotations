@@ -6,7 +6,15 @@
             <form action="{{ route('processes') }}" method="post">
                 @csrf
                 <div class="card-header">
-                    <h3><i class="fa-solid fa-gears"></i> Default processes prices</h3>
+                    <div class="row">
+                        <div class="col">
+                            <h3><i class="fa-solid fa-gears"></i> Default processes prices</h3>
+                        </div>
+                        <div class="col text-end">
+                            <a class="btn btn-dark" href="{{ route('quotation.index') }}"><i class="fa-solid fa-arrow-left"></i></a>
+
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     @foreach($processesSettings as $key => $values)
@@ -14,7 +22,7 @@
                             <div class="row">
                                 <div class="col-md-2">
                                     <label for="{{ $key }}" >Price</label>
-                                    <input type="text" name="{{ $key }}" class="form-control" value="{{ number_format(floatval($quotation->{$key} ?? $values['price'] ?? old($key)), 4) }}">
+                                    <input type="number" name="{{ $key }}" class="form-control" value="{{ number_format(floatval($quotation->{$key} ?? $values['price'] ?? old($key)), 4) }}" step="0.01">
                                 </div>
                                 <div class="col-md-2">
                                     <label for="units">Units</label>
