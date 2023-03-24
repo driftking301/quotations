@@ -1,10 +1,6 @@
 @extends('layouts.app')
-<meta name="csrf-token" content="{{ csrf_token() }}">
-
 @section('content')
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.10.2/Sortable.min.js"></script>
-
-
     <div class="container">
         <div class="row">
             <div class="col-md-8">
@@ -22,6 +18,10 @@
         </div>
         <div class="row">
             <div class="col-md-12">
+                <div class="d-flex justify-content-end ">
+                    <h4 class="">Grand Total: $</h4>
+                    <h4 class="" id="grand-total">0.00</h4>
+                </div>
                 <table class="table table-striped table-hover table-sm" id="partnumber-table">
                     <thead>
                     <tr class="table table-secondary">
@@ -48,7 +48,7 @@
                             <td class="text-center">{{ $detail->total }}</td>
                             <td class="text-center">
                                 <form action="{{ route('quotation.details.destroy', [$quotation, $detail]) }}" class="d-inline" method="post">
-
+                                    @csrf
                                     {{ method_field('DELETE') }}
                                     <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('¿Do you want to delete the item?')"><i class="fa-solid fa-trash"></i></button>
                                 </form>
@@ -96,6 +96,18 @@
                 });*/
             }
         });
+
+        // Calcular el gran total y mostrarlo
+        function updateGrandTotal() {
+            var grandTotal = 0;
+            var totals = document.querySelectorAll('#partnumber-table tbody tr td:nth-child(7)');
+            totals.forEach(function (totalElement) {
+                grandTotal += parseFloat(totalElement.textContent);
+            });
+            document.getElementById('grand-total').textContent = grandTotal.toFixed(2);
+        }
+
+        updateGrandTotal();
     </script>
 
     <style>
