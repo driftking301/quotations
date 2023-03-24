@@ -10,10 +10,9 @@
             </ul>
         </div>
     @endif
-    <script src="https://kit.fontawesome.com/283d08d6db.js" crossorigin="anonymous" defer="defer"></script>
     <script defer="defer">
-        function quotation_update_price()
-        {
+
+        function quotation_update_price() {
             const form = document.getElementById('quotation-details-form');
             $.ajax({
                 type: "POST",
@@ -46,7 +45,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label for="partnumber">Part number</label>
-                        <select name="part_number_id" class="select2" style="width: 100%;">
+                        <select name="part_number_id" class="select2">
                             <option value=""></option>
                             @foreach ($partnumbers as $partnumber)
                                 <option value="{{ $partnumber->id }}">{{ $partnumber->partnumber }} {{ $partnumber->description }}</option>
