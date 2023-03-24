@@ -54,7 +54,6 @@ If you want to check the app configuration is working you will need 2 cmd or 2 t
 php artisan serve
 ```
 - second terminal:
-```
 ```bash
 npm run dev
 ```
