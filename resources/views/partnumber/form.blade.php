@@ -32,16 +32,16 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4">
-                    <label for="price">Weight</label>
-                    <input type="text" class="form-control" name="weight" value="{{ isset($partnumber->weight) ? $partnumber->weight : old('weight') }}">
+                    <label for="weight">Weight</label>
+                    <input type="number" class="form-control" name="weight" value="{{ isset($partnumber->weight) ? $partnumber->weight : old('weight') }}" step="0.01">
                 </div>
                 <div class="col-md-4">
-                    <label for="price">Width</label>
-                    <input type="text" class="form-control" name="width" value="{{ isset($partnumber->width) ? $partnumber->width : old('width') }}">
+                    <label for="width">Width</label>
+                    <input type="number" class="form-control" name="width" value="{{ isset($partnumber->width) ? $partnumber->width : old('width') }}" step="0.01">
                 </div>
                 <div class="col-md-4">
-                    <label for="partnumber">Length</label>
-                    <input type="text" class="form-control" name="length" value="{{ isset($partnumber->length) ? $partnumber->length: old('length') }}">
+                    <label for="length">Length</label>
+                    <input type="number" class="form-control" name="length" value="{{ isset($partnumber->length) ? $partnumber->length: old('length') }}" step="0.01">
                 </div>
             </div>
         </div>
@@ -49,12 +49,12 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-4">
-                    <label for="partnumber">Unit Measure</label>
+                    <label for="unitmeasure">Unit Measure</label>
                     <input type="text" class="form-control" name="unitmeasure" value="{{ isset($partnumber->unitmeasure) ? $partnumber->unitmeasure: old('unitmeasure') }}">
                 </div>
                 <div class="col-md-4">
                     <label for="price">Price</label>
-                    <input type="text" class="form-control" name="price" value="{{ isset($partnumber->price) ? $partnumber->price: old('price') }}">
+                    <input type="number" class="form-control" name="price" value="{{ isset($partnumber->price) ? $partnumber->price: old('price') }}" step="0.01">
                 </div>
             </div>
         </div>

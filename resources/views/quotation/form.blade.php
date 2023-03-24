@@ -17,11 +17,11 @@
     <div class="row">
         <div class="col-md-5">
             <label for="name">Quote name</label>
-            <input type="text" name="name" class="form-control" value="{{ $quotation->name ?? old('name') }}">
+            <input type="text" name="name" class="input-group" value="{{ $quotation->name ?? old('name') }}">
         </div>
         <div class="col-md-5">
             <label for="client">Customer</label>
-            <select class="form-select select2 select2-selection--single" name="client_id">
+            <select class="form-select select2" name="client_id">
                 <option value=""></option>
                 @foreach($customers as $customer)
                     <option value="{{ $customer->id }}" {{ (isset($quotation->client_id) && $customer->id == $quotation->client_id) ? 'selected' : (old('client_id') == $customer->id ? 'selected' : '') }}>{{ $customer->name }}</option>
@@ -30,13 +30,13 @@
         </div>
         <div class="col-md-2">
             <label for="description">Date</label>
-            <input type="date" name="date" class="form-control" value="{{ $quotation->date ?? old('date') }}">
+            <input type="date" name="date" class="input-group" value="{{ $quotation->date ?? old('date') }}">
         </div>
     </div>
 </div>
 <div class="form-group">
     <label for="description">Description</label>
-    <textarea type="text" class="form-control" name="description">{{ $quotation->description ?? old('description') }}</textarea>
+    <textarea type="text" class="input-group" name="description">{{ $quotation->description ?? old('description') }}</textarea>
 </div>
 </div>
 <br>
