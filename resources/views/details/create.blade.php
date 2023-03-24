@@ -14,13 +14,17 @@
 
         function quotation_update_price() {
             const form = document.getElementById('quotation-details-form');
+            const factorInput = document.querySelector("input[name='factor']");
+            const factor = parseFloat(factorInput.value) || 1; // Utiliza 1 si el valor no es un número o está vacío
+
             $.ajax({
                 type: "POST",
                 url: form.action + '/calculate',
                 data: $(form).serialize(),
                 success: function(data) {
                     $('#laser').val(data.laserLength.toFixed(2));
-                    $('#total').text(data.amountTotal.toFixed(2));
+                    const totalAmount = data.amountTotal * factor; // Multiplica el total por el factor
+                    $('#total').text(totalAmount.toFixed(2));
                 },
                 error: function() {
                     $('#laser').val('0.00');
@@ -28,6 +32,10 @@
                 }
             });
         }
+        document.addEventListener("DOMContentLoaded", function() {
+            const factorInput = document.querySelector("input[name='factor']");
+            factorInput.addEventListener('input', quotation_update_price);
+        });
     </script>
     <div class="container">
         <div class="card">
