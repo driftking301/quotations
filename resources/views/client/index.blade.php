@@ -28,7 +28,7 @@
     @foreach($clients as $client)
         <tr>
             <td>{{ $client->name }}</td>
-            <td></td>
+            <td>{{ $client->real_name }}</td>
             <td>{{ $client->description }}</td>
             <td>{{ $client->notes }}</td>
             <td class="text-center">

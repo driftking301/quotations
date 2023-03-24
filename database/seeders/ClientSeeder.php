@@ -16,11 +16,24 @@ class ClientSeeder extends Seeder
     {
         $fake = fake();
         $client = [
-            ['name' => $fake->name(), 'description' => $fake->company(), 'notes' => $fake->realText()],
-            ['name' => $fake->name(), 'description' => $fake->company(), 'notes' => $fake->realText()],
-            ['name' => $fake->name(), 'description' => $fake->company(), 'notes' => $fake->realText()],
-            ['name' => $fake->name(), 'description' => $fake->company(), 'notes' => $fake->realText()],
-            ['name' => $fake->name(), 'description' => $fake->company(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'real_name' => $fake->company, 'description' => $fake->jobTitle(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'real_name' => $fake->company, 'description' => $fake->jobTitle(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'real_name' => $fake->company, 'description' => $fake->jobTitle(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'real_name' => $fake->company, 'description' => $fake->jobTitle(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'real_name' => $fake->company, 'description' => $fake->jobTitle(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'real_name' => $fake->company, 'description' => $fake->jobTitle(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'real_name' => $fake->company, 'description' => $fake->jobTitle(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'real_name' => $fake->company, 'description' => $fake->jobTitle(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'real_name' => $fake->company, 'description' => $fake->jobTitle(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'real_name' => $fake->company, 'description' => $fake->jobTitle(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'real_name' => $fake->company, 'description' => $fake->jobTitle(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'real_name' => $fake->company, 'description' => $fake->jobTitle(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'real_name' => $fake->company, 'description' => $fake->jobTitle(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'real_name' => $fake->company, 'description' => $fake->jobTitle(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'real_name' => $fake->company, 'description' => $fake->jobTitle(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'real_name' => $fake->company, 'description' => $fake->jobTitle(), 'notes' => $fake->realText()],
+            ['name' => $fake->name(), 'real_name' => $fake->company, 'description' => $fake->jobTitle(), 'notes' => $fake->realText()],
+
         ];
         DB::table('clients')->insert($client);
     }
