@@ -43,10 +43,10 @@
     @endforeach
     </tbody>
 </table>
-        <div class="row">
+        <!--<div class="row">
             <div class="col text-end">
-                {!! $clients->links() !!}
+
             </div>
         </div>
-    </div>
+    </div>-->
 @endsection

@@ -12,7 +12,7 @@ class PartNumberController extends Controller
      */
     public function index()
     {
-        $partnumbers = PartNumber::paginate(15);
+        $partnumbers = PartNumber::all();
         return view('partnumber.index', compact('partnumbers'));
     }
 

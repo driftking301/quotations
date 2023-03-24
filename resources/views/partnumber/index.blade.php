@@ -59,6 +59,7 @@
     @endforeach
     </tbody>
 </table>
-        {!! $partnumbers->links() !!}
-    </div>
+
+
+
 @endsection

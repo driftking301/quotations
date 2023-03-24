@@ -10,7 +10,7 @@
                 <input type="text" class="form-control" id="searchInput" placeholder="Search...">
             </div>
             <div class="col-md-4 text-end">
-                {!! $quotations->links() !!}
+                <!--{!! $quotations->links() !!}-->
                 <a href="{{ route('quotation.create') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus"></i> Add new</a>
             </div>
         </div>
