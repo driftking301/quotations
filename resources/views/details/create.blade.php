@@ -63,30 +63,30 @@
                 <div class="row ">
                     <div class="col-md-3">
                         <label for="width">Width</label>
-                        <input class="input-group" type="text" name="width">
+                        <input class="input-group" type="number" name="width">
                     </div>
                     <div class="col-md-3">
                         <label for="length">Length</label>
-                        <input class="input-group" type="text" name="length">
+                        <input class="input-group" type="number" name="length">
                     </div>
                     <div class="col-md-3">
                         <label for="quantity">Quantity</label>
-                        <input class="input-group" type="text" name="quantity">
+                        <input class="input-group" type="number" name="quantity">
                     </div>
                     <div class="col-md-3">
                         <label for="factor">Factor</label>
-                        <input class="input-group" type="text" name="factor">
+                        <input class="input-group" type="number" name="factor" step="0.01">
                     </div>
                 </div>
                 <hr>
                 <div class="row">
                     <div class="col-md-3">
                         <label for="laser">Laser</label>
-                        <input class="input-group" type="text" id="laser" readonly>
+                        <input class="input-group" type="number" id="laser" readonly step="0.01">
                     </div>
                     <div class="col-md-3">
                         <label for="custom_laser_price">Custom Laser Price</label>
-                        <input class="input-group" type="text" name="custom_laser_price">
+                        <input class="input-group" type="number" name="custom_laser_price" step="0.01">
                     </div>
                     <div class="col-md-6">
                         <script>
@@ -160,11 +160,11 @@
                             <div class="row">
                                 <div class="col-md-5">
                                     <label for="hole-form-diameter">Diameter</label>
-                                    <input class="form-control" type="text" id="hole-form-diameter">
+                                    <input class="form-control" type="number" id="hole-form-diameter" step="0.01">
                                 </div>
                                 <div class="col-md-5">
                                     <label for="hole-form-quantity">Quantity</label>
-                                    <input class="form-control" type="text" id="hole-form-quantity">
+                                    <input class="form-control" type="number" id="hole-form-quantity">
                                 </div>
                                 <div class="col-md-2">
                                     <a class="btn btn-primary" href="#" onclick="return table_hole_append()">Append</a>
@@ -177,43 +177,43 @@
                 <div class="row">
                     <div class="col-md-4">
                         <label for="welding">Weld</label>
-                        <input class="input-group" type="text" name="welding">
+                        <input class="input-group" type="number" name="welding">
                     </div>
                     <div class="col-md-4">
                         <label for="press">Press</label>
-                        <input class="input-group" type="text" name="press">
+                        <input class="input-group" type="number" name="press">
                     </div>
                     <div class="col-md-4">
                         <label for="saw">Saw</label>
-                        <input class="input-group" type="text" name="saw">
+                        <input class="input-group" type="number" name="saw">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
                         <label for="drill">Drilling</label>
-                        <input class="input-group" type="text" name="drill">
+                        <input class="input-group" type="number" name="drill">
                     </div>
                     <div class="col-md-4">
                         <label for="clean">Cleaning</label>
-                        <input class="input-group" type="text" name="clean">
+                        <input class="input-group" type="number" name="clean">
                     </div>
                     <div class="col-md-4">
                         <label for="paint">Paint</label>
-                        <input class="input-group" type="text" name="paint">
+                        <input class="input-group" type="number" name="paint">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
                         <label for="pipe_thread">Pipe Thread</label>
-                        <input class="input-group" type="text" name="pipe_thread">
+                        <input class="input-group" type="number" name="pipe_thread">
                     </div>
                     <div class="col-md-4">
                         <label for="pipe_engage">Pipe Engage</label>
-                        <input class="input-group" type="text" name="pipe_engage">
+                        <input class="input-group" type="number" name="pipe_engage">
                     </div>
                     <div class="col-md-4">
                         <label for="press_setup">Press Setup</label>
-                        <input class="input-group" type="text" name="press_setup">
+                        <input class="input-group" type="number" name="press_setup">
                     </div>
                 </div>
                 <hr>
