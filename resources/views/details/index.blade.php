@@ -1,6 +1,9 @@
 @extends('layouts.app')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 
 @section('content')
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.10.2/Sortable.min.js"></script>
+
 
     <div class="container">
         <div class="row">
@@ -21,7 +24,7 @@
             <div class="col-md-12">
                 <table class="table table-striped table-hover table-sm" id="partnumber-table">
                     <thead>
-                    <tr class="table table-dark">
+                    <tr class="table table-secondary">
                         <th>Part Number</th>
                         <th>Part desc.</th>
                         <th class="text-center">Width</th>
@@ -30,31 +33,77 @@
                         <th class="text-center">Factor</th>
                         <th class="text-center">Total</th>
                         <th class="text-center">Actions</th>
+                        <th></th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody >
                     @foreach($details as $detail)
-                    <tr>
-                        <td>{{ $detail->partnumber->partnumber }}</td>
-                        <td>{{ $detail->description ?: $detail->partnumber->description }}</td>
-                        <td class="text-center">{{ $detail->width }}</td>
-                        <td class="text-center">{{ $detail->length }}</td>
-                        <td class="text-center">{{ $detail->quantity }}</td>
-                        <td class="text-center">{{ $detail->factor }}</td>
-                        <td class="text-center">{{ $detail->total }}</td>
-                        <td class="text-center">
-                            <!--<button class="btn btn-sm btn-secondary"><i class="fa-solid fa-pen-to-square"></i></button>-->
-                            <form action="{{ route('quotation.details.destroy', [$quotation, $detail]) }}" class="d-inline" method="post">
-                                @csrf
-                                {{ method_field('DELETE') }}
-                                <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('¿Do you want to delete the item?')"><i class="fa-solid fa-trash"></i></button>
-                            </form>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td class="handle">{{ $detail->partnumber->partnumber }}</td>
+                            <td>{{ $detail->description ?: $detail->partnumber->description }}</td>
+                            <td class="text-center">{{ $detail->width }}</td>
+                            <td class="text-center">{{ $detail->length }}</td>
+                            <td class="text-center">{{ $detail->quantity }}</td>
+                            <td class="text-center">{{ $detail->factor }}</td>
+                            <td class="text-center">{{ $detail->total }}</td>
+                            <td class="text-center">
+                                <form action="{{ route('quotation.details.destroy', [$quotation, $detail]) }}" class="d-inline" method="post">
+
+                                    {{ method_field('DELETE') }}
+                                    <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('¿Do you want to delete the item?')"><i class="fa-solid fa-trash"></i></button>
+                                </form>
+                            </td>
+                            <td class="handle"><i class="fa-solid fa-bars"></i></td>
+                        </tr>
                     @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+
+    <script>
+        var table = document.getElementById('partnumber-table');
+        var tbody = table.getElementsByTagName('tbody')[0];
+        new Sortable(tbody, {
+            animation: 150,
+            handle: '.handle',
+            ghostClass: 'sortable-ghost',
+            dragClass: 'sortable-drag',
+            onEnd: function(evt) {
+                var rows = Array.from(evt.item.parentNode.children);
+                var indexes = rows.map(function(row) {
+                    return row.getAttribute('data-id');
+                });
+                // Actualizar la posición de los detalles en la base de datos
+                /*rows.forEach(function(row, index) {
+                    var detail_id = row.getAttribute('data-id');
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    $.ajax({
+                        url: '/quotation/details/' + detail_id,
+                        type: 'PATCH',
+                        data: {
+                            position: index + 1
+                        },
+                        success: function(data) {
+                            console.log(data);
+                        }
+                    });
+                });*/
+            }
+        });
+    </script>
+
+    <style>
+        .sortable-ghost {
+            cursor: grabbing;
+        }
+        .sortable-drag {
+            cursor: grabbing;
+        }
+    </style>
 @endsection

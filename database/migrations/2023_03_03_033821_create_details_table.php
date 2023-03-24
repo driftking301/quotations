@@ -43,6 +43,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('part_numbers')
                 ->onDelete("cascade");
+            $table->integer('position')->default(0);
         });
     }
 
