@@ -62,3 +62,8 @@ This will open a server in localhost:8000 and you will see the app running
 Depending on the type of web server you have, you will have to do the app deployment and the necessary configuration.
 
 This app will receive updates constantly.
+### How to update?
+- Navigate to the roor directory of the project, open a cmd or terminal and execute this:
+```bash
+git pull origin master
+```
