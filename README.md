@@ -63,7 +63,7 @@ Depending on the type of web server you have, you will have to do the app deploy
 
 This app will receive updates constantly.
 ### How to update?
-- Navigate to the roor directory of the project, open a cmd or terminal and execute this:
+- Navigate to the root directory of the project, open a cmd or terminal and execute this:
 ```bash
 git pull origin master
 ```
