@@ -137,7 +137,7 @@
                                         $('<td></td>').text((3.14 * diameterValue).toFixed(2)),
                                         $('<td></td>').text((3.14 * diameterValue * quantityValue).toFixed(2)),
                                         $('<td></td>').append(
-                                            $('<a href="#" class="btn btn-danger btn-sm">-</a>').click(function (event) {
+                                            $('<a href="#" class="btn btn-danger btn-sm"><i class="fa-sharp fa-solid fa-xmark"></i></a>').click(function (event) {
                                                 $(event.target).closest('tr').remove();
                                                 quotation_update_price();
                                                 return false;
@@ -151,14 +151,14 @@
                             }
 
                         </script>
-                        <table id="holes-table" class="table table-light">
-                            <thead class="thead-light">
+                        <table id="holes-table" class="table table-hover table-striped table-sm">
+                            <thead class="table-secondary">
                             <tr>
                                 <th>Diameter</th>
                                 <th>Quantity</th>
-                                <th>Hole Circum</th>
-                                <th>Total Circum</th>
-                                <th><a class="btn btn-secondary btn-sm" href="#" onclick="return table_hole_form_show();">+</a></th>
+                                <th class="text-center">Hole Circum</th>
+                                <th class="text-center">Total Circum</th>
+                                <th class="text-end"><a class="btn btn-secondary btn-sm" href="#" onclick="return table_hole_form_show();"><i class="fa-solid fa-plus"></i></a></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -174,8 +174,9 @@
                                     <label for="hole-form-quantity">Quantity</label>
                                     <input class="form-control" type="number" id="hole-form-quantity">
                                 </div>
-                                <div class="col-md-2">
-                                    <a class="btn btn-primary" href="#" onclick="return table_hole_append()">Append</a>
+                                <div class="col-md-2 text-center">
+                                    <label for="append">Append</label>
+                                    <a class="btn btn-primary" id="append" href="#" onclick="return table_hole_append()"><i class="fa-solid fa-plus"></i></a>
                                 </div>
                             </div>
                         </div>
