@@ -42,7 +42,7 @@ class QuotationController extends Controller
         ];
         $message=[
             'name.required'=>'Name is required',
-            'client.required'=>'Client is required',
+            'client.required'=>'Customer is required',
             'date.required'=>'Date is required',
             'description.required'=>'Description is required',
         ];
@@ -91,7 +91,7 @@ class QuotationController extends Controller
         ];
         $message=[
             'name.required'=>'Name is required',
-            'client_id.required'=>'Client is required',
+            'client_id.required'=>'Customer is required',
             'date.required'=>'Date is required',
             'description.required'=>'Description is required'
         ];
