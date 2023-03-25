@@ -20,8 +20,8 @@
             <input type="text" name="name" class="form-control" value="{{ isset($client->name) ? $client->name: old('name') }}">
         </div>
         <div class="col-md-4">
-            <label for="realname">Customer real name</label>
-            <input type="text" name="description" class="form-control" value="{{ isset($client->description) ? $client->description: old('description') }}">
+            <label for="real_name">Customer real name</label>
+            <input type="text" name="real_name" class="form-control" value="{{ isset($client->real_name) ? $client->real_name: old('real_name') }}">
         </div>
         <div class="col-md-4">
             <label for="description">Description</label>

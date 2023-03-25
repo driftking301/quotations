@@ -35,19 +35,22 @@ class ClientController extends Controller
         $fields=[
             'name'=>'required|string|max:100',
             'description'=>'required|string|max:200',
+            'real_name'=>'required|string|max:200'
         ];
         $message=[
             'name.required'=>'Name is required',
-            'description.required'=>'Description is required'
+            'description.required'=>'Description is required',
+            'real_name.required'=>'Real name is required'
         ];
         $this->validate($request,$fields,$message);
 
         $client = new Client();
         $client->name = request()->input('name');
+        $client->real_name = request()->input('real_name');
         $client->description = request()->input('description');
         $client->notes = request()->input('notes');
         $client->save();
-        return redirect('quotation')->with('message', 'Customer added successfully');
+        return redirect('client')->with('message', 'Customer added successfully');
     }
 
     /**
@@ -75,15 +78,17 @@ class ClientController extends Controller
         $fields=[
             'name'=>'required|string|max:100',
             'description'=>'required|string|max:200',
+            'real_name'=> 'required|string|max:200'
         ];
         $message=[
             'name.required'=>'Name is required',
-            'description.required'=>'Description is required'
+            'description.required'=>'Description is required',
+            'real_name.required'=>'Real name is required'
         ];
         $this->validate($request,$fields,$message);
 
-        $clienData = request()->except(['_token','_method']);
-        Client::where('id', '=', $id)->update($clienData);
+        $clientData = request()->except(['_token','_method']);
+        Client::where('id', '=', $id)->update($clientData);
         return redirect('client')->with('message','Customer updated successfully');
     }
 
