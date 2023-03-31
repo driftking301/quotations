@@ -50,7 +50,11 @@
             <div class="row">
                 <div class="col-md-4">
                     <label for="unitmeasure">Unit Measure</label>
-                    <input type="text" class="form-control" name="unitmeasure" value="{{ isset($partnumber->unitmeasure) ? $partnumber->unitmeasure: old('unitmeasure') }}">
+                    <select name="unitmeasure" class="form-select" id="unitmeasure">
+                        <option value="units" {{ isset($partnumber->unitmeasure) && $partnumber->unitmeasure == 'units' ? 'selected' : (old('unitmeasure') == 'units' ? 'selected' : '') }}>Units</option>
+                        <option value="inches" {{ isset($partnumber->unitmeasure) && $partnumber->unitmeasure == 'inches' ? 'selected' : (old('unitmeasure') == 'inches' ? 'selected' : '') }}>Inches</option>
+                        <option value="pounds" {{ isset($partnumber->unitmeasure) && $partnumber->unitmeasure == 'pounds' ? 'selected' : (old('unitmeasure') == 'pounds' ? 'selected' : '') }}>Pounds</option>
+                    </select>
                 </div>
                 <div class="col-md-4">
                     <label for="price">Price</label>
