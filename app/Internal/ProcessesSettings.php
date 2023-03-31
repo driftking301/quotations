@@ -14,7 +14,7 @@ class ProcessesSettings
         return $this->data[$key]['price'];
     }
 
-    public function getLaser(float $customPrice): float
+    public function getLaser(float $customPrice = 0.001): float
     {
         if ($customPrice > 0.001) {
             return $customPrice;

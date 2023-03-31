@@ -14,6 +14,7 @@ class PriceLineCalculations implements JsonSerializable
         public readonly float $laserLength,
         public readonly float $amountMaterial,
         public readonly float $amountLaser,
+        public readonly float $customLaser,
         public readonly float $amountWeld,
         public readonly float $amountPress,
         public readonly float $amountSaw,
@@ -41,7 +42,7 @@ class PriceLineCalculations implements JsonSerializable
 
     public static function empty(): self
     {
-        return new self(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        return new self(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     }
 
     /** @return array<string, scalar> */
