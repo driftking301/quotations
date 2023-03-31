@@ -18,7 +18,7 @@
     <thead>
         <tr class="table-secondary align-middle">
             <th class="searchable">Customer Alias</th>
-            <th class="searchable text-center">Customer Real Name</th>
+            <th class="searchable">Customer Real Name</th>
             <th class="searchable">Description</th>
             <th class="searchable">Notes</th>
             <th class="text-center">Actions</th>
