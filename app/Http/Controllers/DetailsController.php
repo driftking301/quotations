@@ -48,14 +48,10 @@ class DetailsController extends Controller
     {
         $fields = [
             'part_number_id' => ['required', 'int', 'min:1', Rule::exists(PartNumber::class, 'id')],
-            'width' => 'required|int|min:1',
-            'length' => 'required|int|min:1',
             'quantity' => 'required|int|min:1',
         ];
         $message = [
             'part_number_id.required' => 'Part number is required',
-            'width.required' => 'Width is required',
-            'length.required' => 'Length is required',
             'quantity.required' => 'Quantity is required',
         ];
         $this->validate($request, $fields, $message);
@@ -64,8 +60,8 @@ class DetailsController extends Controller
         $details->quotation_id = $quotation->id;
         $details->part_number_id = $request->input('part_number_id');
         $details->description = (string) $request->input('description');
-        $details->width = (int) $request->input('width');
-        $details->length = (int) $request->input('length');
+        $details->width = (int) $request->input('width', 0);
+        $details->length = (int) $request->input('length', 0);
         $details->quantity = (int) $request->input('quantity');
         $details->factor = (float) $request->input('factor');
         $details->laser = (float) $request->input('laser');
@@ -87,7 +83,7 @@ class DetailsController extends Controller
             ->with('message', 'Part number added to quote successfully');
     }
 
-    public function calculate(Quotation $quotation, Request $request)
+    public function calculate(Quotation $quotation, Request $request): \Illuminate\Http\JsonResponse
     {
         $result = $this->calculateLineFromRequest($quotation, $request);
         return response()->json($result);
@@ -101,10 +97,11 @@ class DetailsController extends Controller
             $partNumberPrice = new PartNumberPrice(
                 $partNumber->isUnitOfMeasurePounds(),
                 $partNumber->getPricePerSquareInch(),
+                $partNumber->getPricePerUnit(),
                 floatval($partNumber->price),
             );
         } else {
-            $partNumberPrice = new PartNumberPrice(false, 0, 0);
+            $partNumberPrice = new PartNumberPrice(false, 0, 0, 0);
         }
 
         $holes = Holes::fromArrayValues(
