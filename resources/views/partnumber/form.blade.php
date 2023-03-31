@@ -40,7 +40,7 @@
                     <input type="number" class="form-control" name="width" value="{{ isset($partnumber->width) ? $partnumber->width : old('width') }}" step="0.01">
                 </div>
                 <div class="col-md-4">
-                    <label for="length">Length</label>
+                    <label for="length">Length / Inches</label>
                     <input type="number" class="form-control" name="length" value="{{ isset($partnumber->length) ? $partnumber->length: old('length') }}" step="0.01">
                 </div>
             </div>

@@ -8,6 +8,7 @@ class PartNumberPrice
         public readonly bool $isPounds,
         public readonly float $pricePerSqInch,
         public readonly float $pricePerLb,
+        public readonly float $pricePerUnit,
     )
     {
     }

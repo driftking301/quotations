@@ -26,7 +26,7 @@
             <th>Weight</th>
             <th class="searchable">Unit Measure</th>
             <th>Width</th>
-            <th>Length</th>
+            <th>Length / Inches</th>
             <th>Area in2</th>
             <th>Per sq inch</th>
             <th class="searchable">Price</th>

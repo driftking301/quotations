@@ -11,11 +11,24 @@
         </div>
     @endif
     <script defer="defer">
-
         function quotation_update_price() {
             const form = document.getElementById('quotation-details-form');
             const factorInput = document.querySelector("input[name='factor']");
-            const factor = parseFloat(factorInput.value) || 1; // Utiliza 1 si el valor no es un número o está vacío
+            const factor = parseFloat(factorInput.value) || 1;
+
+            // Verifica si se ha seleccionado un número de parte
+            const partNumberSelect = document.querySelector("select[name='part_number_id']");
+            const priceInput = document.querySelector("input[name='price']"); // Agrega esta línea
+            if (!partNumberSelect.value) {
+                $('#laser').val('0.00');
+                $('#total').text('0.00');
+                priceInput.value = ''; // Agrega esta línea
+                return;
+            }
+
+            const selectedPartNumber = partNumberSelect.options[partNumberSelect.selectedIndex]; // Agrega esta línea
+            const partNumberPrice = selectedPartNumber.getAttribute('data-price'); // Agrega esta línea
+            priceInput.value = partNumberPrice; // Agrega esta línea
 
             $.ajax({
                 type: "POST",
@@ -35,6 +48,12 @@
         document.addEventListener("DOMContentLoaded", function() {
             const factorInput = document.querySelector("input[name='factor']");
             factorInput.addEventListener('input', quotation_update_price);
+
+            const partNumberSelect = document.querySelector("select[name='part_number_id']");
+            partNumberSelect.addEventListener('change', function() {
+                const selectedPartNumber = partNumberSelect.options[partNumberSelect.selectedIndex];
+                quotation_update_price();
+            });
         });
     </script>
     <div class="container">
@@ -56,15 +75,19 @@
                         <select name="part_number_id" class="select2">
                             <option value=""></option>
                             @foreach ($partnumbers as $partnumber)
-                                <option value="{{ $partnumber->id }}">{{ $partnumber->partnumber }} {{ $partnumber->description }}</option>
+                                <option value="{{ $partnumber->id }}" data-price="{{ $partnumber->price }}" >{{ $partnumber->partnumber }} {{ $partnumber->description }}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-8">
                         <label for="description">Part description</label>
                         <input class="input-group" type="text" name="description">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="price">Price</label>
+                        <input class="input-group" type="number" name="price" disabled>
                     </div>
                 </div>
                 <hr>
@@ -79,8 +102,10 @@
                     </div>
                     <div class="col-md-3">
                         <label for="quantity">Quantity</label>
-                        <input class="input-group" type="number" name="quantity">
+                        <input class="input-group" type="number" name="quantity" step="1">
                     </div>
+                    <input type="hidden" name="price_per_unit" id="price_per_unit" value=""> <!-- Añade esta línea -->
+
                     <div class="col-md-3">
                         <label for="factor">Factor</label>
                         <input class="input-group" type="number" name="factor" step="0.01">

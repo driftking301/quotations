@@ -47,4 +47,10 @@ class PartNumber extends Model
 
         return $this->price;
     }
+
+    public function getPricePerUnit(): float
+    {
+        //if is units
+        return $this->price;
+    }
 }
