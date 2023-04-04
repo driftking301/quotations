@@ -53,7 +53,7 @@ class PriceQuotation
             $perimeters,
             $laserLength,
             $amountMaterial,
-            $this->processes->getLaser($line->customLaserPrice) * $laserLength,
+            $this->processes->getLaser($line->customLaserPrice) * $line->quantity,
             $this->processes->getLaser(0.0) * $laserLength,
             $this->processes->getWeld() * $line->quantity * $line->weld,
             $this->processes->getPress() * $line->quantity * $line->press,

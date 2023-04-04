@@ -118,7 +118,7 @@
                         <input class="input-group" type="number" id="laser" readonly step="0.01">
                     </div>
                     <div class="col-md-3">
-                        <label for="custom_laser_price">Custom Laser Price</label>
+                        <label for="custom_laser_price">Buy out item</label>
                         <input class="input-group" type="number" name="custom_laser_price" step="0.01">
                     </div>
                     <div class="col-md-6">
