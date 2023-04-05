@@ -40,7 +40,7 @@ class PriceQuotation
             $amountMaterial= $line->quantity * $line->partNumberPrice->pricePerUnit;
         }
         else {
-            $amountMaterial = $line->quantity * $line->partNumberPrice->pricePerUnit;
+            $amountMaterial = $line->quantity * $line->partNumberPrice->pricePerSqInch;
         }
 
         $perimeter = 2 * $line->width + 2 * $line->length;
@@ -53,7 +53,7 @@ class PriceQuotation
             $perimeters,
             $laserLength,
             $amountMaterial,
-            $this->processes->getLaser($line->customLaserPrice) * $line->quantity,
+            $this->processes->getLaser() * $laserLength,
             $this->processes->getLaser(0.0) * $laserLength,
             $this->processes->getWeld() * $line->quantity * $line->weld,
             $this->processes->getPress() * $line->quantity * $line->press,
