@@ -13,8 +13,6 @@
     <script defer="defer">
         function quotation_update_price() {
             const form = document.getElementById('quotation-details-form');
-            const factorInput = document.querySelector("input[name='factor']");
-            const factor = parseFloat(factorInput.value) || 1;
 
             // Verifica si se ha seleccionado un número de parte
             const partNumberSelect = document.querySelector("select[name='part_number_id']");
@@ -26,9 +24,9 @@
                 return;
             }
 
-            const selectedPartNumber = partNumberSelect.options[partNumberSelect.selectedIndex]; // Agrega esta línea
-            const partNumberPrice = selectedPartNumber.getAttribute('data-price'); // Agrega esta línea
-            priceInput.value = partNumberPrice; // Agrega esta línea
+            const selectedPartNumber = partNumberSelect.options[partNumberSelect.selectedIndex];
+            const partNumberPrice = selectedPartNumber.getAttribute('data-price');
+            priceInput.value = partNumberPrice;
 
             $.ajax({
                 type: "POST",
@@ -36,7 +34,7 @@
                 data: $(form).serialize(),
                 success: function(data) {
                     $('#laser').val(data.laserLength.toFixed(2));
-                    const totalAmount = data.amountTotal * factor; // Multiplica el total por el factor
+                    const totalAmount = data.amountTotal; // Multiplica el total por el factor
                     $('#total').text(totalAmount.toFixed(2));
                 },
                 error: function() {
@@ -46,9 +44,6 @@
             });
         }
         document.addEventListener("DOMContentLoaded", function() {
-            const factorInput = document.querySelector("input[name='factor']");
-            factorInput.addEventListener('input', quotation_update_price);
-
             const partNumberSelect = document.querySelector("select[name='part_number_id']");
             partNumberSelect.addEventListener('change', function() {
                 const selectedPartNumber = partNumberSelect.options[partNumberSelect.selectedIndex];
@@ -94,17 +89,17 @@
                 <div class="row ">
                     <div class="col-md-3">
                         <label for="width">Width</label>
-                        <input class="input-group" type="number" name="width">
+                        <input class="input-group" type="number" name="width" step="0.01">
                     </div>
                     <div class="col-md-3">
                         <label for="length">Length</label>
-                        <input class="input-group" type="number" name="length">
+                        <input class="input-group" type="number" name="length" step="0.01">
                     </div>
                     <div class="col-md-3">
                         <label for="quantity">Quantity</label>
                         <input class="input-group" type="number" name="quantity" step="1">
                     </div>
-                    <input type="hidden" name="price_per_unit" id="price_per_unit" value=""> <!-- Añade esta línea -->
+
 
                     <div class="col-md-3">
                         <label for="factor">Factor</label>

@@ -9,8 +9,8 @@ class PriceLineCalculations implements JsonSerializable
     public readonly float $amountTotal;
 
     public function __construct(
-        public readonly int $perimeter,
-        public readonly int $perimeters,
+        public readonly float $perimeter,
+        public readonly float $perimeters,
         public readonly float $laserLength,
         public readonly float $amountMaterial,
         public readonly float $amountLaser,

@@ -110,8 +110,8 @@ class DetailsController extends Controller
         );
 
         $line = new PriceLineData(
-            intval($request->input('width', 0)),
-            intval($request->input('length', 0)),
+            floatval($request->input('width', 0)),
+            floatval($request->input('length', 0)),
             intval($request->input('quantity', 0)),
             floatval($request->input('factor', 0)),
             $partNumberPrice,

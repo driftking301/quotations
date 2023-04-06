@@ -5,8 +5,8 @@ namespace App\Internal;
 class PriceLineData
 {
     public function __construct(
-        public readonly int               $width,
-        public readonly int               $length,
+        public readonly float             $width,
+        public readonly float             $length,
         public readonly int               $quantity,
         public readonly float             $factor,
         public readonly PartNumberPrice   $partNumberPrice,
