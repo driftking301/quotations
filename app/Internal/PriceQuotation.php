@@ -46,14 +46,20 @@ class PriceQuotation
         $perimeter = 2 * $line->width + 2 * $line->length;
         $perimeters = $perimeter * $line->quantity;
         $laserLength = $perimeters + $line->holes->totalLengthHoles;
-        $laserPrice = $line->customLaserPrice > 0 ? $line->customLaserPrice : $this->processes->getLaser();
+
+        if ($line->customLaserPrice > 0) {
+            $laserAmount = $line->customLaserPrice * $line->quantity; // Solo multiplicar customLaserPrice por quantity
+        } else {
+            $laserAmount = $this->processes->getLaser() * $laserLength;
+        }
+
 
         return new PriceLineCalculations(
             $perimeter,
             $perimeters,
             $laserLength,
             $amountMaterial,
-            $this->processes->getLaser() * $laserLength,
+            $laserAmount, // Pasar el monto ajustado del láser aquí
             $this->processes->getLaser(0.0) * $laserLength,
             $this->processes->getWeld() * $line->quantity * $line->weld,
             $this->processes->getPress() * $line->quantity * $line->press,
