@@ -12,7 +12,6 @@ class PriceLineCalculations implements JsonSerializable
         public readonly float $perimeter,
         public readonly float $perimeters,
         public readonly float $laserLength,
-        public readonly float $amountMaterial,
         public readonly float $amountLaser,
         public readonly float $customLaser,
         public readonly float $amountWeld,
@@ -26,7 +25,6 @@ class PriceLineCalculations implements JsonSerializable
         public readonly float $amountPressSetUp,
     ) {
         $this->amountTotal = array_sum([
-            $this->amountMaterial,
             $this->amountLaser,
             $this->amountWeld,
             $this->amountPress,

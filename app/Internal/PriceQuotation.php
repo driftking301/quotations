@@ -39,9 +39,7 @@ class PriceQuotation
         elseif ($line->partNumberPrice->pricePerUnit) {
             $amountMaterial= $line->quantity * $line->partNumberPrice->pricePerUnit;
         }
-        else {
-            $amountMaterial = $line->quantity * $line->partNumberPrice->pricePerSqInch;
-        }
+
 
         $perimeter = 2 * $line->width + 2 * $line->length;
         $perimeters = $perimeter * $line->quantity;
@@ -58,7 +56,6 @@ class PriceQuotation
             $perimeter,
             $perimeters,
             $laserLength,
-            $amountMaterial,
             $laserAmount, // Pasar el monto ajustado del láser aquí
             $this->processes->getLaser(0.0) * $laserLength,
             $this->processes->getWeld() * $line->quantity * $line->weld,
