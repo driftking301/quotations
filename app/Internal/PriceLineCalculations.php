@@ -27,6 +27,7 @@ class PriceLineCalculations implements JsonSerializable
         public readonly float $amountPressSetUp,
     ) {
         $this->amountTotal = array_sum([
+            $this->factor,
             $this->amountMaterial,
             $this->amountLaser,
             $this->amountWeld,
@@ -43,7 +44,7 @@ class PriceLineCalculations implements JsonSerializable
 
     public static function empty(): self
     {
-        return new self(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+        return new self(0, 0, 0,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
     }
 
     /** @return array<string, scalar> */
