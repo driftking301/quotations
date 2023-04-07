@@ -33,6 +33,17 @@ class PriceQuotation
 
     public function calculateLine(PriceLineData $line): PriceLineCalculations
     {
+        $factor = ($line->factor !== null && $line->partNumberPrice->pricePerUnit !== null) ? $line->factor * $line->partNumberPrice->pricePerUnit * $line->quantity : 0;
+
+        if (!$factor) {
+            $factor = 0;
+        } else {
+            if ($line->factor !== null && $line->partNumberPrice->pricePerUnit !== null) {
+                $factor = $line->factor * $line->partNumberPrice->pricePerUnit * $line->quantity;
+            } else {
+                $factor = 0;
+            }
+        }
         if ($line->partNumberPrice->isPounds) {
             $amountMaterial = $line->width * $line->length * $line->quantity * $line->partNumberPrice->pricePerSqInch;
         }
@@ -56,6 +67,8 @@ class PriceQuotation
             $perimeter,
             $perimeters,
             $laserLength,
+            $amountMaterial,
+            $factor,
             $laserAmount, // Pasar el monto ajustado del láser aquí
             $this->processes->getLaser(0.0) * $laserLength,
             $this->processes->getWeld() * $line->quantity * $line->weld,
