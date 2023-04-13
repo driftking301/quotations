@@ -1,70 +1,121 @@
 @extends('layouts.app')
 
 @section('content')
-    <script src="https://kit.fontawesome.com/283d08d6db.js" crossorigin="anonymous" defer="defer"></script>
+    @if(count($errors)>0)
+        <div class="alert alert-danger" role="alert">
+            <ul>
+                @foreach($errors->all() as $error)
+                    <li> {{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <script defer="defer">
+        function quotation_update_price() {
+            const form = document.getElementById('quotation-details-form');
+
+            // Verifica si se ha seleccionado un número de parte
+            const partNumberSelect = document.querySelector("select[name='part_number_id']");
+            const priceInput = document.querySelector("input[name='price']");
+            if (!partNumberSelect.value) {
+                $('#laser').val('0.00');
+                $('#total').text('0.00');
+                priceInput.value = ''; // Agrega esta línea
+                return;
+            }
+
+            const selectedPartNumber = partNumberSelect.options[partNumberSelect.selectedIndex];
+            const partNumberPrice = selectedPartNumber.getAttribute('data-price');
+            priceInput.value = partNumberPrice;
+
+            $.ajax({
+                type: "POST",
+                url: form.action + '/calculate',
+                data: $(form).serialize(),
+                success: function(data) {
+                    $('#laser').val(data.laserLength.toFixed(2));
+                    const totalAmount = data.amountTotal; // Multiplica el total por el factor
+                    $('#total').text(totalAmount.toFixed(2));
+                },
+                error: function() {
+                    $('#laser').val('0.00');
+                    $('#total').text('0.00');
+                }
+            });
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            quotation_update_price();
+            const partNumberSelect = document.querySelector("select[name='part_number_id']");
+            partNumberSelect.addEventListener('change', function() {
+                const selectedPartNumber = partNumberSelect.options[partNumberSelect.selectedIndex];
+                quotation_update_price();
+            });
+        });
+    </script>
     <div class="container">
         <div class="card">
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-11">
-                        <h4 class="card-title">Quote: {{ $quotation->name }} / {{ $quotation->client->name }}</h4>
-                    </div>
-                    <div class="col-md-1 text-end">
-                        <button class="btn btn-primary input-group" name="lhc" id="lhc">
-                            LHC
-                        </button>
+                        <h4 class="card-title">Quote: </h4>
                     </div>
                 </div>
             </div>
-            <div class="card-body">
-                <form action="{{ route('quotation.details.store', $quotation) }}" method="post">
+            <form id="quotation-details-form" action="" method="post">
+                <div class="card-body">
                     @csrf
-                    <input type="hidden" value="{{$quotation->id}}" name="quotation_id">
+                    <input type="hidden" value="" name="quotation_id">
                     <div class="row">
                         <div class="col-md-12">
                             <label for="partnumber">Part number</label>
-                            <select name="partnumber" class="select2" style="width: 100%;">
+                            <select name="part_number_id" class="select2">
                                 <option value=""></option>
                                 @foreach ($partnumbers as $partnumber)
-                                    <option value="{{ $partnumber->partnumber }}">{{ $partnumber->partnumber }} {{ $partnumber->description }}</option>
+                                    <option value="{{ $partnumber->id }}" data-price="{{ $partnumber->price }}" @if ($partnumber->id == $detail->part_number_id) selected @endif>{{ $partnumber->partnumber }} {{ $partnumber->description }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-8">
                             <label for="description">Part description</label>
-                            <input class="input-group" type="text" name="description">
+                            <input class="input-group" type="text" name="description" value="{{ $detail->description }}">
+                        </div>
+                        <div class="col-md-4">
+                            <label for="price">Price</label>
+                            <input class="input-group" type="number" name="price" value="{{ $detail->price }}" disabled>
                         </div>
                     </div>
                     <hr>
                     <div class="row ">
                         <div class="col-md-3">
                             <label for="width">Width</label>
-                            <input class="input-group" type="text" name="width">
+                            <input class="input-group" type="number" name="width" step="0.01" value="{{ $detail->width }}">
                         </div>
                         <div class="col-md-3">
                             <label for="length">Length</label>
-                            <input class="input-group" type="text" name="length">
+                            <input class="input-group" type="number" name="length" step="0.01" value="{{ $detail->length }}">
                         </div>
                         <div class="col-md-3">
                             <label for="quantity">Quantity</label>
-                            <input class="input-group" type="text" name="quantity">
+                            <input class="input-group" type="number" name="quantity" step="1" value="{{ $detail->quantity }}">
                         </div>
+
+
                         <div class="col-md-3">
                             <label for="factor">Factor</label>
-                            <input class="input-group" type="text" name="factor">
+                            <input class="input-group" type="number" name="factor" step="0.01" value="{{ $detail->factor }}">
                         </div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-md-3">
                             <label for="laser">Laser</label>
-                            <input class="input-group" type="text" name="laser">
+                            <input class="input-group" type="number" id="laser" readonly step="0.01" value="{{ $detail->laser }}">
                         </div>
                         <div class="col-md-3">
-                            <label for="custom_laser_price">Custom Laser Price</label>
-                            <input class="input-group" type="text" name="custom_laser_price">
+                            <label for="custom_laser_price">Buy out item</label>
+                            <input class="input-group" type="number" name="custom_laser_price" step="0.01" value="{{ $detail->custom_laser_price }}">
                         </div>
                         <div class="col-md-6">
                             <script>
@@ -102,47 +153,61 @@
                                     const holesTable = $("#holes-table tbody");
                                     holesTable.append(
                                         $('<tr></tr>').append(
-                                            $('<td></td>').append($('<input name="holes[].diameter" readonly/>').val(diameterValue.toFixed(2))),
-                                            $('<td></td>').append($('<input name="holes[].quantity" readonly/>').val(quantityValue.toFixed(0))),
+                                            $('<td></td>').append($('<input name="holes_diameter[]" readonly/>').val(diameterValue.toFixed(2))),
+                                            $('<td></td>').append($('<input name="holes_quantity[]" readonly/>').val(quantityValue.toFixed(0))),
                                             $('<td></td>').text((3.14 * diameterValue).toFixed(2)),
                                             $('<td></td>').text((3.14 * diameterValue * quantityValue).toFixed(2)),
                                             $('<td></td>').append(
-                                                $('<a href="#" class="btn btn-danger btn-sm">-</a>').click(function (event) {
+                                                $('<a href="#" class="btn btn-danger btn-sm"><i class="fa-sharp fa-solid fa-xmark"></i></a>').click(function (event) {
                                                     $(event.target).closest('tr').remove();
+                                                    quotation_update_price();
+                                                    return false;
                                                 })
                                             ),
                                         )
                                     );
-
-                                    return table_hole_form_hide();
+                                    quotation_update_price();
+                                    table_hole_form_hide();
+                                    return false;
                                 }
 
                             </script>
-                            <table id="holes-table" class="table table-light">
-                                <thead class="thead-light">
+                            <table id="holes-table" class="table table-hover table-striped table-sm">
+                                <thead class="table-secondary">
                                 <tr>
                                     <th>Diameter</th>
                                     <th>Quantity</th>
-                                    <th>Circumference</th>
-                                    <th>Total Cir</th>
-                                    <th><a class="btn btn-secondary btn-sm" href="#" onclick="return table_hole_form_show()">+</a></th>
+                                    <th class="text-center">Hole Circum</th>
+                                    <th class="text-center">Total Circum</th>
+                                    <th class="text-end"><a class="btn btn-secondary btn-sm" href="#" onclick="return table_hole_form_show();"><i class="fa-solid fa-plus"></i></a></th>
                                 </tr>
                                 </thead>
                                 <tbody>
+                                @foreach ($detail->holes as $hole)
+                                    <tr>
+                                        <td><input value="{{ $hole['diameter'] }}" readonly/></td>
+                                        <td><input value="{{ $hole['quantity'] }}"></td>
+                                        <td>{{ number_format($hole['diameter'] * pi(), 2) }}</td>
+                                        <td>{{ number_format($hole['diameter'] * $hole['quantity'] * pi(), 2) }}</td>
+                                        <td><button type="button" class="btn btn-danger btn-sm" onclick="$(this).closest('tr').remove()"><i class="fa-sharp fa-solid fa-xmark"></i></button></td>
+                                    </tr>
+                                @endforeach
                                 </tbody>
                             </table>
+
                             <div id="hole-form" class="container" style="display: none">
                                 <div class="row">
                                     <div class="col-md-5">
                                         <label for="hole-form-diameter">Diameter</label>
-                                        <input class="form-control" type="text" id="hole-form-diameter">
+                                        <input class="form-control" type="number" id="hole-form-diameter" step="0.01">
                                     </div>
                                     <div class="col-md-5">
                                         <label for="hole-form-quantity">Quantity</label>
-                                        <input class="form-control" type="text" id="hole-form-quantity">
+                                        <input class="form-control" type="number" id="hole-form-quantity">
                                     </div>
-                                    <div class="col-md-2">
-                                        <a class="btn btn-primary" href="#" onclick="return table_hole_append()">Append</a>
+                                    <div class="col-md-2 text-center">
+                                        <label for="append">Append</label>
+                                        <a class="btn btn-primary" id="append" href="#" onclick="return table_hole_append()"><i class="fa-solid fa-plus"></i></a>
                                     </div>
                                 </div>
                             </div>
@@ -152,59 +217,57 @@
                     <div class="row">
                         <div class="col-md-4">
                             <label for="welding">Weld</label>
-                            <input class="input-group" type="text" name="welding">
+                            <input class="input-group" type="number" name="welding" value="{{ $detail->welding }}">
                         </div>
                         <div class="col-md-4">
                             <label for="press">Press</label>
-                            <input class="input-group" type="text" name="press">
+                            <input class="input-group" type="number" name="press" value="{{ $detail->press }}">
                         </div>
                         <div class="col-md-4">
                             <label for="saw">Saw</label>
-                            <input class="input-group" type="text" name="saw">
+                            <input class="input-group" type="number" name="saw" value="{{ $detail->saw }}">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
                             <label for="drill">Drilling</label>
-                            <input class="input-group" type="text" name="drill">
+                            <input class="input-group" type="number" name="drill" value="{{ $detail->drill }}">
                         </div>
                         <div class="col-md-4">
                             <label for="clean">Cleaning</label>
-                            <input class="input-group" type="text" name="clean">
+                            <input class="input-group" type="number" name="clean" value="{{ $detail->clean }}">
                         </div>
                         <div class="col-md-4">
                             <label for="paint">Paint</label>
-                            <input class="input-group" type="text" name="paint">
+                            <input class="input-group" type="number" name="paint" value="{{ $detail->paint }}">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
                             <label for="pipe_thread">Pipe Thread</label>
-                            <input class="input-group" type="text" name="pipe_thread">
+                            <input class="input-group" type="number" name="pipe_thread" value="{{ $detail->pipe_thread }}">
                         </div>
                         <div class="col-md-4">
                             <label for="pipe_engage">Pipe Engage</label>
-                            <input class="input-group" type="text" name="pipe_engage">
+                            <input class="input-group" type="number" name="pipe_engage" value="{{ $detail->pipe_engage }}">
                         </div>
                         <div class="col-md-4">
                             <label for="press_setup">Press Setup</label>
-                            <input class="input-group" type="text" name="press_setup">
+                            <input class="input-group" type="number" name="press_setup" value="{{ $detail->press_setup }}">
                         </div>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-md-2 input-group">
-                            <h5 id="total">Total: $0.00</h5>
+                            <h5>Total: $ <span id="total">0.00</span></h5>
                         </div>
                     </div>
-                    <div class="card-footer text-end">
-                        <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-                        <a class="btn btn-secondary" href="{{ route('quotation.details.index', $quotation) }}"><i class="fa-solid fa-arrow-left"></i> Back</a>
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="card-footer text-end">
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save</button>
+                    <a class="btn btn-secondary" href=""><i class="fa-solid fa-arrow-left"></i> Back</a>
+                </div>
+            </form>
         </div>
     </div>
-
-
 @endsection

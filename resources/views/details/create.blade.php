@@ -188,11 +188,11 @@
                             <div class="row">
                                 <div class="col-md-5">
                                     <label for="hole-form-diameter">Diameter</label>
-                                    <input class="form-control" type="number" id="hole-form-diameter" step="0.01">
+                                    <input class="form-control" type="number" id="hole-form-diameter" name="holes[diameter][]" step="0.01">
                                 </div>
                                 <div class="col-md-5">
                                     <label for="hole-form-quantity">Quantity</label>
-                                    <input class="form-control" type="number" id="hole-form-quantity">
+                                    <input class="form-control" type="number" id="hole-form-quantity"  name="holes[quantity][]">
                                 </div>
                                 <div class="col-md-2 text-center">
                                     <label for="append">Append</label>

@@ -56,6 +56,15 @@ class DetailsController extends Controller
         ];
         $this->validate($request, $fields, $message);
 
+        $holes = [];
+
+        if(!empty($request->holes_diameter) && !empty($request->holes_quantity)) {
+            foreach ($request->holes_diameter as $key => $value) {
+                $holes[] = ['diameter' => $value, 'quantity' => $request->holes_quantity[$key]];
+            }
+        }
+
+
         $details = new Details();
         $details->quotation_id = $quotation->id;
         $details->part_number_id = $request->input('part_number_id');
@@ -66,7 +75,11 @@ class DetailsController extends Controller
         $details->factor = (float) $request->input('factor');
         $details->laser = (float) $request->input('laser');
         $details->custom_laser_price = (float) $request->input('custom_laser_price');
-        $details->holes = $request->input('holes') ?: [];
+        $details->holes = $holes ?: [];
+
+
+
+        //$details->holes = $holes ?: [];
         $details->welding = (int) $request->input('welding');
         $details->press = (int) $request->input('press');
         $details->saw = (int) $request->input('saw');
@@ -147,11 +160,10 @@ class DetailsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Quotation $quotation, string $id)
+    public function edit(Details $detail)
     {
-
-        $detail = Details::findOrFail($id);
-        return view('client.edit', compact('detail'));
+        $partnumbers = PartNumber::all();
+        return view('details.edit', compact( 'detail', 'partnumbers'));
     }
 
     /**

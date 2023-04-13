@@ -51,6 +51,8 @@
                                     @csrf
                                     {{ method_field('DELETE') }}
                                     <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('¿Do you want to delete the item?')"><i class="fa-solid fa-trash"></i></button>
+                                    <a href="{{ route('details.edit', $detail) }}" class="btn btn-sm btn-secondary"><i class="fa-solid fa-pen-to-square"></i></a>
+
                                 </form>
                             </td>
                             <td class="handle"><i class="fa-solid fa-bars"></i></td>
