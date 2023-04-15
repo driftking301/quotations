@@ -42,6 +42,7 @@ class Quotation extends Model
             $partNumberPrice = new PartNumberPrice(
                 $detail->partnumber->isUnitOfMeasurePounds(),
                 $detail->partnumber->getPricePerSquareInch(),
+                $detail->partnumber->getPricePerUnit(),
                 floatval($detail->partnumber->price)
             );
 
