@@ -50,9 +50,8 @@
                                 <form action="{{ route('quotation.details.destroy', [$quotation, $detail]) }}" class="d-inline" method="post">
                                     @csrf
                                     {{ method_field('DELETE') }}
+                                    <a href="{{ route('quotation.details.edit', [$quotation, $detail]) }}" class="btn btn-sm btn-secondary"><i class="fa-solid fa-pen-to-square"></i></a>
                                     <button class="btn btn-sm btn-danger" type="submit" onclick="return confirm('¿Do you want to delete the item?')"><i class="fa-solid fa-trash"></i></button>
-                                    <a href="{{ route('details.edit', $detail) }}" class="btn btn-sm btn-secondary"><i class="fa-solid fa-pen-to-square"></i></a>
-
                                 </form>
                             </td>
                             <td class="handle"><i class="fa-solid fa-bars"></i></td>

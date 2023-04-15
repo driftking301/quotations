@@ -38,9 +38,8 @@ Route::get('details/{quotation}/processes', [QuotationController::class, 'editDe
 Route::resource('partnumber', PartNumberController::class);
 Route::resource('quotation.details', DetailsController::class);
 Route::post('quotation/{quotation}/details/calculate', [DetailsController::class, 'calculate']);
-
-
-
+Route::post('quotation/{quotation}/details/{detail}/calculate', [DetailsController::class, 'calculate']);
+Route::post('quotation/{quotation}/details/{details}', [DetailsController::class, 'update'])->name('quotation.details.update');
 
 Route::resource('details', DetailsController::class);
 //Route::resource('process', ProcessController::class)->middleware('auth');

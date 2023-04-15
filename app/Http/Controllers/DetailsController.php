@@ -160,18 +160,58 @@ class DetailsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Details $detail)
+    public function edit(Quotation $quotation, Details $detail)
     {
         $partnumbers = PartNumber::all();
-        return view('details.edit', compact( 'detail', 'partnumbers'));
+        return view('details.edit', compact( 'detail', 'partnumbers', 'quotation'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Details $details)
+    public function update(Request $request, Quotation $quotation, Details $details,)
     {
-        //
+        $fields = [
+            'part_number_id' => ['required', 'int', 'min:1', Rule::exists(PartNumber::class, 'id')],
+            'quantity' => 'required|int|min:1',
+        ];
+        $message = [
+            'part_number_id.required' => 'Part number is required',
+            'quantity.required' => 'Quantity is required',
+        ];
+        $this->validate($request, $fields, $message);
+
+        $holes = [];
+
+        if(!empty($request->holes_diameter) && !empty($request->holes_quantity)) {
+            foreach ($request->holes_diameter as $key => $value) {
+                $holes[] = ['diameter' => $value, 'quantity' => $request->holes_quantity[$key]];
+            }
+        }
+
+        $detailsData = $request->except(['_token','_method', 'quotation_id', 'part_number_id']);
+
+        $detailsData['description'] = $request->description ?: '';
+        $detailsData['width'] = $request->width ?: 0;
+        $detailsData['length'] = $request->length ?: 0;
+        $detailsData['quantity'] = $request->quantity ?: 0;
+        $detailsData['factor'] = $request->factor ?: 0;
+        $detailsData['laser'] = $request->laser ?: 0;
+        $detailsData['custom_laser_price'] = $request->custom_laser_price ?: 0;
+        $detailsData['welding'] = $request->welding ?: 0;
+        $detailsData['press'] = $request->press ?: 0;
+        $detailsData['saw'] = $request->saw ?: 0;
+        $detailsData['drill'] = $request->drill ?: 0;
+        $detailsData['clean'] = $request->clean ?: 0;
+        $detailsData['paint'] = $request->paint ?: 0;
+        $detailsData['pipe_thread'] = $request->pipe_thread ?: 0;
+        $detailsData['pipe_engage'] = $request->pipe_engage ?: 0;
+        $detailsData['press_setup'] = $request->press_setup ?: 0;
+
+        $details->total = $this->calculateLineFromRequest($quotation, $request)->amountTotal;
+        $details->holes = $holes ?: [];
+        $details->update($detailsData);
+        return redirect(route('quotation.details.index', [$quotation, $details]))->with('message','Part number updated successfully');
     }
 
     /**

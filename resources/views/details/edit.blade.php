@@ -57,13 +57,14 @@
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-11">
-                        <h4 class="card-title">Quote: </h4>
+                        <h4 class="card-title">Quote: {{ $quotation->name }} / {{ $quotation->client->name }} </h4>
                     </div>
                 </div>
             </div>
-            <form id="quotation-details-form" action="" method="post">
+            <form id="quotation-details-form" action="{{ route('quotation.details.update', [$quotation, $detail]) }}" method="post">
+                @csrf
                 <div class="card-body">
-                    @csrf
+
                     <input type="hidden" value="" name="quotation_id">
                     <div class="row">
                         <div class="col-md-12">
@@ -185,11 +186,11 @@
                                 <tbody>
                                 @foreach ($detail->holes as $hole)
                                     <tr>
-                                        <td><input value="{{ $hole['diameter'] }}" readonly/></td>
-                                        <td><input value="{{ $hole['quantity'] }}"></td>
+                                        <td><input name="holes_diameter[]" value="{{ $hole['diameter'] }}" readonly/></td>
+                                        <td><input name="holes_quantity[]" value="{{ $hole['quantity'] }}"></td>
                                         <td>{{ number_format($hole['diameter'] * pi(), 2) }}</td>
                                         <td>{{ number_format($hole['diameter'] * $hole['quantity'] * pi(), 2) }}</td>
-                                        <td><button type="button" class="btn btn-danger btn-sm" onclick="$(this).closest('tr').remove()"><i class="fa-sharp fa-solid fa-xmark"></i></button></td>
+                                        <td><button type="button" class="btn btn-danger btn-sm" onclick="$(this).closest('tr').remove(); quotation_update_price();"><i class="fa-sharp fa-solid fa-xmark"></i></button></td>
                                     </tr>
                                 @endforeach
                                 </tbody>
@@ -265,7 +266,7 @@
                 </div>
                 <div class="card-footer text-end">
                     <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk"></i> Save</button>
-                    <a class="btn btn-secondary" href=""><i class="fa-solid fa-arrow-left"></i> Back</a>
+                    <a class="btn btn-secondary" href="{{ route('quotation.details.index', $quotation) }}"><i class="fa-solid fa-arrow-left"></i> Back</a>
                 </div>
             </form>
         </div>
